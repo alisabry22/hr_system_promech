@@ -1,0 +1,31 @@
+.container{
+
+  height: 100vh;
+  border-radius: 0.313rem;
+  display: flex;
+
+
+}
+
+.card{
+  height: 100px;
+  width: 220px;
+
+  background-color  : #fff;
+  align-items: center;
+  border-radius: 0.413rem;
+  box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+  margin: 10px;
+  text-align: center;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+
+
+
+
+

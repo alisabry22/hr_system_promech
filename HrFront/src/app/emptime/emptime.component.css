@@ -1,0 +1,50 @@
+
+table {
+  width: 100%;
+
+  font-size: 16px;
+
+}
+
+table th{
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+}
+.departmentInput {
+	margin:10px 0;
+	padding:10px 10px;
+	width:20%;
+	outline:none;
+	border:1px solid #bbb;
+	border-radius:20px;
+	display:inline-block;
+	-webkit-box-sizing:border-box;
+	   -moz-box-sizing:border-box;
+	        box-sizing:border-box;
+    -webkit-transition:0.2s ease all;
+	   -moz-transition:0.2s ease all;
+	    -ms-transition:0.2s ease all;
+	     -o-transition:0.2s ease all;
+	        transition:0.2s ease all;
+}
+td,
+th {
+  padding: 16px 16px;
+  text-align: left;
+
+}
+
+thead tr {
+  background-color: #087f5b;
+  color: #fff;
+}
+
+
+
+
+tbody tr:hover{
+  cursor: pointer;
+}
+
+

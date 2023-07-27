@@ -1,0 +1,60 @@
+<div  *ngIf="(state=='error' && alertShown)" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Error </strong> {{message}}
+  <button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="container">
+  <!-- all Employees card  -->
+
+  <a routerLink="/allemp">
+
+    <div class="card">
+      <div class="card-head">
+
+        <h2>Total Employees</h2>
+      </div>
+
+      <a routerLink="/allemp" href="">{{totalemp}}</a>
+
+    </div>
+  </a>
+
+
+  <!-- Total Departments-->
+  <a routerLink="/departments">
+    <div class="card">
+      <div class="card-head">
+        <h2>Total Departments</h2>
+      </div>
+
+      <a >{{totaldept}}</a>
+
+    </div>
+  </a>
+
+
+    <!-- Total Dep-->
+    <div  class="card">
+      <div class="card-head">
+
+        <h2>Total Departments</h2>
+      </div>
+
+          <P>64</P>
+
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+
+        <h2>Total Departments</h2>
+      </div>
+
+          <P>64</P>
+
+    </div>
+
+</div>
+
+

@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Edit Employee</h2>
+
+<mat-dialog-content [formGroup]="editEmpForm">
+  <mat-form-field appearance="outline">
+    <input matInput  placeholder="Employee Name" readonly formControlName="empname">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput  readonly placeholder="Clock_In" formControlName="clock_in">
+
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput readonly placeholder="Clock_out"   formControlName="clock_out">
+
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Remarks"   formControlName="remarks">
+
+  </mat-form-field>
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn btn-secondary"(click)="close()">Close</button>
+  <button class="btn btn-primary"(click)="save()">Save</button>
+</mat-dialog-actions>

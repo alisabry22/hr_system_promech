@@ -1,0 +1,58 @@
+
+	<div class="container">
+  <div class="card">
+
+
+
+    <div  *ngIf="(state=='success' && alertShown) " class="alert  alert-success alert-dismissible fade show" role="alert">
+      <strong>Congratulations </strong>{{message}}
+      <button type="button" (click)="closeAlert()" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+
+    <div  *ngIf="(state=='error' && alertShown)" class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>Error </strong> {{message}}
+      <button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <h3>Upload attendance</h3>
+    <div class="progress" *ngIf="file && state=='success'">
+      <div class="progress-bar" role="progressbar" [ngStyle]="{width:progress+'%'}" attr.aria-valuenow={{progress}} aria-valuemax="100">{{progress}}%</div>
+    </div>
+
+    <div class="progress" *ngIf="state=='error'" style="height: 20px;">
+      <div class="progress-bar bg-danger"  role="progressbar" style="width: 100% " aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> Failed to upload</div>
+    </div>
+    <div class="drop_box">
+      <header>
+        <h4>Select File here</h4>
+      </header>
+      <p>Files Supported: Excel file .xlsx</p>
+        <form (ngSubmit)="onsubmit()"  enctype="multipart/form-data" >
+
+		<div class="custom-select">
+				File Type <select name="selectfile" (change)="onSelectChange($event)" >
+	<option value="Promech">Promech </option>
+	<option value="Promech12">Promech12</option>
+	<option value="Penta3d">Penta3d</option>
+		</select>
+		</div>
+
+
+ <input type="file" accept=".xlsx" name="uploadfile" (change)="onFileSelected($event)" />
+
+<input type="submit"  value="upload"  />
+
+
+	</form>
+
+  <p> you can find output files in this Dir : D:\hr_system\frontend\HRBackend\output</p>
+    </div>
+
+  </div>
+
+</div>

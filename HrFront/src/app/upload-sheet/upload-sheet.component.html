@@ -1,0 +1,47 @@
+
+<div class="container">
+  <div class="card">
+
+
+
+    <div  *ngIf="(state=='success'&&alertShown) " class="alert  alert-success alert-dismissible fade show" role="alert">
+      <strong>Congratulations </strong>{{message}}
+      <button type="button" (click)="closeAlert()" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+
+    <div  *ngIf="(state=='error'&&alertShown)" class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>Error </strong> {{message}}
+      <button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+
+    <h3>Upload sheets To Database</h3>
+
+    <div class="drop_box">
+      <header>
+        <h4>Select File here</h4>
+      </header>
+      <p>Files Supported: Excel file promech.xlsx , penta3d.xlsx , promech12.xlsx</p>
+      <p>Max number of Files : 3</p>
+        <form (ngSubmit)="onsubmit()" enctype="multipart/form-data" >
+
+
+
+ <input type="file" accept=".xlsx" multiple  name="uploadfile"  (change)="onFileSelected($event)" />
+
+<input type="submit"  value="upload"  />
+
+
+	</form>
+
+
+    </div>
+
+  </div>
+
+</div>

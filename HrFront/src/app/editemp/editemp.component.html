@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Edit Employee</h2>
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Employee Name</mat-label>
+    <input matInput  readonly placeholder="Employee Name" name="employeename"  formControlName="employeename">
+  </mat-form-field>
+
+ <!-- select employee Deartment -->
+  <mat-form-field appearance="fill">
+    <mat-label>Department</mat-label>
+    <mat-select   *ngIf="departmentName" formControlName="departmentName" >
+       <mat-option [value]="departmentName">
+         {{departmentName}}
+       </mat-option>
+       <mat-option *ngFor="let dept of departments" value="{{dept.dept_desc}}" [hidden]="dept.dept_desc===departmentName">{{dept.dept_desc}}</mat-option>
+
+     </mat-select>
+     <mat-select  *ngIf="!departmentName" formControlName="departmentName" >
+
+       <mat-option *ngFor="let dept of departments" value="{{dept.dept_desc}}">{{dept.dept_desc}}</mat-option>
+
+     </mat-select>
+  </mat-form-field>
+
+
+ <!-- select employee Role -->
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select Role</mat-label>
+      <mat-select appearance="outline"  formControlName="role" placeholder="Role" *ngIf="role">
+        <mat-option value="{{role}}" >{{role}}</mat-option>
+        <mat-option *ngIf="role==='Employee'" value="Manager">Manager</mat-option>
+        <mat-option *ngIf="role==='Manager'" value="Employee">Employee</mat-option>
+
+      </mat-select>
+     <mat-select appearance="outline" formControlName="role" placeholder="Role" *ngIf="!role">
+        <mat-option value="Employee">Employee</mat-option>
+        <mat-option value="Manager">Manager</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn btn-secondary"(click)="close()">Close</button>
+  <button class="btn btn-primary"(click)="save()">Save</button>
+</mat-dialog-actions>

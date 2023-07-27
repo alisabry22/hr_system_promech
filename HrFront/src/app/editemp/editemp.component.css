@@ -1,0 +1,24 @@
+mat-dialog-content{
+  justify-content: space-between;
+
+}
+mat-form-field{
+  width: 90%;
+}
+
+mat-dialog-actions{
+  margin: 20px 20px 20px 20px;
+  padding: 10px;
+  justify-content: center;
+
+}
+mat-dialog-actions button{
+  margin-right: 20px;
+}
+mat-select{
+
+  margin-bottom:30px;
+  border-radius: 20px ;
+}
+
+

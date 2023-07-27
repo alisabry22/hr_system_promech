@@ -1,0 +1,10 @@
+
+ <h2 mat-dialog-title>Add Department</h2>
+
+ <mat-dialog-content >
+<p>Are you sure to delete {{dept_codes.length}} Department(s)?</p>
+ </mat-dialog-content>
+ <mat-dialog-actions>
+  <button class="btn btn-secondary"(click)="closeDeleteDepartmentDialog()">Close</button>
+  <button class="btn btn-primary"(click)="saveDeleteDepartmentDialog()">Delete</button>
+ </mat-dialog-actions>

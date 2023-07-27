@@ -1,0 +1,43 @@
+
+
+table {
+  width: 100%;
+
+  font-size: 20px;
+
+}
+table thead{
+font-size: 15px;
+}
+
+
+
+td,
+th {
+  padding: 16px 24px;
+  text-align: left;
+
+}
+
+thead tr {
+  background-color: #087f5b;
+  color: #fff;
+}
+ td:nth-child(1) {
+  width: 30px;
+}
+button{
+  align-items: right;
+  text-align: right;
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: #fff;
+}
+
+
+tbody tr:hover{
+  cursor: pointer;
+}
+
+
