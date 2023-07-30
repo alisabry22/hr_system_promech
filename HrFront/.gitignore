@@ -19,6 +19,8 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
+*.xlsx
+*.xls
 
 # Visual Studio Code
 .vscode/*

@@ -39,6 +39,7 @@ import { DeleteDepartmentComponent } from './delete-department/delete-department
 import { AllemptimeComponent } from './allemptime/allemptime.component';
 import{MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { JobsComponent } from './jobs/jobs.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +64,7 @@ import {MatNativeDateModule} from '@angular/material/core';
     HttperrorComponent,
     DeleteDepartmentComponent,
     AllemptimeComponent,
+    JobsComponent,
   ],
   imports: [
     BrowserModule,

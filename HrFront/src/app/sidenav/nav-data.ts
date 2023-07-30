@@ -24,6 +24,13 @@ export const navbarData:INavbarData[]=[
         label:'Departments',
 
       },
+
+      {
+        routeLink:'jobs',
+          icon:"fas fa-user-md",
+          label:'Jobs',
+  
+        },
     {
       routeLink:'emptime',
         icon:'far fa-clock',

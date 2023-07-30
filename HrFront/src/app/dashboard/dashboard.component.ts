@@ -27,13 +27,15 @@ export class DashboardComponent implements OnInit{
         {
 
         next:(event:any)=>{
-          console.log(event);
+          
           if (event instanceof HttpErrorResponse){
             this.state="error";
             this.message=event.message;
             this.alertShown=true;
-            console.log(event);
+           
           }else{
+      
+    
             this.state=event.state;
             this.totalemp=event.totalemp;
             this.totaldept=event.totaldept;

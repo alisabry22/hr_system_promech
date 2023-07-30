@@ -12,8 +12,11 @@ export const EDIT_EMPLOYEE_URL=BASE_URL+"/emps/editemp";
 
 //department routes
 export const GET_ALL_DEPARTMENTS=BASE_URL+'/dept/getalldepts';
-
 export const ADD_NEW_DEPARTMENT=BASE_URL+'/dept/addnewdept';
 export const DELETE_DEPARTMENTS=BASE_URL+'/dept/deletedepts';
+
+//jobs routes
+export const GET_ALL_JOBS=BASE_URL+'/job/getalljobs';
+export const ADD_NEW_JOB=BASE_URL+'/job/addnewjob';
 
 

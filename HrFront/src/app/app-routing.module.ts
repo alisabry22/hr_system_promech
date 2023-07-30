@@ -10,6 +10,7 @@ import { UploadfileComponent } from './uploadfile/uploadfile.component';
 import { AddemployeeComponent } from './addemployee/addemployee.component';
 import { AllDepartmentsComponent } from './all-departments/all-departments.component';
 import { AllemptimeComponent } from './allemptime/allemptime.component';
+import { JobsComponent } from './jobs/jobs.component';
 const routes: Routes = [
   {path:'',redirectTo:'dashboard',pathMatch:'full'},
   {path:'departments',component:AllDepartmentsComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path:'reports',component:ReportsComponent},
   {path:'uploadfile',component:UploadfileComponent},
   {path:'AllEmpTime',component:AllemptimeComponent},
+  {path:'jobs',component:JobsComponent},
 
 ];
 
