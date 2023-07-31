@@ -18,6 +18,18 @@ th {
   text-align: left;
 
 }
+.empty_container{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 250px;
+  height: 200px;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.imgsource{
+  padding-left: 50px;
+}
 
 thead tr {
   background-color: #087f5b;

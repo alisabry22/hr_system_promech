@@ -29,16 +29,13 @@ export class AllempComponent implements OnInit{
     this.employeeService.getAllEmployees().subscribe((response)=>{
 
       this.state=response.state;
-      this.employees=response.result;
-      this.departments=response.departments;
+      this.employees=response.allemp;
+      this.departments=response.alldept;
 
-
-      console.log(this.employees);
-      this.final_emps=this.employees.map((val=>({card_id:val["CARD_ID"],employee_name:val["EMP_NAME"],department_name:val["DEPT_DESC"],rule:val["RULE_DESC"],hire_date:val["HIRE_DATE"],status:val["STATUS"]})));
-        console.log(this.employees);
-        this.sortedEmps=this.final_emps.slice();
-      this.final_departs=this.departments.map(val=>({dept_desc:val["DEPT_DESC"],dept_id:val["DEPT_CODE"]}));
-
+      this.final_emps=this.employees.map((val=>({card_id:val["card_id"],employee_name:val["emp_name"],department_name:val["dept_desc"],rule:val["rule_desc"],hire_date:val["hire_date"],status:val["emp_status"],job_title:val["job_desc"]})));
+      this.sortedEmps=this.final_emps.slice();
+      this.final_departs=this.departments.map(val=>({dept_desc:val["dept_desc"],dept_id:val["dept_code"]}));
+   
     });
 
 
@@ -48,20 +45,20 @@ export class AllempComponent implements OnInit{
     dialogConfig.hasBackdrop=true;
     dialogConfig.autoFocus=true;
     dialogConfig.width="30%";
-    dialogConfig.height="70vh";
+    dialogConfig.height="80vh";
 
     dialogConfig.data={emp,depts:this.final_departs};
 
  const dialogRef=   this.dialog.open(EditempComponent,dialogConfig);
 
  dialogRef.afterClosed().subscribe( (data)=>{
- this.editEmployee(data["employeename"],data["departmentName"],data["role"]);
+ this.editEmployee(data["employeename"],data["departmentName"],data["role"],data["emp_status"]);
 });
 
   }
 
-  editEmployee(empname:string,departname:string,role:string){
-    this.employeeService.editEmployeeData(empname,departname,role).subscribe({
+  editEmployee(empname:string,departname:string,role:string,status:string){
+    this.employeeService.editEmployeeData(empname,departname,role,status).subscribe({
       next:(event:any)=>{
         if (event instanceof HttpResponse){
        this.state=event.body.state;
@@ -102,6 +99,8 @@ export class AllempComponent implements OnInit{
           return compare(a.employee_name!,b.employee_name!,isAsc);
         case 'deptname':
             return compare(a.department_name!,b.department_name!,isAsc) ;
+        case'jobtitle':
+        return compare(a.job_title!,b.job_title!,isAsc);
         case 'role':
           return compare(a.rule!,b.rule!,isAsc);
             default:

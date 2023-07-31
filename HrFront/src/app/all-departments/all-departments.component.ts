@@ -1,4 +1,4 @@
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Department } from 'shared/models/department';
 import { AlldepartmentService } from '../services/alldepartment.service';
 import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
@@ -40,8 +40,9 @@ export class AllDepartmentsComponent implements OnInit {
   getAllDepts(){
     this.alldeptservice.getAllDepts().subscribe(response=>{
       this.departments=response.departments;
-   this.final_departs=this.departments.map(val=>({dept_desc:val["DEPT_DESC"],dept_id:val["DEPT_CODE"],emp_count:val["EMP_COUNT"]}));
-
+   this.final_departs=this.departments.map(val=>({dept_desc:val["dept_desc"],dept_id:val["dept_code"],emp_count:val["emp_count"]}));
+      console.log(this.final_departs);
+      
    this.sortedData=this.final_departs.slice();
     });
 

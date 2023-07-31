@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { ADD_NEW_JOB, GET_ALL_DEPARTMENTS, GET_ALL_JOBS } from '../url';
+import { ADD_NEW_JOB, GET_ALL_JOBS } from '../url';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,10 @@ export class JobService {
     return this.http.get(GET_ALL_JOBS);
   }
 
-  addNewDepartment(jobname:string):Observable<any>{
+  addNewJob(jobname:string):Observable<any>{
     let body = new URLSearchParams();
     body.set("jobname",jobname);
-jobname
+
     return this.http.post(ADD_NEW_JOB,body.toString(),{headers:{'Content-Type': 'application/x-www-form-urlencoded'}});
   }
 

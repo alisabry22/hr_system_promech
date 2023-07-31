@@ -4,14 +4,14 @@
 <div class="adddept">
   <input class="departmentInput" type="text" placeholder="Department Name" [(ngModel)]="filter_text"/>
 
+  <div class="DeptActions">
 
+    <button mat-raised-button  matTooltip="Add Department" (click)="openAppDepartmentDialog()"  color="primary">Add Department</button>
+  </div>
 
 </div>
 
-<div class="DeptActions">
 
-  <button mat-raised-button  matTooltip="Add Department" (click)="openAppDepartmentDialog()"  color="primary">Add Department</button>
-</div>
 <div  *ngIf="(state=='success' && alertShown) " class="alert  alert-success alert-dismissible fade show" role="alert">
   <strong>{{message}}</strong>
   <button type="button" (click)="closeAlert()" class="close" data-dismiss="alert" aria-label="Close">

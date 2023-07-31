@@ -40,6 +40,9 @@ import { AllemptimeComponent } from './allemptime/allemptime.component';
 import{MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { JobsComponent } from './jobs/jobs.component';
+import { JOBSearchPipe } from 'shared/models/jobsearch.pipe';
+import { AddJobComponent } from './add-job/add-job.component';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +68,9 @@ import { JobsComponent } from './jobs/jobs.component';
     DeleteDepartmentComponent,
     AllemptimeComponent,
     JobsComponent,
+    JOBSearchPipe,
+    AddJobComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -85,7 +91,8 @@ import { JobsComponent } from './jobs/jobs.component';
     MatTooltipModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatIconModule
 
 
 

@@ -16,6 +16,17 @@
   </div>
 
   <input type="text" placeholder="Employee Name" *ngIf="employees.length>=1">
+  <div class="empty_container">
+    <div class="empty_container" *ngIf="employees.length==0">
+      <h2>
+
+        Their are no Employees yet
+      </h2>
+     <img class="imgsource" src="./assets/empty.png" alt="empty"/>
+
+
+    </div>
+  </div>
   <table id="table" data-toggle="table" data-search="true" matSort (matSortChange)="sortEmps($event)" class="table table-striped table-hover table-bordered table-sm" *ngIf="employees.length>=1">
 
     <thead>
@@ -24,6 +35,7 @@
         <th class="th-sm"  mat-sort-header="carid" scope="col">Card ID</th>
         <th class="th-sm" mat-sort-header="empname"  scope="col">Employee Name</th>
         <th class="th-sm"  mat-sort-header="deptname" scope="col">Department Name</th>
+        <th class="th-sm"  mat-sort-header="jobtitle" scope="col">Job Title</th>
         <th class="th-sm"  mat-sort-header="role" scope="col">Role</th>
         <th class="th-sm"  mat-sort-header="status" scope="col">Status</th>
         <th class="th-sm"  mat-sort-header="hiredate" scope="col">HireDate</th>
@@ -36,6 +48,7 @@
         <td>{{emp.card_id}}</td>
         <td>{{emp.employee_name}}</td>
         <td>{{emp.department_name}}</td>
+        <td>{{emp.job_title}}</td>
         <td> {{emp.rule}}</td>
         <td> {{emp.status=="1"?"Active":"InActive"}}</td>
         <td> {{emp.hire_date?.substring(0,10)}}</td>

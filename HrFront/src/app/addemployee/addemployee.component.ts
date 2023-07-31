@@ -36,11 +36,11 @@ export class AddemployeeComponent implements OnInit {
       this.state=response.state;
       this.departments=response.departments;
       this.jobs=response.jobs;
-      this.final_departs=this.departments.map(val=>({dept_desc:val["DEPT_DESC"],dept_id:val["DEPT_CODE"]}));
-      this.final_jobs=this.jobs.map(val=>({job_desc:val["JOB_DESC"],job_id:val["JOB_CODE"]}));
+      this.final_departs=this.departments.map(val=>({dept_desc:val["dept_desc"],dept_id:val["dept_code"]}));
+      this.final_jobs=this.jobs.map(val=>({job_desc:val["job_desc"],job_id:val["job_code"]}));
       this.selectedDebt=this.final_departs[0].dept_desc!;
       this.selectedJob=this.final_jobs[0].job_desc!;
-      console.log(this.final_jobs);
+      console.log(this.final_jobs,this.final_departs);
     });
   }
   //on selecting department getting its value
@@ -59,7 +59,7 @@ export class AddemployeeComponent implements OnInit {
   // on selecting company
   onSelectCompany(event:any){
     this.selectedCompany=event.target.options[event.target.options.selectedIndex].text;
-    console.log(this.selectedCompany);
+ 
 
   }
   getChangedDate(event:MatDatepickerInputEvent<Date>){

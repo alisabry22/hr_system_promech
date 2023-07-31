@@ -13,11 +13,12 @@ export class EmployeeserviceService {
   getAllEmployees():Observable<any>{
     return this.http.get(GET_ALL_EMPS);
   }
-  editEmployeeData(empname:string,department:string,role:string):Observable<any>{
+  editEmployeeData(empname:string,department:string,role:string,status:string):Observable<any>{
     let body = new URLSearchParams();
     body.set('empname',empname);
     body.set('departmentName',department);
     body.set('role',role);
+    body.set("status",status);
 
     return this.http.post(EDIT_EMPLOYEE_URL,body.toString(),{headers:{'Content-Type': 'application/x-www-form-urlencoded'}});
   }

@@ -52,7 +52,7 @@ td:nth-child(1) {
 }
 
 .DeptActions{
-  text-align: right;
+  padding: 20px;
 
 
 }
@@ -63,8 +63,8 @@ td:nth-child(1) {
 
 }
 .adddept{
-
-  text-align: left;
+padding: 20px;
+display: flex;
 }
 ::ng-deep .mat-sort-header-arrow {
   color: #fff;

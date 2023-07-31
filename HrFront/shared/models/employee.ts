@@ -5,4 +5,5 @@ export class Employee{
   rule?:string;
   hire_date?:string;
   status?:string;
+  job_title?:string;
 }

@@ -18,14 +18,13 @@ const getAllDepartments=async(req,res)=>{
          connection.query(get_dept_query,function(err,result){
             if(err)return res.send({status:"error",message:err})
             connection.query(get_jops_query,function(err,result1){
-                console.log(result,result1);
+              if(err)return res.send({status:"error",message:err})
+              console.log(result,result1);
+              return res.send({state:"success",departments:result,jobs:result1});
             })
          } );
 
-        //   var jobs=await connection.execute();
-        //     connection.close();
-            
-        //   return res.send({state:"success",departments:departments.rows,jobs:jobs.rows});
+    
   } catch (error) {
         return res.send({state:"error", message:error.message});
   }

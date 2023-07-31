@@ -14,19 +14,21 @@ export class EditempComponent implements OnInit {
   departmentName:string="";
   employeename:string="";
   role:string="";
+  emp_status:string="";
   departments:Department[]=[];
   constructor(private fb:FormBuilder,private dialogRef:MatDialogRef<EditempComponent>,@Inject (MAT_DIALOG_DATA)data:any){
-
+    
     this.employeename=data["emp"].employee_name!;
     this.departmentName=data["emp"].department_name!;
     this.role=data["emp"].rule!;
     this.departments=data["depts"];
+    this.emp_status=data["emp"].status;
 
   }
   ngOnInit(): void {
     this.form=this.fb.group(
 
-      {departmentName:this.departmentName,role:this.role,employeename:this.employeename}
+      {departmentName:this.departmentName,role:this.role,employeename:this.employeename,emp_status:this.emp_status}
 
       );
   }
@@ -34,7 +36,7 @@ export class EditempComponent implements OnInit {
     this.dialogRef.close();
   }
   save(){
-
+    
     this.dialogRef.close(this.form.value);
   }
 

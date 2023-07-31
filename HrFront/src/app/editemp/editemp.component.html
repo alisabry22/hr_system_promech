@@ -40,6 +40,19 @@
       </mat-select>
     </mat-form-field>
 
+     <!-- select employee status -->
+  <mat-form-field appearance="fill">
+    <mat-label>Employee Status</mat-label>
+    <mat-select   *ngIf="emp_status" formControlName="emp_status" >
+       <mat-option [value]="emp_status"> {{emp_status=="1"?"Active":"InActive"}}</mat-option>
+
+       <mat-option value="2" *ngIf="emp_status=='1' " >InActive </mat-option>
+       <mat-option value="1" *ngIf="emp_status=='2' " > Active</mat-option>
+       
+
+     </mat-select>
+  </mat-form-field>
+
 
 </mat-dialog-content>
 <mat-dialog-actions>

@@ -7,7 +7,7 @@ const employee_router=require("./routes/employee_router")
 const oraclerun=require('./db');
 const dashobard_router = require("./routes/dashboard_router");
 const deptrouter = require("./routes/department_router");
-
+const jobsRouter=require('./routes/jobs_router');
 
 app.use(cors());
 oraclerun();
@@ -15,6 +15,7 @@ app.use(dashobard_router);
 app.use(split_router);
 app.use("/emps",employee_router);
 app.use("/dept",deptrouter);
+app.use('/job',jobsRouter);
 
 
 
