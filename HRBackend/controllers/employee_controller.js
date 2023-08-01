@@ -109,12 +109,13 @@ const getAllEmpTime = async (req, res) => {
       password: "promech",
       database: "attend",
     });
-    var get_emp_time_query = "select * from at_emp_time ORDER BY (CAST(card_id as integer)) ASC";
-    var emptime = await new Promise((resolve) => {
-      connection.query(get_emp_time_query, (err, result) => resolve(result));
-    })
+    var get_emp_time_query = "select * from at_emp_time";
+    connection.query(get_emp_time_query, (err, result) => {
+      if (err) return res.send({ state: "error", message: err.message });
+      
+      return res.send({ state: "success", emptime: result });
+    });
 
-    return res.send({ state: "success", emptime: emptime.rows });
   } catch (error) {
     console.log(error);
     return res.send({ state: "error", message: error.message });
@@ -126,7 +127,7 @@ const EditEmployee = async (req, res) => {
   empname = req.body.empname;
   departmentName = req.body.departmentName;
   role = req.body.role;
-  emp_status=req.body.status;
+  emp_status = req.body.status;
 
 
   try {
@@ -140,26 +141,26 @@ const EditEmployee = async (req, res) => {
 
     rolecode = role == "Manager" ? "1" : "2";
     var get_dept_query = `select dept_code from at_dept where dept_desc=?`;
-   
 
-    var dept_Code = await new Promise(function(resolve,reject){
-      connection.query(get_dept_query,departmentName,function(err,result){
-        if(err) return reject(res.send({state:"error",message:err.message}));
-          return resolve(result[0].dept_code);
-        
+
+    var dept_Code = await new Promise(function (resolve, reject) {
+      connection.query(get_dept_query, departmentName, function (err, result) {
+        if (err) return reject(res.send({ state: "error", message: err.message }));
+        return resolve(result[0].dept_code);
+
       })
     },);
-   
+
     var updateQuery = "update at_emps set emp_name=? , dept_code=? ,rule_no=?,emp_status=? where emp_name=?";
-    var binds = [empname, dept_Code, rolecode,emp_status,empname];
-     connection.query(updateQuery, binds,function(err,result){
-      if(err)return res.send({state:"error",message:err.message});
+    var binds = [empname, dept_Code, rolecode, emp_status, empname];
+    connection.query(updateQuery, binds, function (err, result) {
+      if (err) return res.send({ state: "error", message: err.message });
       connection.end();
       return res.send({ state: "success", message: "Successfully changed Employee Data" });
     });
-   
 
-    
+
+
 
 
 

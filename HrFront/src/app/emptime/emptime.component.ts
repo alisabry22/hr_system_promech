@@ -34,17 +34,16 @@ export class EmptimeComponent implements OnInit {
 
       this.getemps=response.emptime;
       this.get_emps_time=this.getemps.map(val=>({
-        card_id:val["CARD_ID"],
-      emp_name:val["EMP_NAME"],
-      date_day:val["DATE_DAY"],
-      clock_in:val["CLOCK_IN"],
-      clock_out:val["CLOCK_OUT"],
-      late:val["LATE"],
-      early:val["EARLY"],
-      absent_flag:val["ABSENT_FLAG"],
-      remarks:val["REMARKS"],
-      trans_amt:val["TRANS_AMT"],
-      calc_flag:val["CALC_FLAG"],
+        card_id:val["card_id"],
+      emp_name:val["emp_name"],
+      date_day:val["date"],
+      clock_in:val["clock_in"],
+      clock_out:val["clock_out"],
+      late:val["late"],
+      early:val["early"],
+      absent_flag:val["absent"],
+      remarks:val["remarks"],
+      trans_amt:val["trans"],
       }));
 
     } );

@@ -1,7 +1,7 @@
-const oracledb=require("oracledb");
+const mysql=require("mysql");
 const xlsx=require("xlsx");
-const process=require("child_process");
-
+const fastcsv=require("fast-csv");
+const fs=require("fs");
 const uploadSheetToDatabase=async(req,res)=>{
     let connection;
     var files=req.files;
@@ -97,9 +97,14 @@ let promech12aoe=[];
          xlsx.utils.sheet_add_aoa(promechsheet,promech12aoe,{origin:-1});
 
          xlsx.utils.book_append_sheet(newbook,promechsheet,"promech");
-       
-         
-        xlsx.writeFileXLSX(newbook,"./sql/attend.xlsx");
+         //manuplate date as date
+         var sheet=  manuplateDate(newbook.Sheets[newbook.SheetNames[0]]);
+         var latest_book=xlsx.utils.book_new();
+         xlsx.utils.book_append_sheet(latest_book,sheet,"promech");
+             
+        xlsx.writeFileXLSX(latest_book,"./sql/attend.xlsx");
+               
+
         
     
 
@@ -108,27 +113,93 @@ let promech12aoe=[];
       
 
 
-        connection=await oracledb.getConnection({
-            user:"ATTEND",
-            password:"attend",
-            connectString:"192.168.0.69:1521/xe",
+        connection= mysql.createConnection({
+            user:"root",
+            host:"localhost",
+            password:"promech",
+            database:"attend",
                 });
-      var workbook=  xlsx.readFile("./sql/attend.xlsx");
-            var sheet=workbook.Sheets[workbook.SheetNames[0]];
-            exceldata=xlsx.utils.sheet_to_csv(sheet);
-            //get file name 
+      var workbook=  xlsx.readFile("./sql/attend.xlsx",{cellDates:true});
+            
+            trunc_query="truncate table at_emp_time";
+        
+        
+            insert_query="insert into at_emp_time (card_id,emp_name,date,clock_in,clock_out,late,early,absent,mission,trans,company_name) values ?";
+
+      
+
+
             //create csv file from upload xlsx
             xlsx.writeFile(workbook,"./sql/attend.csv",{bookType:'csv'});
-             truncateTable="truncate table AT_EMP_TIME drop storage";
-             await connection.execute(truncateTable);
-             command="sqlldr userid=attend/attend control=D:/hr_system/HrBackend/sql/at_emp_time.ctl log=D:/hr_system/HrBackend/sql/attendance.log skip=1";
+            let stream=fs.createReadStream("./sql/attend.csv");
+      
+            let csvData=[];
+            let csvStream=fastcsv.parse().on("data",function(data){
+                csvData.push(data);
+            
+            }).on("end",function(){
+                csvData.shift();
+            connection.query(trunc_query,function(err,result){
+                if(err)  return res.send({state:"error",message:err.message});
+                connection.query(insert_query,[csvData],function(err,result1){
+                    if(err) return res.send({state:"error",message:err.message});
+                    calculateEmpData();
+                    connection.end();
+                    return res.send({state:"success",message:"Succesfully uploaded file to database"});                    
+                })
 
-           result=  process.exec(command);
+            });
+
+                
+            });
+            stream.pipe(csvStream);
+            
+            
+          
+         
      
-        return res.send({state:"success",message:"Succesfully uploaded file to database"});
     } catch (error) {
+        console.log(error);
         return res.send({state:"error",message:error.message});
 
     }
+}
+
+function manuplateDate(worksheet){
+   
+var excelData=xlsx.utils.sheet_to_json(worksheet);
+for (let i=0 ;i<excelData.length ;i++){
+   var obj=Object(excelData[i]);
+    var full_date=new Date(obj["Date"]);
+    
+    obj["Date"]=full_date.toISOString().slice(0,10);
+
+}
+return xlsx.utils.json_to_sheet(excelData);
+}
+
+async function calculateEmpData(){
+    
+    let connection=mysql.createConnection({
+        host:"localhost",
+        database:"attend",
+        user:"root",
+        password:"promech",
+    });
+
+    var get_emp_time_qury="select * from at_emp_time";
+
+    //get emp time
+    var result_emp_time=await new Promise((resolve,reject)=>{
+        connection.query(get_emp_time_qury,(err,result)=>{
+            if(err) reject(err.message);
+            resolve(result);
+        })
+    });
+    var emp_count=0;
+    let dates=[...new Set(result_emp_time.map(x=>x.date))];
+    console.log(dates);
+
+
 }
 module.exports=uploadSheetToDatabase;
