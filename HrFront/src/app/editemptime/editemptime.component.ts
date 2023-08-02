@@ -14,22 +14,29 @@ export class EditemptimeComponent implements OnInit {
   clock_in:string="";
   clock_out:string="";
   remarks:string="";
+  trans:number;
+  empTime:EmpTime;
 
   constructor(private fb:FormBuilder,private dialogRef:MatDialogRef<EditemptimeComponent>,@Inject (MAT_DIALOG_DATA)data:EmpTime){
-    console.log("data",data);
+    this.empTime=data;
     this.empname=data.emp_name!;
     this.clock_in=data.clock_in!;
     this.clock_out=data.clock_out!;
     this.remarks=data.remarks!;
+    this.trans=data.trans_amt!;
   }
   ngOnInit(): void {
-    this.editEmpForm=this.fb.group( {empname:this.empname,clock_in:this.clock_in,clock_out:this.clock_out,remarks:this.remarks});
+    this.editEmpForm=this.fb.group( {empname:this.empname,clock_in:this.clock_in,clock_out:this.clock_out,remarks:this.remarks,trans:this.trans});
   }
 
   close() {
     this.dialogRef.close();
 }
 save(){
-  this.dialogRef.close(this.editEmpForm.value);
+  this.empTime.trans_amt=this.editEmpForm.value["trans"];
+  this.empTime.remarks=this.editEmpForm.value["remarks"];
+  
+this.dialogRef.close(this.empTime);
 }
+
 }

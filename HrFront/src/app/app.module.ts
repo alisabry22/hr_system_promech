@@ -43,6 +43,8 @@ import { JobsComponent } from './jobs/jobs.component';
 import { JOBSearchPipe } from 'shared/models/jobsearch.pipe';
 import { AddJobComponent } from './add-job/add-job.component';
 import {MatIconModule} from '@angular/material/icon';
+import { TimeReportComponent } from './time-report/time-report.component';
+import { TransReportComponent } from './trans-report/trans-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +72,8 @@ import {MatIconModule} from '@angular/material/icon';
     JobsComponent,
     JOBSearchPipe,
     AddJobComponent,
+    TimeReportComponent,
+    TransReportComponent,
     
   ],
   imports: [

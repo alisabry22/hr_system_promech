@@ -2,6 +2,7 @@ const mysql=require("mysql");
 const xlsx=require("xlsx");
 const fastcsv=require("fast-csv");
 const fs=require("fs");
+const moment=require("moment");
 const uploadSheetToDatabase=async(req,res)=>{
     let connection;
     var files=req.files;
@@ -122,9 +123,10 @@ let promech12aoe=[];
       var workbook=  xlsx.readFile("./sql/attend.xlsx",{cellDates:true});
             
             trunc_query="truncate table at_emp_time";
+
+                check_missing_employees_query='select distinct emp.emp_name from at_emp_time as emp where not  exists (select null from at_emps emp2 where emp2.card_id=emp.card_id  and emp2.company_name=emp.company_name)';
         
-        
-            insert_query="insert into at_emp_time (card_id,emp_name,date,clock_in,clock_out,late,early,absent,mission,trans,company_name) values ?";
+            insert_query="insert into at_emp_time (card_id,emp_name,date,clock_in,clock_out,late,early,absent,remarks,trans,company_name) values ?";
 
       
 
@@ -143,9 +145,10 @@ let promech12aoe=[];
                 if(err)  return res.send({state:"error",message:err.message});
                 connection.query(insert_query,[csvData],function(err,result1){
                     if(err) return res.send({state:"error",message:err.message});
-                    calculateEmpData();
                     connection.end();
-                    return res.send({state:"success",message:"Succesfully uploaded file to database"});                    
+                    return res.send({state:"success",message:"Successfully uploaded data"});
+                  
+                                    
                 })
 
             });
@@ -197,9 +200,25 @@ async function calculateEmpData(){
         })
     });
     var emp_count=0;
-    let dates=[...new Set(result_emp_time.map(x=>x.date))];
-    console.log(dates);
+    var at_trans=[];
+    for (let i=0 ; i<result_emp_time.length ; i++){
+        let clock_in=result_emp_time[i].clock_in.toString();
+        if(clock_in.length===5){
+            var t1=moment(result_emp_time[i].clock_in,"hh:mm");
+            var t2=moment("09:10","hh:mm");
+            var t3=moment(t2.diff(t1),"hh:mm");
+            console.log(`${t3.hours()}:${t3.minutes()}`);
+         
+        }
+        // else{
+        //     at_trans.push("");
+        // }
 
+ 
+    }
+    console.log(at_trans);
+ 
 
 }
+
 module.exports=uploadSheetToDatabase;

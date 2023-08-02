@@ -112,7 +112,7 @@ const getAllEmpTime = async (req, res) => {
     var get_emp_time_query = "select * from at_emp_time";
     connection.query(get_emp_time_query, (err, result) => {
       if (err) return res.send({ state: "error", message: err.message });
-      
+      console.log(result[0]);
       return res.send({ state: "success", emptime: result });
     });
 
@@ -171,9 +171,38 @@ const EditEmployee = async (req, res) => {
   }
 }
 
+const EditEmpTime=async(req,res)=>{
+  
+   let connection;
+ 
+  const{card_id,date,company_name,trans,remarks}=req.body;
+ 
+
+  try {
+   
+      connection=mysql.createConnection({
+        host:"localhost",
+        user:"root",
+        password:"promech",
+        database:"attend",
+      });
+
+      update_emp_query="update at_emp_time set  trans=? , remarks=? where card_id=? and company_name=? and date=?";
+      var binds=[trans,remarks,card_id,company_name,date];
+      connection.query(update_emp_query,binds,(err,result)=>{
+        if(err)return res.send({state:"error",message:err.message});
+        return res.send({state:"success",message:"Succesffully  edited User"});
+      })
+
+
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 
 
 
-module.exports = { getAllEmployees, addNewEmployee, getAllEmpTime, EditEmployee };
+
+module.exports = { getAllEmployees, addNewEmployee, getAllEmpTime, EditEmployee ,EditEmpTime};

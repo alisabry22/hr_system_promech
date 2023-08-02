@@ -8,6 +8,7 @@ export const UPLOAD_EXCEL_URL=BASE_URL+'/uploadfile';
 export const GET_ALL_EMPS=BASE_URL+'/emps/getallemp';
 export const ADD_NEW_EMP=BASE_URL+"/emps/addemp";
 export const GET_ALL_EMP_TIME=BASE_URL+"/emps/getemptime";
+export const EDIT_EMP_TIME=BASE_URL+"/emps/editEmpTime";
 export const EDIT_EMPLOYEE_URL=BASE_URL+"/emps/editemp";
 
 //department routes

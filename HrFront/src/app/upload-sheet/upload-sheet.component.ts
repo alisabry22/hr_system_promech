@@ -42,16 +42,16 @@ export class UploadSheetComponent {
         if(this.canBeProcessed){
           this.uploadsheetservice.upload(this.files).subscribe({
             next:(event:any)=>{
-               if (event instanceof HttpResponse){
-              this.state=event.body.state;
-            this.message=event.body.message;
-            this.alertShown=true;
-              }else if (event instanceof HttpErrorResponse){
-                this.state=event.error;
-                this.message=event.message;
-                this.alertShown=true;
-
+              if(event instanceof HttpResponse){
+                
+                
+                 this.state=event.body.state;
+                 this.message=event.body.message;
+                 this.alertShown=true;
+                 console.log(this.state,this.message);
               }
+        
+
             }
           });
          }

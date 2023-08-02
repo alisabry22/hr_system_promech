@@ -5,7 +5,7 @@
     <span class="sr-only">Loading...</span>
   </div>
 
-  <table id="table" class="table table-striped table-hover table-bordered table-sm" *ngIf="getemps.length>=1 && !showLoading">
+  <table id="table" class="table table-striped table-hover table-bordered table-sm" *ngIf="get_emps_time.length>=1 && !showLoading">
 
     <thead>
 
@@ -21,7 +21,7 @@
         <th class="th-sm" scope="col">Absent</th>
         <th class="th-sm" scope="col">Remarks</th>
         <th class="th-sm" scope="col">Trans_Amount</th>
-        <th class="th-sm" scope="col">CALC_FLAG</th>
+       
       </tr>
     </thead>
     <tbody >
@@ -37,7 +37,7 @@
         <td>{{emp.absent_flag}} </td>
         <td>{{emp.remarks}} </td>
         <td> {{emp.trans_amt}}</td>
-        <td> {{emp.calc_flag}}</td>
+      
       </tr>
 
     </tbody>

@@ -1,0 +1,6 @@
+.report_body{
+    display: flex;
+    padding: 50px;
+    margin: 30px;
+    justify-content: space-evenly;
+}

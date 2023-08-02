@@ -11,6 +11,8 @@ import { AddemployeeComponent } from './addemployee/addemployee.component';
 import { AllDepartmentsComponent } from './all-departments/all-departments.component';
 import { AllemptimeComponent } from './allemptime/allemptime.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { TimeReportComponent } from './time-report/time-report.component';
+import { TransReportComponent } from './trans-report/trans-report.component';
 const routes: Routes = [
   {path:'',redirectTo:'dashboard',pathMatch:'full'},
   {path:'departments',component:AllDepartmentsComponent},
@@ -24,6 +26,8 @@ const routes: Routes = [
   {path:'uploadfile',component:UploadfileComponent},
   {path:'AllEmpTime',component:AllemptimeComponent},
   {path:'jobs',component:JobsComponent},
+  {path:'timereport',component:TimeReportComponent},
+  {path:'transreport',component:TransReportComponent},
 
 ];
 
