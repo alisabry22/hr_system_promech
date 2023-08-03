@@ -112,12 +112,11 @@ const getAllEmpTime = async (req, res) => {
     var get_emp_time_query = "select * from at_emp_time";
     connection.query(get_emp_time_query, (err, result) => {
       if (err) return res.send({ state: "error", message: err.message });
-      console.log(result[0]);
+     
       return res.send({ state: "success", emptime: result });
     });
 
   } catch (error) {
-    console.log(error);
     return res.send({ state: "error", message: error.message });
   }
 

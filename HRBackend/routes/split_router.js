@@ -20,7 +20,7 @@ let upload=multer({
     storage:storage
 });
 router.post("/uploadsheet",uploadToDatabase.array("uploadfile",3),uploadSheetToDatabase);
-
+   
 // for uploading files from angular to node js 
 router.post("/uploadfile",upload.single('file'),(req,res)=>{
    console.log(req.body);
