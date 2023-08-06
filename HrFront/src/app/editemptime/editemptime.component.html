@@ -15,23 +15,23 @@
  
 
  
-  <mat-form-field *ngIf="empTime.absent_flag=='True' " >
+  <mat-form-field  >
     <mat-label>Remarks</mat-label>
     
     <mat-select  [(value)]="remarks" disableOptionCentering="true" formControlName="remarks" >
 
-      <mat-option value="Permission">إذن</mat-option>
-      <mat-option value="Ordinary">إعتيادي</mat-option>
-      <mat-option value="Casual">عارضة</mat-option>
-      <mat-option value="Sick">مرضي</mat-option>
-      <mat-option value="Anual">سنوية</mat-option>
-      <mat-option value="Mission">مهمة</mat-option>
+      <mat-option value="Permission">Permission</mat-option>
+      <mat-option value="Ordinary">Ordinary</mat-option>
+      <mat-option value="Casual">Casual</mat-option>
+      <mat-option value="Sick">Sick</mat-option>
+     
+      <mat-option value="Mission">Mission</mat-option>
 
     </mat-select>
   </mat-form-field>
 
  
-  <mat-form-field *ngIf="empTime.absent_flag=='True' ">
+  <mat-form-field>
     <input matInput  placeholder="Transportation Amount"   formControlName="trans">
 
   </mat-form-field>

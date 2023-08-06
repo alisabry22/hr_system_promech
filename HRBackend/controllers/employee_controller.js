@@ -185,18 +185,76 @@ const EditEmpTime=async(req,res)=>{
         password:"promech",
         database:"attend",
       });
+        
 
       update_emp_query="update at_emp_time set  trans=? , remarks=? where card_id=? and company_name=? and date=?";
+
       var binds=[trans,remarks,card_id,company_name,date];
-      connection.query(update_emp_query,binds,(err,result)=>{
-        if(err)return res.send({state:"error",message:err.message});
-        return res.send({state:"success",message:"Succesffully  edited User"});
-      })
+      return new Promise((resolve,reject)=>{
+        connection.query(update_emp_query,binds,  (err,result)=>{
+          if(err)return reject(res.send({state:"error",message:err.message}));
+          updateAtTransOnEachEdit(card_id,company_name);
+         //  updateAtTransOnEachEdit(card_id,company_name);
+  
+       
+   
+        });
+      });
+     
+
+     
+    
 
 
   } catch (error) {
     console.log(error);
   }
+}
+
+ function updateAtTransOnEachEdit(card_id,company_name){
+  var total_trans=0;
+  try {
+    let connection=mysqlConnection();
+    //once edit is done on single date of user call this function to calculate reports
+    var select_emp_time_query='select * from at_emp_time where card_id=? and company_name=?';
+   var empTime= new Promise((resolve)=>{
+    connection.query(select_emp_time_query,[card_id,company_name],(err,result)=>{
+      resolve(result);
+    })   });
+   console.log(empTime);
+   var last_date=empTime[empTime.length-1].date.toString().split("-");
+   for(let i=0; i<empTime.length;i++){
+    if(empTime[i].trans.length!=0){
+      total_trans+=parseInt(empTime[i].trans);
+    }
+   
+   }
+   console.log("trans amount",total_trans);
+   
+
+   var update_trans_for_emp='update at_trans set trans_amount=? where card_id=? and month=? and year=? and company_name=?';
+   connection.query(update_trans_for_emp,[parseInt(total_trans),card_id,parseInt(last_date[1]),parseInt(last_date[0]),company_name.toString()],(err,result)=>{
+    if(err)console.log(err.message);
+
+   
+
+
+   })
+
+  } catch (error) {
+    return error.message;
+  }
+
+
+}
+
+function mysqlConnection(){
+  return  mysql.createConnection({
+        host:"localhost",
+        user:"root",
+        password:"promech",
+        database:"attend"
+    });
 }
 
 

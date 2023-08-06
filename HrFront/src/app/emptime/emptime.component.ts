@@ -31,7 +31,7 @@ export class EmptimeComponent implements OnInit {
     this.empTimeService.getAllEmpTime().subscribe(response => {
 
       this.getemps = response.emptime;
-      console.log("getEmps",this.getemps);
+      
       this.get_emps_time = this.getemps.map(val => ({
         card_id: val["card_id"],
         emp_name: val["emp_name"],
@@ -70,15 +70,16 @@ export class EmptimeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((data: EmpTime) => {
       
-      if(data.absent_flag==="True"){
+    
         
         //this condition means edits will be only on absent users
         this.empTimeService.editEmployeeTimeSheet(data).subscribe(response=>{
+          console.log(response);
          if(response.state==="success"){
           this.ngOnInit();
          }
         });
-      }
+      
      
     }
     );

@@ -181,10 +181,11 @@ async function submitDataToAtTransTable() {
         var insert_into_at_trans = 'insert into at_trans (card_id,emp_name,month,year,rule_no,company_name) values ?';
 
 
-
+        
         for (let i = 0; i < emp_times.length; i += date_count) {
-            var date = (emp_times[i].date).split('-');
-
+            
+            var date = (emp_times[date_count-1].date).split('-');
+            
             var values = [
                 parseInt(emp_times[i].card_id),
                 emp_times[i].emp_name,
@@ -197,14 +198,19 @@ async function submitDataToAtTransTable() {
             connection.query(insert_into_at_trans, [[values]], (err, result) => {
             });
         }
+        //calculating total late for each emp
+        calculateTotalLateData(emp_times, date_count);
+                //calculating total absent for each emp
 
-        calculateEmpData(emp_times, date_count);
+        CalculateTotalAbsent(emp_times,date_count);
+        //calculating total attendance
+        CalculateTotalAttendHours(emp_times,date_count);
 
     } catch (error) {
         console.log(error);
     }
 }
-async function calculateEmpData(emp_times, date_count) {
+async function calculateTotalLateData(emp_times, date_count) {
 
     let connection = mysql.createConnection({
         host: "localhost",
@@ -214,7 +220,7 @@ async function calculateEmpData(emp_times, date_count) {
     });
 
     //update total late time in at_trans table for this user at this specific month,year
-    var update_trans_late_query = 'update at_trans set t_late=? where card_id=?,month=?,year=?,company_name=?';
+    var update_trans_late_query = 'update at_trans set t_late=? where card_id=? and month=? and year=? and company_name=?';
     var t_late_milliseconds = 0;
 
     var count = 0;
@@ -245,10 +251,19 @@ async function calculateEmpData(emp_times, date_count) {
 
 
 
+        }else {
+                    //معناها هنا انه مبصمش علي البصمه هشوف بقي لو مبصمش وكمان مش غايب عشان احسب عليه ساعه تأخير
+
+            if(emp_times[i].absent!="True"){
+                
+                t_late_milliseconds+=3600000;
+            }
         }
         count++;
         if (count === date_count) {
             //we neeed to update this row now 
+           
+            var date = (emp_times[i].date).split('-');
             var msec = t_late_milliseconds;
             var hh = Math.floor(msec / 1000 / 60 / 60);
             msec -= hh * 1000 * 60 * 60;
@@ -256,14 +271,14 @@ async function calculateEmpData(emp_times, date_count) {
             count = 0;
             t_late_milliseconds = 0;
             value=[
-                `${hh}:${mm}`,
-                emp_times[i].card_id,
-                parseInt(emp_times[i].month),
-                parseInt(emp_times[i].year),
+                (`${hh}:${mm}`).toString(),
+                parseInt(emp_times[i].card_id),
+                parseInt(date[1]),
+                parseInt(date[0]),
                 emp_times[i].company_name.toString()
             ];
-            connection.query(update_trans_late_query,[value], (err, res) => {
-                if(err)console.log(err.sql);
+            connection.query(update_trans_late_query,value, (err, res) => {
+                if(err)console.log(err.message);
             })
         }
 
@@ -274,9 +289,104 @@ async function calculateEmpData(emp_times, date_count) {
 
 
 }
+async function CalculateTotalAbsent(emp_times,date_count){
 
-getMySqlConnection = () => {
+    let connection = mysql.createConnection({
+        host: "localhost",
+        database: "attend",
+        user: "root",
+        password: "promech",
+    });
 
+    //update total late time in at_trans table for this user at this specific month,year
+    var update_trans_late_query = 'update at_trans set t_absent=? where card_id=? and month=? and year=? and company_name=?';
+    var t_absent_count = 0;
+
+    var count = 0;
+    for (let i = 0; i < emp_times.length; i++) {
+       
+            if(emp_times[i].absent==="True"){
+                t_absent_count+=1;
+            }
+        count++;
+        if (count === date_count) {
+            var date = (emp_times[i].date).split('-');
+            //we neeed to update this row now 
+            value=[
+                t_absent_count,
+                parseInt(emp_times[i].card_id),
+                parseInt(date[1]),
+                parseInt(date[0]),
+                emp_times[i].company_name.toString()
+            ];
+            
+            count = 0;
+            t_absent_count = 0;
+           
+            connection.query(update_trans_late_query,value, (err, res) => {
+                if(err)console.log(err.message);
+            })
+        }
+
+
+
+
+    }
 }
+async function CalculateTotalAttendHours(emp_times,date_count){
+
+    let connection = mysql.createConnection({
+        host: "localhost",
+        database: "attend",
+        user: "root",
+        password: "promech",
+    });
+
+    //update total late time in at_trans table for this user at this specific month,year
+    var update_trans_late_query = 'update at_trans set t_attend=? where card_id=? and month=? and year=? and company_name=?';
+    var t_attend_hours = 0;
+
+    var count = 0;
+    for (let i = 0; i < emp_times.length; i++) {
+       
+           if(emp_times[i].clock_in.length===5 && emp_times[i].clock_out.length===5){
+                clock_in_slice=emp_times[i].clock_in.toString().split(":");
+                clock_out_slice=emp_times[i].clock_out.toString().split(":");
+                time1 = new Date(2000, 0, 1, clock_in_slice[0], clock_in_slice[1]);
+                time2 = new Date(2000, 0, 1,clock_out_slice[0], clock_out_slice[1]);
+                diff=time2-time1;
+
+                t_attend_hours+=diff;
+           }
+        count++;
+        if (count === date_count) {
+            var msec = t_attend_hours;
+            var hh = Math.floor(msec / 1000 / 60 / 60);
+            msec -= hh * 1000 * 60 * 60;
+            var mm = Math.floor(msec / 1000 / 60);
+            var date = (emp_times[i].date).split('-');
+            //we neeed to update this row now 
+            value=[
+                (`${hh}:${mm}`).toString(),
+                parseInt(emp_times[i].card_id),
+                parseInt(date[1]),
+                parseInt(date[0]),
+                emp_times[i].company_name.toString()
+            ];
+            
+            count = 0;
+            t_attend_hours = 0;
+           
+            connection.query(update_trans_late_query,value, (err, res) => {
+                if(err)console.log(err.sql);
+            })
+        }
+
+
+
+
+    }
+}
+
 
 module.exports = uploadSheetToDatabase;

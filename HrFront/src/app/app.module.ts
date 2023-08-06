@@ -45,6 +45,7 @@ import { AddJobComponent } from './add-job/add-job.component';
 import {MatIconModule} from '@angular/material/icon';
 import { TimeReportComponent } from './time-report/time-report.component';
 import { TransReportComponent } from './trans-report/trans-report.component';
+import { FilterTimeReportPipe } from 'shared/filters/filter_report_empTime';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +75,7 @@ import { TransReportComponent } from './trans-report/trans-report.component';
     AddJobComponent,
     TimeReportComponent,
     TransReportComponent,
+    FilterTimeReportPipe
     
   ],
   imports: [

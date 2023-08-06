@@ -1,1 +1,60 @@
-<p>time-report works!</p>
+<input class="departmentInput" type="text" placeholder="Employee Name" [(ngModel)]="filter_text"/>
+
+<div class="table-responsive">
+  <div *ngIf="showLoading" class="spinner-grow justify-content-center" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <table id="table" class="table table-striped table-hover table-bordered table-sm" *ngIf="timeRepoData.length>=1 && !showLoading">
+
+    <thead>
+
+      <tr>
+
+        <th class="th-sm" scope="col">Card ID</th>
+        <th class="th-sm" scope="col">Employee Name</th>
+        <th class="th-sm" scope="col">Month</th>
+        <th class="th-sm" scope="col">Year</th>
+        <th class="th-sm" scope="col">Total Late</th>
+        <th class="th-sm" scope="col">Total Attend</th>
+        <th class="th-sm" scope="col">Trans Amount</th>
+        <th class="th-sm" scope="col">Total Absent</th>
+        <th class="th-sm" scope="col">Total Sick</th>
+        <th class="th-sm" scope="col">Total Mission</th>
+        <th class="th-sm" scope="col">Ordinary Vacation</th>
+        <th class="th-sm" scope="col">Casual Vacation</th>
+        <th class="th-sm" scope="col">Rule</th>
+        <th class="th-sm" scope="col">Company Name</th>
+       
+      </tr>
+    </thead>
+    <tbody >
+      <tr  *ngFor="let singleTime of timeRepoData|filterTimeReport:filter_text |paginate :{itemsPerPage:22,currentPage:pagination,totalItems:timeRepoData.length} " >
+
+        <td>{{singleTime.cardId}}</td>
+        <td>{{singleTime.emp_name}}</td>
+        <td>{{singleTime.month}} </td>
+        <td>{{singleTime.year}} </td>
+        <td>{{singleTime.total_late}} </td>
+        <td>{{singleTime.total_attend}} </td>
+        <td>{{singleTime.trans_amount}} </td>
+        <td>{{singleTime.total_absent}} </td>
+        <td>{{singleTime.total_sick}} </td>
+        <td> {{singleTime.total_mission}}</td>
+        <td> {{singleTime.total_oridinary_vacation}}</td>
+        <td> {{singleTime.total_casual_vacation}}</td>
+        <td> {{singleTime.rule_no==1?"Manager":"Employee"}}</td>
+        <td> {{singleTime.company_name}}</td>
+
+      
+      </tr>
+
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls
+      (pageChange)="renderPage($event)"
+    ></pagination-controls>
+  </div>
+</div>
+

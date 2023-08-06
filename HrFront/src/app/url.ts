@@ -20,4 +20,7 @@ export const DELETE_DEPARTMENTS=BASE_URL+'/dept/deletedepts';
 export const GET_ALL_JOBS=BASE_URL+'/job/getalljobs';
 export const ADD_NEW_JOB=BASE_URL+'/job/addnewjob';
 
+//time repo routes
+export const GET_ALL_TIME_REPO=BASE_URL+'/report/timerepo';
+
 
