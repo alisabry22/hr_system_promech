@@ -11,6 +11,7 @@ import { HttperrorComponent } from '../httperror/httperror.component';
 export class DashboardComponent implements OnInit{
   totalemp:number=0;
   totaldept:number=0;
+  totaljobs:number=0;
   state:string="";
   message:string="";
   alertShown:boolean=false;
@@ -39,6 +40,7 @@ export class DashboardComponent implements OnInit{
             this.state=event.state;
             this.totalemp=event.totalemp;
             this.totaldept=event.totaldept;
+            this.totaljobs=event.totaljob;
           }
 
         },

@@ -3,21 +3,40 @@
 table {
   width: 100%;
 
-  font-size: 20px;
+  font-size: 16px;
 
 }
+
+table th{
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
 table thead{
 font-size: 15px;
 }
-
-
-
 td,
 th {
-  padding: 16px 24px;
+  padding: 16px 16px;
   text-align: left;
 
 }
+
+thead tr {
+  background-color: #087f5b;
+  color: #fff;
+}
+
+
+
+
+tbody tr:hover{
+  cursor: pointer;
+}
+
+
+
 .empty_container{
   position: fixed;
   top: 50%;
@@ -31,10 +50,7 @@ th {
   padding-left: 50px;
 }
 
-thead tr {
-  background-color: #087f5b;
-  color: #fff;
-}
+
  td:nth-child(1) {
   width: 30px;
 }
@@ -48,8 +64,6 @@ button{
 }
 
 
-tbody tr:hover{
-  cursor: pointer;
-}
+
 
 

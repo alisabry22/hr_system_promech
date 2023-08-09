@@ -6,4 +6,5 @@ export class Employee{
   hire_date?:string;
   status?:string;
   job_title?:string;
+  sect_code?:string;
 }

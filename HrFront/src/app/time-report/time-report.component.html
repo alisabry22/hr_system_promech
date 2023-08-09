@@ -1,11 +1,27 @@
-<input class="departmentInput" type="text" placeholder="Employee Name" [(ngModel)]="filter_text"/>
+<div class="headerline">
+  <input class="departmentInput" type="text" placeholder="Employee Name" [(ngModel)]="filter_text" />
+  <mat-form-field class="datePicker" >
+    <mat-label>Enter a date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker" [formGroup]="range">
+      <input matStartDate placeholder="Start date" formControlName="start" (dateChange)="startDateChange($event)">
+      <input matEndDate placeholder="End date" formControlName="end" (dateChange)="endDateChange($event)">
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
 
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker  #picker></mat-date-range-picker>
+   
+  </mat-form-field>
+  <button mat-raised-button  matTooltip="Export to Excel" (click)="exportToExcel()"   color="primary">Export to excel</button>
+
+</div>
 <div class="table-responsive">
   <div *ngIf="showLoading" class="spinner-grow justify-content-center" role="status">
     <span class="sr-only">Loading...</span>
   </div>
 
-  <table id="table" class="table table-striped table-hover table-bordered table-sm" *ngIf="timeRepoData.length>=1 && !showLoading">
+  <table id="table" class="table table-striped table-hover table-bordered table-sm"
+    *ngIf="timeRepoData.length>=1 && !showLoading">
 
     <thead>
 
@@ -23,13 +39,15 @@
         <th class="th-sm" scope="col">Total Mission</th>
         <th class="th-sm" scope="col">Ordinary Vacation</th>
         <th class="th-sm" scope="col">Casual Vacation</th>
+        <th class="th-sm" scope="col">Total Permission</th>
         <th class="th-sm" scope="col">Rule</th>
         <th class="th-sm" scope="col">Company Name</th>
-       
+
       </tr>
     </thead>
-    <tbody >
-      <tr  *ngFor="let singleTime of timeRepoData|filterTimeReport:filter_text |paginate :{itemsPerPage:22,currentPage:pagination,totalItems:timeRepoData.length} " >
+    <tbody>
+      <tr
+        *ngFor="let singleTime of timeRepoData|filterTimeReport:filter_text|filterDateTimeReport:startDate:endDate |paginate :{itemsPerPage:22,currentPage:pagination,totalItems:timeRepoData.length} ">
 
         <td>{{singleTime.cardId}}</td>
         <td>{{singleTime.emp_name}}</td>
@@ -43,18 +61,16 @@
         <td> {{singleTime.total_mission}}</td>
         <td> {{singleTime.total_oridinary_vacation}}</td>
         <td> {{singleTime.total_casual_vacation}}</td>
+        <td> {{singleTime.total_permission}}</td>
         <td> {{singleTime.rule_no==1?"Manager":"Employee"}}</td>
         <td> {{singleTime.company_name}}</td>
 
-      
+
       </tr>
 
     </tbody>
   </table>
   <div class="d-flex justify-content-center">
-    <pagination-controls
-      (pageChange)="renderPage($event)"
-    ></pagination-controls>
+    <pagination-controls (pageChange)="renderPage($event)"></pagination-controls>
   </div>
 </div>
-

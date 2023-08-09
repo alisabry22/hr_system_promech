@@ -36,7 +36,6 @@ import { HttperrorComponent } from './httperror/httperror.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import { DeleteDepartmentComponent } from './delete-department/delete-department.component';
-import { AllemptimeComponent } from './allemptime/allemptime.component';
 import{MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { JobsComponent } from './jobs/jobs.component';
@@ -46,6 +45,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { TimeReportComponent } from './time-report/time-report.component';
 import { TransReportComponent } from './trans-report/trans-report.component';
 import { FilterTimeReportPipe } from 'shared/filters/filter_report_empTime';
+import { filterDateTimeReport } from 'shared/filters/filter_report_bydate';
+import {DatePipe} from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,13 +71,14 @@ import { FilterTimeReportPipe } from 'shared/filters/filter_report_empTime';
     EditempComponent,
     HttperrorComponent,
     DeleteDepartmentComponent,
-    AllemptimeComponent,
     JobsComponent,
     JOBSearchPipe,
     AddJobComponent,
     TimeReportComponent,
     TransReportComponent,
-    FilterTimeReportPipe
+    FilterTimeReportPipe,
+    filterDateTimeReport,
+    
     
   ],
   imports: [
@@ -98,7 +101,9 @@ import { FilterTimeReportPipe } from 'shared/filters/filter_report_empTime';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    DatePipe
+    
 
 
 

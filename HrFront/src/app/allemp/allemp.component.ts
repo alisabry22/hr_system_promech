@@ -12,99 +12,99 @@ import { Sort } from '@angular/material/sort';
   templateUrl: './allemp.component.html',
   styleUrls: ['./allemp.component.css']
 })
-export class AllempComponent implements OnInit{
-  employees=[];
-  final_emps:Employee[]=[];
-  message:string="";
-  alertShown:boolean=false;
-  state:string="";
-  sortedEmps:Employee[]=[];
+export class AllempComponent implements OnInit {
+  employees = [];
+  final_emps: Employee[] = [];
+  message: string = "";
+  alertShown: boolean = false;
+  state: string = "";
+  sortedEmps: Employee[] = [];
 
-  departments=[];
-  final_departs:Department[]=[];
-  constructor(private route:ActivatedRoute,private employeeService:EmployeeserviceService,private dialog:MatDialog ){
+  departments = [];
+  final_departs: Department[] = [];
+  constructor(private route: ActivatedRoute, private employeeService: EmployeeserviceService, private dialog: MatDialog) {
 
   }
   ngOnInit(): void {
-    this.employeeService.getAllEmployees().subscribe((response)=>{
+    this.employeeService.getAllEmployees().subscribe((response) => {
 
-      this.state=response.state;
-      this.employees=response.allemp;
-      this.departments=response.alldept;
+      this.state = response.state;
+      this.employees = response.allemp;
+      this.departments = response.alldept;
 
-      this.final_emps=this.employees.map((val=>({card_id:val["card_id"],employee_name:val["emp_name"],department_name:val["dept_desc"],rule:val["rule_desc"],hire_date:val["hire_date"],status:val["emp_status"],job_title:val["job_desc"]})));
-      this.sortedEmps=this.final_emps.slice();
-      this.final_departs=this.departments.map(val=>({dept_desc:val["dept_desc"],dept_id:val["dept_code"]}));
-   
+      this.final_emps = this.employees.map((val => ({ card_id: val["card_id"], employee_name: val["emp_name"], department_name: val["dept_desc"], rule: val["rule_desc"], hire_date: val["hire_date"], status: val["emp_status"], sect_code:val["sect_code"],job_title: val["job_desc"] })));
+      this.sortedEmps = this.final_emps.slice();
+      this.final_departs = this.departments.map(val => ({ dept_desc: val["dept_desc"], dept_id: val["dept_code"] }));
+
     });
 
 
   }
-  openDialog(emp:Employee){
-    const dialogConfig=new MatDialogConfig();
-    dialogConfig.hasBackdrop=true;
-    dialogConfig.autoFocus=true;
-    dialogConfig.width="30%";
-    dialogConfig.height="80vh";
+  openDialog(emp: Employee) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.hasBackdrop = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "30%";
+    dialogConfig.height = "80vh";
 
-    dialogConfig.data={emp,depts:this.final_departs};
+    dialogConfig.data = { emp, depts: this.final_departs };
 
- const dialogRef=   this.dialog.open(EditempComponent,dialogConfig);
+    const dialogRef = this.dialog.open(EditempComponent, dialogConfig);
 
- dialogRef.afterClosed().subscribe( (data)=>{
- this.editEmployee(data["employeename"],data["departmentName"],data["role"],data["emp_status"]);
-});
+    dialogRef.afterClosed().subscribe((data) => {
+      this.editEmployee(data["employeename"], data["departmentName"], data["role"], data["emp_status"]);
+    });
 
   }
 
-  editEmployee(empname:string,departname:string,role:string,status:string){
-    this.employeeService.editEmployeeData(empname,departname,role,status).subscribe({
-      next:(event:any)=>{
-        if (event instanceof HttpResponse){
-       this.state=event.body.state;
-     this.message=event.body.message;
-     this.alertShown=true;
-       }else if (event instanceof HttpErrorResponse){
-         this.state=event.error;
-         this.message=event.message;
-         this.alertShown=true;
+  editEmployee(empname: string, departname: string, role: string, status: string) {
+    this.employeeService.editEmployeeData(empname, departname, role, status).subscribe({
+      next: (event: any) => {
+        if (event instanceof HttpResponse) {
+          this.state = event.body.state;
+          this.message = event.body.message;
+          this.alertShown = true;
+        } else if (event instanceof HttpErrorResponse) {
+          this.state = event.error;
+          this.message = event.message;
+          this.alertShown = true;
 
-       }else{
-        this.state=event.state;
-        this.message=event.message;
-        this.alertShown=true;
-        this.ngOnInit();
-       }
+        } else {
+          this.state = event.state;
+          this.message = event.message;
+          this.alertShown = true;
+          this.ngOnInit();
+        }
 
-     }
+      }
     });
   }
 
-  closeAlert(){
-    this.alertShown=false;
+  closeAlert() {
+    this.alertShown = false;
   }
 
-  sortEmps(sort:Sort){
-    const data=this.final_emps.slice();
-    if(!sort.active||sort.direction===''){
-      this.sortedEmps=data;
+  sortEmps(sort: Sort) {
+    const data = this.final_emps.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedEmps = data;
       return;
     }
-    this.sortedEmps=data.sort((a,b)=>{
-      const isAsc=sort.direction==='asc';
-      switch(sort.active){
+    this.sortedEmps = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
         case 'cardid':
-          return compare(a.card_id!,b.card_id!,isAsc);
+          return compare(a.card_id!, b.card_id!, isAsc);
         case 'empname':
-          return compare(a.employee_name!,b.employee_name!,isAsc);
+          return compare(a.employee_name!, b.employee_name!, isAsc);
         case 'deptname':
-            return compare(a.department_name!,b.department_name!,isAsc) ;
-        case'jobtitle':
-        return compare(a.job_title!,b.job_title!,isAsc);
+          return compare(a.department_name!, b.department_name!, isAsc);
+        case 'jobtitle':
+          return compare(a.job_title!, b.job_title!, isAsc);
         case 'role':
-          return compare(a.rule!,b.rule!,isAsc);
-            default:
-              return 0;
+          return compare(a.rule!, b.rule!, isAsc);
+        default:
+          return 0;
       }
     });
 

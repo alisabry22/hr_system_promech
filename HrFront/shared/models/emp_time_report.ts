@@ -11,6 +11,7 @@ export class EmpTimeReport{
     total_mission?:number;
     total_oridinary_vacation?:number;
     total_casual_vacation?:number;
+    total_permission?:number;
     rule_no?:number;
     company_name?:string;
 

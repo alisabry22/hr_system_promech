@@ -15,12 +15,15 @@ const getAllDepartments=async(req,res)=>{
        
           var get_dept_query="select distinct d.dept_code ,d.dept_desc,count(e.emp_name) as emp_count from at_dept d left join at_emps e on e.dept_code=d.dept_code group by  d.dept_desc ,d.dept_code order by d.dept_code ASC";
           var get_jops_query="select job_desc,job_code from at_jobs ORDER BY job_code ASC";
+          var get_sects_query="select * from at_sect";
          connection.query(get_dept_query,function(err,result){
             if(err)return res.send({status:"error",message:err})
             connection.query(get_jops_query,function(err,result1){
               if(err)return res.send({status:"error",message:err})
-              console.log(result,result1);
-              return res.send({state:"success",departments:result,jobs:result1});
+              connection.query(get_sects_query,(err,result2)=>{
+                return res.send({state:"success",departments:result,jobs:result1,sects:result2});
+            })
+             
             })
          } );
 

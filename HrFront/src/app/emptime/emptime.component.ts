@@ -45,7 +45,6 @@ export class EmptimeComponent implements OnInit {
         trans_amt: val["trans"],
         company_name:val["company_name"],
       }));
-      console.log("get_emps_time",this.get_emps_time);
 
     });
 
@@ -62,7 +61,7 @@ export class EmptimeComponent implements OnInit {
     dialogConfig.hasBackdrop = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "40%";
-    dialogConfig.height = "70vh";
+    dialogConfig.height = "75vh";
 
     dialogConfig.data = emp;
 
@@ -72,7 +71,7 @@ export class EmptimeComponent implements OnInit {
       
     
         
-        //this condition means edits will be only on absent users
+       
         this.empTimeService.editEmployeeTimeSheet(data).subscribe(response=>{
           console.log(response);
          if(response.state==="success"){

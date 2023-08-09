@@ -9,7 +9,6 @@ import { UploadSheetComponent } from './upload-sheet/upload-sheet.component';
 import { UploadfileComponent } from './uploadfile/uploadfile.component';
 import { AddemployeeComponent } from './addemployee/addemployee.component';
 import { AllDepartmentsComponent } from './all-departments/all-departments.component';
-import { AllemptimeComponent } from './allemptime/allemptime.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { TimeReportComponent } from './time-report/time-report.component';
 import { TransReportComponent } from './trans-report/trans-report.component';
@@ -24,7 +23,6 @@ const routes: Routes = [
   {path:'uploadsheet',component:UploadSheetComponent},
   {path:'reports',component:ReportsComponent},
   {path:'uploadfile',component:UploadfileComponent},
-  {path:'AllEmpTime',component:AllemptimeComponent},
   {path:'jobs',component:JobsComponent},
   {path:'timereport',component:TimeReportComponent},
   {path:'transreport',component:TransReportComponent},

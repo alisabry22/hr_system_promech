@@ -16,7 +16,7 @@ export class AddemployeeService {
    return this.http.get(GET_ALL_DEPARTMENTS);
 
    }
-   addnewEmployee(empname:string,department:string,job:string,emptype:string,hiredate:Date,ordinary_vacation:string,casual_vacation:string,company_name:string,cardId:string):Observable<any>{
+   addnewEmployee(empname:string,department:string,job:string,emptype:string,hiredate:Date,ordinary_vacation:string,casual_vacation:string,company_name:string,cardId:string,sectCode:string):Observable<any>{
     let body = new URLSearchParams();
     body.set('empname',empname);
     body.set('emptype',emptype);
@@ -27,6 +27,7 @@ export class AddemployeeService {
     body.set('casual_vacation',casual_vacation);
     body.set('card_id',cardId);
     body.set('company_name',company_name);
+    body.set('sect_code',sectCode);
 
     return this.http.post(ADD_NEW_EMP,body.toString(),{headers:{'Content-Type': 'application/x-www-form-urlencoded'}});
    }

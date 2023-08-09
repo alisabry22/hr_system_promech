@@ -35,6 +35,7 @@
         <th class="th-sm"  mat-sort-header="carid" scope="col">Card ID</th>
         <th class="th-sm" mat-sort-header="empname"  scope="col">Employee Name</th>
         <th class="th-sm"  mat-sort-header="deptname" scope="col">Department Name</th>
+        <th class="th-sm"  mat-sort-header="deptname" scope="col">Section Name</th>
         <th class="th-sm"  mat-sort-header="jobtitle" scope="col">Job Title</th>
         <th class="th-sm"  mat-sort-header="role" scope="col">Role</th>
         <th class="th-sm"  mat-sort-header="status" scope="col">Status</th>
@@ -48,6 +49,7 @@
         <td>{{emp.card_id}}</td>
         <td>{{emp.employee_name}}</td>
         <td>{{emp.department_name}}</td>
+        <td>{{emp.sect_code=='1'?"Product Development":'2'?"Manufacturing Solutions":"Sheet Metal"}}</td>
         <td>{{emp.job_title}}</td>
         <td> {{emp.rule}}</td>
         <td> {{emp.status=="1"?"Active":"InActive"}}</td>

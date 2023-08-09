@@ -15,4 +15,6 @@ export class TimerepoService  {
   getAllTimeReportData():Observable<any>{
     return this.http.get(GET_ALL_TIME_REPO);
   }
+
+ 
 }

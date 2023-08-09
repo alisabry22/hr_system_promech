@@ -71,6 +71,14 @@
                 <div class="job_type">
 
                   <div class="custom-select">
+                    Select Section  <select class="select" (change)="onSelectSection($event)">
+                        <option *ngFor="let sect of sections_model">{{sect.sect_description}}</option>
+                       </select>
+                    </div>
+                </div>
+                <div class="job_type">
+
+                  <div class="custom-select">
                     Select Department  <select class="select" (change)="onSelectDept($event)">
                         <option *ngFor="let dept of final_departs">{{dept.dept_desc}}</option>
                        </select>

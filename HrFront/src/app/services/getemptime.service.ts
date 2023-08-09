@@ -17,14 +17,12 @@ export class GetemptimeService {
 
   //edit employee 
   editEmployeeTimeSheet(empTime:EmpTime):Observable<any>{
-    console.log("empTime",empTime);
     let body = new URLSearchParams();
     body.set('card_id',empTime.card_id!);
     body.set('date',empTime.date_day!);
     body.set('company_name',empTime.company_name!);
     body.set("trans",empTime.trans_amt!.toString());
     body.set("remarks",empTime.remarks!);
-    console.log(EDIT_EMP_TIME);
     return this.http.post(EDIT_EMP_TIME,body.toString(),{headers:{'Content-Type': 'application/x-www-form-urlencoded'}});
   }
 }
