@@ -52,10 +52,6 @@ export const navbarData:INavbarData[]=[
               icon:'fal fa-file',
               label:'Reports',
             },
-            {
-              routeLink:'AllEmpTime',
-                icon:'far fa-clock',
-                label:'EmployeeTime',
-              }
+          
 
 ]
