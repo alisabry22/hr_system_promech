@@ -113,7 +113,7 @@ const getAllEmpTime = async (req, res) => {
     var get_emp_time_query = "select * from at_emp_time";
     connection.query(get_emp_time_query, (err, result) => {
       if (err) return res.send({ state: "error", message: err.message });
-
+   
       return res.send({ state: "success", emptime: result });
     });
 

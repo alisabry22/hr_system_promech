@@ -2,22 +2,61 @@
 
   height: 100vh;
   border-radius: 0.313rem;
-  display: flex;
+
 justify-content: center;
 
 
 }
 
-.card{
-  height: 100px;
-  width: 220px;
-
-  background-color  : #fff;
+.cards{
+  width: 100%;
+  height: 25%;
+  display: flex ;
+  justify-content: space-evenly;
+}
+.card a{
+  width: 100%;
+  height: 100%;
   align-items: center;
+  display: flex;
+}
+.card{
+  width: 18%;
+  height: 60%;
+  display: flex;  
+  align-items: center;
+  justify-content: space-between;
+  background-color  : #fff;
+  padding: 10px;
   border-radius: 0.413rem;
-  box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+  box-shadow: 0 0 1.09rem 0 #8690a3;
   margin: 10px;
-  text-align: center;
+ 
+}
+.card  .icon .bx{
+color: #087f5b;
+
+align-items: center;
+display: flex;
+margin: 6px;
+
+}
+.card span{
+  margin-left: 20px;
+
+}
+
+.card .icon{
+  width: 60px;
+height: 60px;
+border-radius: 10px;
+color: grey;
+align-items: center;
+display: flex;
+background-color: lightgray;
+font-size: 36px;
+
+
 }
 
 a{
@@ -25,8 +64,63 @@ a{
   color: black;
 }
 
+.latest_users{
 
+  width: 45%;
+  height: 10%;
+  color: black;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+  text-align: center;
+  border: 20px grey  ;
+}
+.users{
+  
+    width: 100%;
+  
+    font-size: 16px;
+  
+  
+}
+table th{
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+}
 
+h3,h2{
+ line-height: 25px;
+  
+}
+
+table thead{
+font-size: 15px;
+}
+td,
+th {
+  padding: 16px 16px;
+  text-align: left;
+  font-size: 14px;
+
+}
+
+.top_dept_emp
+{
+
+  width: 45%;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+  text-align: center;
+  border: 20px grey  ;
+}
+
+.stats{
+  
+  justify-content: space-evenly;
+  display: flex;
+}
 
 
 

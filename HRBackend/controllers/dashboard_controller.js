@@ -10,29 +10,24 @@ const getDashboardData=async(req,res)=>{
         database:"attend",
         user:"root",
         multipleStatements:true,
+        timezone:'utc',
         });
 
         connection.connect();
         
-        // connection=await oracledb.getConnection({
-        //     user:"ATTEND",
-        //     password:"attend",
-        //     connectString:"192.168.0.69:1521/xe",
-        //         });
 
-                var sql="select count(*) as total_emp from at_emps;select count(*) as total_dep from at_dept;select count(*) as total_jobs from at_jobs";
+                var sql="select count(*) as total_emp from at_emps;select count(*) as total_dep from at_dept;select count(*) as total_jobs from at_jobs;select e.*, d.dept_desc from at_emps e,at_dept d where emp_status=1 and e.dept_code=d.dept_code  order by hire_date desc limit 5;";
                  connection.query(sql,function(err,results,fields){
                     if(err)return res.send({state:"error",message:err});
-              
-
-                    return res.send({state:"success",totalemp:results[0][0].total_emp,totaldept:results[1][0].total_dep,totaljob:results[2][0].total_jobs});
+                    connection.end();
+                    return res.send({state:"success",totalemp:results[0][0].total_emp,totaldept:results[1][0].total_dep,totaljob:results[2][0].total_jobs,latest_emps:results[3]});
 
 
                     
                 });
                 
                
-                connection.end();
+              
                 
                
 

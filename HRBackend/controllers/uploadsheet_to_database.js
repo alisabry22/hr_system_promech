@@ -2,9 +2,7 @@ const mysql = require("mysql");
 const xlsx = require("xlsx");
 const fastcsv = require("fast-csv");
 const fs = require("fs");
-const moment = require("moment");
-const { log } = require("console");
-const { parse } = require("path");
+
 const uploadSheetToDatabase = async (req, res) => {
     let connection;
     var files = req.files;
@@ -84,7 +82,6 @@ const uploadSheetToDatabase = async (req, res) => {
 
         trunc_query = "truncate table at_emp_time";
 
-        check_missing_employees_query = 'select distinct emp.emp_name from at_emp_time as emp where not  exists (select null from at_emps emp2 where emp2.card_id=emp.card_id  and emp2.company_name=emp.company_name)';
 
         insert_query = "insert into at_emp_time (card_id,emp_name,date,clock_in,clock_out,late,early,absent,remarks,trans,company_name) values ?";
 
@@ -178,6 +175,7 @@ async function submitDataToAtTransTable() {
             });
 
         });
+        console.log(emp_times[0])
         var insert_into_at_trans = 'insert into at_trans (card_id,emp_name,month,year,rule_no,company_name) values ?';
 
 

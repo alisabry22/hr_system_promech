@@ -3,6 +3,7 @@ import { DashboardServicesService } from '../services/dashboard-services.service
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { HttperrorComponent } from '../httperror/httperror.component';
+import { Employee } from 'shared/models/employee';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -12,6 +13,7 @@ export class DashboardComponent implements OnInit{
   totalemp:number=0;
   totaldept:number=0;
   totaljobs:number=0;
+  latest_emps:Employee[]=[];
   state:string="";
   message:string="";
   alertShown:boolean=false;
@@ -41,6 +43,9 @@ export class DashboardComponent implements OnInit{
             this.totalemp=event.totalemp;
             this.totaldept=event.totaldept;
             this.totaljobs=event.totaljob;
+          
+          this.latest_emps=event.latest_emps.map((val:any)=>({card_id:val["card_id"],employee_name:val["emp_name"],hire_date:val["hire_date"],department_name:val["dept_desc"]}))
+            
           }
 
         },

@@ -21,12 +21,12 @@ export class AddemployeeComponent implements OnInit {
   message:string="";
   alertShown:boolean=false;
   selectedJob:string="";
-  selectedDebt:string="";
+  selectedDebt:string="IT Services";
   selectedCompany:string="promech";
   card_id:string="";
   employeeName:string="";
   ordinaryVacation:string="";
-  selectedSection:string="";
+  selectedSection:string="Product Development";
   casualVacation:string="";
   employeeType:string="";
   hiredate:Date=new Date();
