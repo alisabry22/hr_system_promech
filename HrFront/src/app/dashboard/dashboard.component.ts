@@ -4,6 +4,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { HttperrorComponent } from '../httperror/httperror.component';
 import { Employee } from 'shared/models/employee';
+import { SectionModel } from 'shared/models/section';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -16,6 +17,7 @@ export class DashboardComponent implements OnInit{
   latest_emps:Employee[]=[];
   state:string="";
   message:string="";
+  totalsects:number=0;
   alertShown:boolean=false;
   ngOnInit(): void {
     this.getDashboardData();
@@ -43,9 +45,11 @@ export class DashboardComponent implements OnInit{
             this.totalemp=event.totalemp;
             this.totaldept=event.totaldept;
             this.totaljobs=event.totaljob;
-          
-          this.latest_emps=event.latest_emps.map((val:any)=>({card_id:val["card_id"],employee_name:val["emp_name"],hire_date:val["hire_date"],department_name:val["dept_desc"]}))
+            this.totalsects=event.totalsect;
+            console.log(this.totalsects);
             
+          this.latest_emps=event.latest_emps.map((val:any)=>({card_id:val["card_id"],employee_name:val["emp_name"],hire_date:val["hire_date"],department_name:val["dept_desc"]}))
+     
           }
 
         },

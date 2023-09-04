@@ -8,53 +8,65 @@
   <!-- all Employees card  -->
   <div class="cards">
    
-
+    <div class="firstrow">
       <div class="card">
         <a routerLink="/allemp">
-          <div class="icon">
-        <i class='bx bx-user'></i>
-        </div>
+    
         <span>
-          <h3>Employees</h3>
+          <h3>Total Employees</h3>
           <p>{{totalemp}}</p>
         </span>
   
       </a>
       </div>
+      
+      <div class="card">
+        <a routerLink="/departments">
+   
+     
+          <span>
+            <h3>Total Departments</h3>
+            <p >{{totaldept}}</p>
+          </span>
+        </a>
+  
+      </div>
+    </div>
+
+    <div class="secondrow">
+      <div  class="card">
+        <a routerLink="/jobs">
+      
+        <span>
+          <h3>Jobs</h3>
+          <P>{{totaljobs}}</P>
+        </span>
+          
+      </a>
+      </div>
+      <div  class="card">
+        <a >
+      
+        <span>
+          <h3>Sections</h3>
+          <P>{{totalsects}}</P>
+        </span>
+          
+      </a>
+      </div>
+    </div>
+   
 
 
       <!-- Total Departments-->
     
-    <div class="card">
-      <a routerLink="/departments">
-        <div class="icon">
-          <i class='bx bx-file' ></i>
-        </div>
    
-        <span>
-          <h3>Departments</h3>
-          <p >{{totaldept}}</p>
-        </span>
-      </a>
-
-    </div>
 
 
       <!-- Total Dep-->
     
 
-        <div  class="card">
-          <a routerLink="/jobs">
-            <div class="icon">
-          <i class='bx bxs-briefcase'></i>
-              </div>
-          <span>
-            <h3>Jobs</h3>
-            <P>{{totaljobs}}</P>
-          </span>
-            
-        </a>
-        </div>
+     
   
   </div>
   
@@ -67,6 +79,7 @@
 
     
 <!-- latest users in system -->
+<!-- 
 <div class="stats">
 
   <div class="latest_users">
@@ -117,6 +130,10 @@
     </div>
 
   </div>
+
+</div> -->
+
+<div class="sect">
 
 </div>
 </div>

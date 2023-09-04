@@ -2,28 +2,36 @@
 
   height: 100vh;
   border-radius: 0.313rem;
-
+  background-color: rgb(235, 235, 235);
 justify-content: center;
 
 
 }
 
 .cards{
-  width: 100%;
-  height: 25%;
-  display: flex ;
-  justify-content: space-evenly;
+  width: 40%;
+  height: 40%;
+  background-color: #087f5b;
+
+
+
 }
-.card a{
+
+.cards .firstrow{
   width: 100%;
-  height: 100%;
-  align-items: center;
-  display: flex;
-}
-.card{
-  width: 18%;
   height: 60%;
-  display: flex;  
+  display: inline-block;
+
+}
+.cards .secondrow{
+  width: 100%;
+  height: 40%;
+  display: inline-block;
+
+}
+.cards .firstrow .card{
+
+ float: left;
   align-items: center;
   justify-content: space-between;
   background-color  : #fff;
@@ -31,33 +39,25 @@ justify-content: center;
   border-radius: 0.413rem;
   box-shadow: 0 0 1.09rem 0 #8690a3;
   margin: 10px;
- 
-}
-.card  .icon .bx{
-color: #087f5b;
-
-align-items: center;
-display: flex;
-margin: 6px;
 
 }
-.card span{
-  margin-left: 20px;
+.cards .secondrow .card{
+  width: 45%;
+ float: left;
+
+  align-items: center;
+  justify-content: space-between;
+  background-color  : #fff;
+  padding: 10px;
+  border-radius: 0.413rem;
+  box-shadow: 0 0 1.09rem 0 #8690a3;
+  margin: 10px;
 
 }
 
-.card .icon{
-  width: 60px;
-height: 60px;
-border-radius: 10px;
-color: grey;
-align-items: center;
-display: flex;
-background-color: lightgray;
-font-size: 36px;
 
 
-}
+
 
 a{
   text-decoration: none;
@@ -76,12 +76,12 @@ a{
   border: 20px grey  ;
 }
 .users{
-  
+
     width: 100%;
-  
+
     font-size: 16px;
-  
-  
+
+
 }
 table th{
   font-size: 14px;
@@ -91,7 +91,7 @@ table th{
 
 h3,h2{
  line-height: 25px;
-  
+
 }
 
 table thead{
@@ -117,7 +117,7 @@ th {
 }
 
 .stats{
-  
+
   justify-content: space-evenly;
   display: flex;
 }
