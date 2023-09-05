@@ -1,24 +1,18 @@
 
-const mysql=require("mysql");
+
+const oracleConnection = require("./oracle_connection");
 GetAllTimeRepoData=async(req,res)=>{
 
-    let connection=mysqlConnection();
+    let connection=await oracleConnection();
     var get_time_Repo_query="select * from at_trans";
-    connection.query(get_time_Repo_query,(err,result)=>{
-        if(err)return res.send({state:"error",message:err.message});
-        connection.end();
+
+   const result=await connection.execute(get_time_Repo_query);
+        connection.close();
         return res.send({state:"success",timerepo:result})
-    });
+   
 
 }
 
- function mysqlConnection(){
-  return  mysql.createConnection({
-        host:"localhost",
-        user:"root",
-        password:"promech",
-        database:"attend"
-    });
-}
+
 
 module.exports={GetAllTimeRepoData};

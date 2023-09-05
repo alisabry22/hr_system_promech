@@ -1,7 +1,8 @@
-const mysql = require("mysql");
+
 const xlsx = require("xlsx");
 const fastcsv = require("fast-csv");
 const fs = require("fs");
+const oracleConnection = require("./oracle_connection");
 
 const uploadSheetToDatabase = async (req, res) => {
     let connection;
@@ -72,13 +73,8 @@ const uploadSheetToDatabase = async (req, res) => {
 
 
 
-        connection = mysql.createConnection({
-            user: "root",
-            host: "localhost",
-            password: "promech",
-            database: "attend",
-        });
-        var workbook = xlsx.readFile("./sql/attend.xlsx");
+        connection = oracleConnection();
+                var workbook = xlsx.readFile("./sql/attend.xlsx");
 
         trunc_query = "truncate table at_emp_time";
 
@@ -149,15 +145,10 @@ async function submitDataToAtTransTable() {
     //we need for each employee to calculate all things and add new row in at_trans
     let connection;
     try {
-        connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "promech",
-            database: "attend",
-        });
+        connection =  oracleConnection();
         var select_distinct_dates_query = 'select count( distinct date) as date_count from at_emp_time';
         var date_count = await new Promise((resolve, reject) => {
-            connection.query(select_distinct_dates_query, (err, result) => {
+            connection.execute(select_distinct_dates_query, (err, result) => {
                 if (err) reject(err);
 
                 resolve(result[0].date_count);
@@ -169,7 +160,7 @@ async function submitDataToAtTransTable() {
 
         var select_all_emp_time_query = 'SELECT emp_time.*,emp.rule_no FROM at_emp_time as emp_time left join at_emps emp on emp_time.card_id=emp.card_id and emp_time.company_name=emp.company_name';
         var emp_times = await new Promise((resolve, reject) => {
-            connection.query(select_all_emp_time_query, (err, result) => {
+            connection.execute(select_all_emp_time_query, (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });
@@ -193,7 +184,7 @@ async function submitDataToAtTransTable() {
                 (emp_times[i].company_name).toString()
             ];
 
-            connection.query(insert_into_at_trans, [[values]], (err, result) => {
+            connection.execute(insert_into_at_trans, [[values]], (err, result) => {
             });
         }
         //calculating total late for each emp
@@ -210,12 +201,7 @@ async function submitDataToAtTransTable() {
 }
 async function calculateTotalLateData(emp_times, date_count) {
 
-    let connection = mysql.createConnection({
-        host: "localhost",
-        database: "attend",
-        user: "root",
-        password: "promech",
-    });
+    let connection =  oracleConnection();
 
     //update total late time in at_trans table for this user at this specific month,year
     var update_trans_late_query = 'update at_trans set t_late=? where card_id=? and month=? and year=? and company_name=?';
@@ -275,7 +261,7 @@ async function calculateTotalLateData(emp_times, date_count) {
                 parseInt(date[0]),
                 emp_times[i].company_name.toString()
             ];
-            connection.query(update_trans_late_query,value, (err, res) => {
+            connection.execute(update_trans_late_query,value, (err, res) => {
                 if(err)console.log(err.message);
             })
         }
@@ -289,12 +275,7 @@ async function calculateTotalLateData(emp_times, date_count) {
 }
 async function CalculateTotalAbsent(emp_times,date_count){
 
-    let connection = mysql.createConnection({
-        host: "localhost",
-        database: "attend",
-        user: "root",
-        password: "promech",
-    });
+    let connection =  oracleConnection();
 
     //update total late time in at_trans table for this user at this specific month,year
     var update_trans_late_query = 'update at_trans set t_absent=? where card_id=? and month=? and year=? and company_name=?';
@@ -321,7 +302,7 @@ async function CalculateTotalAbsent(emp_times,date_count){
             count = 0;
             t_absent_count = 0;
            
-            connection.query(update_trans_late_query,value, (err, res) => {
+            connection.execute(update_trans_late_query,value, (err, res) => {
                 if(err)console.log(err.message);
             })
         }
@@ -333,12 +314,7 @@ async function CalculateTotalAbsent(emp_times,date_count){
 }
 async function CalculateTotalAttendHours(emp_times,date_count){
 
-    let connection = mysql.createConnection({
-        host: "localhost",
-        database: "attend",
-        user: "root",
-        password: "promech",
-    });
+    let connection =  oracleConnection();
 
     //update total late time in at_trans table for this user at this specific month,year
     var update_trans_late_query = 'update at_trans set t_attend=? where card_id=? and month=? and year=? and company_name=?';
@@ -375,7 +351,7 @@ async function CalculateTotalAttendHours(emp_times,date_count){
             count = 0;
             t_attend_hours = 0;
            
-            connection.query(update_trans_late_query,value, (err, res) => {
+            connection.execute(update_trans_late_query,value, (err, res) => {
                 if(err)console.log(err.sql);
             })
         }

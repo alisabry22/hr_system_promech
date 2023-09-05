@@ -37,16 +37,20 @@ export class AddemployeeComponent implements OnInit {
   }
   getAllEmployees(){
     this.addempservice.getAllDepartments().subscribe((response)=>{
+    console.log(response.sects);
+
+
+
       this.state=response.state;
       this.departments=response.departments;
       this.jobs=response.jobs;
       this.sections=response.sects;
-      this.final_departs=this.departments.map(val=>({dept_desc:val["dept_desc"],dept_id:val["dept_code"]}));
-      this.final_jobs=this.jobs.map(val=>({job_desc:val["job_desc"],job_id:val["job_code"]}));
-      this.sections_model=this.sections.map(val=>({sect_code:val["sect_code"],sect_description:val["sect_desc"]}))
+      this.final_departs=this.departments.map(val=>({dept_id:val[0],dept_desc:val[1]}));
+      this.final_jobs=this.jobs.map(val=>({job_id:val[0],job_desc:val[1]}));
+      this.sections_model=this.sections.map(val=>({sect_code:val[0],sect_description:val[1]}))
       this.selectedDebt=this.final_departs[0].dept_desc!;
       this.selectedJob=this.final_jobs[0].job_desc!;
-      console.log(this.final_jobs,this.final_departs);
+
     });
   }
   //on selecting department getting its value
@@ -69,7 +73,7 @@ export class AddemployeeComponent implements OnInit {
   // on selecting company
   onSelectCompany(event:any){
     this.selectedCompany=event.target.options[event.target.options.selectedIndex].text;
- 
+
 
   }
   getChangedDate(event:MatDatepickerInputEvent<Date>){

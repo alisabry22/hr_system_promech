@@ -32,9 +32,9 @@ export class AllempComponent implements OnInit {
       this.employees = response.allemp;
       this.departments = response.alldept;
 
-      this.final_emps = this.employees.map((val => ({ card_id: val["card_id"], employee_name: val["emp_name"], department_name: val["dept_desc"], rule: val["rule_desc"], hire_date: val["hire_date"], status: val["emp_status"], sect_code:val["sect_code"],job_title: val["job_desc"] })));
+      this.final_emps = this.employees.map((val => ({ card_id: val[0], employee_name: val[1],job_title:val[2],hire_date:val[3],status:val[5],sect_code:val[6],department_name:val[7],rule:val[8]})));
       this.sortedEmps = this.final_emps.slice();
-      this.final_departs = this.departments.map(val => ({ dept_desc: val["dept_desc"], dept_id: val["dept_code"] }));
+      this.final_departs = this.departments.map(val => ({ dept_desc: val[0], dept_id: val[1] }));
 
     });
 

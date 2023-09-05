@@ -31,26 +31,26 @@ export class EmptimeComponent implements OnInit {
     this.empTimeService.getAllEmpTime().subscribe(response => {
 
       this.getemps = response.emptime;
-      
+
       this.get_emps_time = this.getemps.map(val => ({
-        card_id: val["card_id"],
-        emp_name: val["emp_name"],
-        date_day: val["date"],
-        clock_in: val["clock_in"],
-        clock_out: val["clock_out"],
-        late: val["late"],
-        early: val["early"],
-        absent_flag: val["absent"],
-        remarks: val["remarks"],
-        trans_amt: val["trans"],
-        company_name:val["company_name"],
+        card_id: val[0],
+        emp_name: val[1],
+        date_day: val[2],
+        clock_in: val[3],
+        clock_out: val[4],
+        late: val[5],
+        early: val[6],
+        absent_flag: val[7],
+        remarks: val[8],
+        trans_amt: val[9],
+        company_name:val[10],
       }));
 
     });
 
- 
 
-    
+
+
   }
 
   renderPage(event: number) {
@@ -70,18 +70,18 @@ export class EmptimeComponent implements OnInit {
     const dialogRef = this.dialog.open(EditemptimeComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((data: EmpTime) => {
-      
-    
-        
-       
+
+
+
+
         this.empTimeService.editEmployeeTimeSheet(data).subscribe(response=>{
           console.log(response);
          if(response.state==="success"){
           this.ngOnInit();
          }
         });
-      
-     
+
+
     }
     );
 

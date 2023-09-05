@@ -9,8 +9,9 @@ const dashobard_router = require("./routes/dashboard_router");
 const deptrouter = require("./routes/department_router");
 const jobsRouter=require('./routes/jobs_router');
 const reportsRouter=require('./routes/reports_router');
+process.env.ORA_SDTZ="UTC";
 app.use(cors());
-oraclerun();
+
 app.use(dashobard_router);
 app.use(split_router);
 app.use("/emps",employee_router);

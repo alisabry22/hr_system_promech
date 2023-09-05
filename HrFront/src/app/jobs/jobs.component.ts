@@ -21,7 +21,7 @@ export class JobsComponent implements OnInit{
   filter_text:string="";
 
   constructor(private jobservice:JobService,private dialog:MatDialog){
-    
+
   }
   ngOnInit(): void {
     this.getAllJobs();
@@ -36,11 +36,11 @@ export class JobsComponent implements OnInit{
           this.alertShown=true;
         }else{
           this.jobs=event.alljobs;
-          this.final_jobs=this.jobs.map(val=>({job_id:val["job_code"],job_desc:val["job_desc"],total_emp:val["total_emp"]}));
-          
+          this.final_jobs=this.jobs.map(val=>({job_id:val[0],job_desc:val[1],total_emp:val[2]}));
+
         }
-      
-        
+
+
       }
     })
   }
@@ -50,24 +50,24 @@ export class JobsComponent implements OnInit{
     return this.jobservice.addNewJob(this.jobname).subscribe({
       next:(event:any)=>{
         console.log(event);
-      
+
           this.state=event.state;
           this.message=event.message;
           this.alertShown=true;
-        
+
           if(this.state=="success"){
             this.ngOnInit();
           }
-          
-      
-   
+
+
+
       }
 
     });
   }
   OpenAddJobDialog(){
     console.log("called");
-    
+
     const dialogConfig=new MatDialogConfig();
     dialogConfig.hasBackdrop=true;
     dialogConfig.autoFocus=true;
@@ -83,7 +83,7 @@ export class JobsComponent implements OnInit{
  const dialogRef=   this.dialog.open(AddJobComponent,dialogConfig);
 
  dialogRef.afterClosed().subscribe( (data)=>{
- 
+
   this.jobname=data;
   if(this.jobname&&this.jobname.length>=1){
     this.AddJob();
