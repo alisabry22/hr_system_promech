@@ -97,7 +97,8 @@ function GetMaxEmpNo(){
 
 function GetAllEmpTime (){
     return new Promise(async function (resolve,reject){
-        var get_emp_time_query = "select * from at_emp_time";
+        let connection;
+        var get_emp_time_query = "select * from at_emp_time order by card_id ASC";
         try {
             
             connection=await oracleConnection();

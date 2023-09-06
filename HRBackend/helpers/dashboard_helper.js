@@ -1,5 +1,4 @@
 const oracleConnection = require("../controllers/oracle_connection");
-
 function GetEmployeeTotalCount(){
    
     return new Promise(async function(reslove,reject){
@@ -81,7 +80,7 @@ function GetLast5JoinedEmployees(){
         try {
                 connection=await oracleConnection();
                 const result=await connection.execute(last_5_emps_query);
-                console.log(result.rows);
+           
                 reslove(result.rows);
         } catch (error) {
             console.log(error);

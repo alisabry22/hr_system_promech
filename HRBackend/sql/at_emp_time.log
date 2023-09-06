@@ -1,11 +1,11 @@
 
-SQL*Loader: Release 11.2.0.2.0 - Production on Tue Jul 18 17:21:10 2023
+SQL*Loader: Release 11.2.0.2.0 - Production on Wed Sep 6 17:58:50 2023
 
 Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
 
-Control File:   D:/hr_system/HrBackend/sql/at_emp_time.ctl
-Data File:      D:\hr_system\HrBackend\sql\attend.csv
-  Bad File:     D:\hr_system\HrBackend\sql\attend.bad
+Control File:   D:\hr_system\HRBackend\sql\at_emp_time.ctl
+Data File:      D:\hr_system\HRBackend\sql\attend.csv
+  Bad File:     D:\hr_system\HRBackend\sql\attend.bad
   Discard File:  none specified
  
  (Allow all discards)
@@ -25,7 +25,7 @@ Insert option in effect for this table: APPEND
 CARD_ID                             FIRST     *   ,       CHARACTER            
 EMP_NAME                             NEXT     *   ,       CHARACTER            
 DATE_DAY                             NEXT     *   ,       CHARACTER            
-    SQL string for column : "to_date(:date_day,'DD/MM/RRRR')"
+    SQL string for column : "to_date(:date_day,'YYYY/MM/dd')"
 CLOCK_IN                             NEXT     *   ,       CHARACTER            
 CLOCK_OUT                            NEXT     *   ,       CHARACTER            
 LATE                                 NEXT     *   ,       CHARACTER            
@@ -35,12 +35,10 @@ REMARKS                              NEXT     *   ,       CHARACTER
 TRANS_AMT                            NEXT     *   ,       CHARACTER            
 COMPANY_NAME                         NEXT     *   ,       CHARACTER            
 
-Record 3037: Rejected - Error on table AT_EMP_TIME, column COMPANY_NAME.
-Column not found before end of logical record (use TRAILING NULLCOLS)
 
 Table AT_EMP_TIME:
-  3036 Rows successfully loaded.
-  1 Row not loaded due to data errors.
+  1617 Rows successfully loaded.
+  0 Rows not loaded due to data errors.
   0 Rows not loaded because all WHEN clauses were failed.
   0 Rows not loaded because all fields were null.
 
@@ -49,12 +47,12 @@ Space allocated for bind array:                 181632 bytes(64 rows)
 Read   buffer bytes: 1048576
 
 Total logical records skipped:          1
-Total logical records read:          3037
-Total logical records rejected:         1
+Total logical records read:          1617
+Total logical records rejected:         0
 Total logical records discarded:        0
 
-Run began on Tue Jul 18 17:21:10 2023
-Run ended on Tue Jul 18 17:21:10 2023
+Run began on Wed Sep 06 17:58:50 2023
+Run ended on Wed Sep 06 17:58:51 2023
 
-Elapsed time was:     00:00:00.12
+Elapsed time was:     00:00:00.19
 CPU time was:         00:00:00.08

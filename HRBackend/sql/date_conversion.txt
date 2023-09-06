@@ -1,0 +1,1 @@
+"to_date(:date_day,'DD/MM/RRRR')"
