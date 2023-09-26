@@ -3,7 +3,6 @@ const xlsx = require("xlsx");
 const oracleConnection = require("../controllers/oracle_connection");
 const {GetDistinctDaysAtEmpTime,GetAllEmpTimeWithHisRule,} = require("./common_helpers");
 const moment=require("moment");
-const { parse } = require("querystring");
 
 function UploadSheetsToDatabaseHelper() {
   return new Promise(async function (resolve, reject) {
@@ -119,7 +118,7 @@ async function SubmitDataToAtTransTable() {
             (emp_times[i][10]).toString(),
           ];
           
-          console.log("values are ",values);
+       
     
          await connection.execute(insert_into_at_trans, values);
     
@@ -141,47 +140,52 @@ async function SubmitDataToAtTransTable() {
 }
 
 async function calculateTotalLateData(emp_times, date_count) {
+    let connection;
     try {
     
-    let connection = await oracleConnection();
+     connection = await oracleConnection();
   
     //update total late time in at_trans table for this user at this specific month,year
-    var update_trans_late_query ="update at_transs set t_late=? where card_id=? and month=? and year=? and company_name=?";
+    var update_trans_late_query ="update at_transs set t_late=:1 where card_id=:2 and month=:3 and year=:4 and company_name=:5";
     var t_late_milliseconds = 0;
   
     var count = 0;
+    var diff = 0;
     for (let i = 0; i < emp_times.length; i++) {
       let clock_in="" ;
       if(emp_times[i][3]!=null){
           clock_in=(emp_times[i][3]).toString();
-      }
-      var diff = 0;
-      if (clock_in.length === 5) {
-        var clock_slice = clock_in.split(":");
-        var time1;
-        var time2;
-        if (emp_times[i][12] === 1) {
-          //it means he is manager
-          time1 = new Date(2000, 0, 1, clock_slice[0], clock_slice[1]);
-          time2 = new Date(2000, 0, 1, 10, 30);
-        } else {
-          // it means he is employee
-          time1 = new Date(2000, 0, 1, clock_slice[0], clock_slice[1]);
-          time2 = new Date(2000, 0, 1, 9, 10);
-        }
-  
-        diff = time1 - time2;
-  
-        if (Math.sign(diff) == 1) {
-          t_late_milliseconds += diff;
-        }
-      } else {
+          var clock_slice = clock_in.split(":");
+          var time1;
+          var time2;
+          if (emp_times[i][12] === 1) {
+            //it means he is manager
+            time1 = new Date(2000, 0, 1, clock_slice[0], clock_slice[1]);
+            time2 = new Date(2000, 0, 1, 10, 30);
+          } else {
+           
+            // it means he is employee
+            time1 = new Date(2000, 0, 1, clock_slice[0], clock_slice[1]);
+            time2 = new Date(2000, 0, 1, 9, 10);
+          }
+    
+          diff = time1 - time2;
+    
+          if (Math.sign(diff) == 1) {
+            t_late_milliseconds += diff;
+          }
+      }else {
         //معناها هنا انه مبصمش علي البصمه هشوف بقي لو مبصمش وكمان مش غايب عشان احسب عليه ساعه تأخير
   
         if (emp_times[i][7]!= "True") {
           t_late_milliseconds += 3600000;
         }
       }
+      if(emp_times[i][2]==="Alisabry"){
+               console.log(`${emp_times[i][2]}:${t_late_milliseconds}`); 
+      }
+      
+     
       count++;
       if (count === date_count) {
         //we neeed to update this row now
@@ -201,31 +205,46 @@ async function calculateTotalLateData(emp_times, date_count) {
           parseInt(date[2]),
           emp_times[i][10].toString(),
         ];
-        connection.execute(update_trans_late_query, value, { autoCommit: true });
+        await connection.execute(update_trans_late_query, value, { autoCommit: true });
       }
+      
     }
     } catch (error) {
             console.log("Calculate total late",error);
   
+}finally{
+    if(connection){
+        try {
+                await connection.release();
+        } catch (error) {
+                console.error(error);
+        }
+    }
 }
 }
 
 async function CalculateTotalAbsent(emp_times, date_count) {
+    let connection;
     try {
             
-  let connection = await oracleConnection();
+   connection = await oracleConnection();
 
   //update total late time in at_trans table for this user at this specific month,year
   var update_trans_late_query =
-    "update at_transs set t_absent=? where card_id=? and month=? and year=? and company_name=?";
+    "update at_transs set t_absent=:1 where card_id=:2 and month=:3 and year=:4 and company_name=:5";
   var t_absent_count = 0;
 
   var count = 0;
   for (let i = 0; i < emp_times.length; i++) {
-    if (emp_times[i][7] === "True") {
+   
+    if (emp_times[i][7] !=null) {
+    
       t_absent_count += 1;
+     
     }
     count++;
+   
+
     if (count === date_count) {
         let date =   moment.utc(emp_times[i][2]).format("DD/MM/YYYY");
         date=date.toString().split("/");
@@ -244,36 +263,50 @@ async function CalculateTotalAbsent(emp_times, date_count) {
      await connection.execute(update_trans_late_query, value, { autoCommit: true });
     }
   }
+
     } catch (error) {
         console.log("Calculate Total Absent",error);
+    }finally{
+        if(connection){
+            await connection.release();
+        }else{
+            console.error(error);
+        }
     }
 
 }
 
 async function CalculateTotalAttendHours(emp_times, date_count) {
-
+    let connection;
         try {
-            let connection = await oracleConnection();
+             connection = await oracleConnection();
 
             //update total late time in at_trans table for this user at this specific month,year
             var update_trans_late_query =
-              "update at_transs set t_attend=? where card_id=? and month=? and year=? and company_name=?";
+              "update at_transs set t_attend=:1 where card_id=:2 and month=:3 and year=:4 and company_name=:5";
             var t_attend_hours = 0;
           
             var count = 0;
             for (let i = 0; i < emp_times.length; i++) {
               if (emp_times[i][3]!=null &&emp_times[i][4]!=null) {
-                clock_in_slice = emp_times[i][3].toString().split(":");
-                clock_out_slice = emp_times[i][4].toString().split(":");
-                time1 = new Date(2000, 0, 1, clock_in_slice[0], clock_in_slice[1]);
-                time2 = new Date(2000, 0, 1, clock_out_slice[0], clock_out_slice[1]);
-                diff = time2 - time1;
-          
-                t_attend_hours += diff;
+             
+                   if(emp_times[i][3].toString().length>1&&emp_times[i][4].toString().length>1){
+                    clock_in_slice = emp_times[i][3].toString().split(":");
+                    clock_out_slice = emp_times[i][4].toString().split(":");
+                    console.log(clock_in_slice,clock_out_slice,emp_times[i][0],emp_times[i][1]);
+                    time1 = new Date(2000, 0, 1, parseInt(clock_in_slice[0]), parseInt(clock_in_slice[1]));
+                    time2 = new Date(2000, 0, 1, parseInt(clock_out_slice[0]), parseInt(clock_out_slice[1]));
+                    diff = time2 - time1;
+              
+                    t_attend_hours += diff;
+                   }
+                
+              
+              
               }
               count++;
               if (count === date_count) {
-                var msec = t_attend_hours;
+                var msec = parseInt(t_attend_hours);
                 var hh = Math.floor(msec / 1000 / 60 / 60);
                 msec -= hh * 1000 * 60 * 60;
                 var mm = Math.floor(msec / 1000 / 60);
@@ -287,15 +320,24 @@ async function CalculateTotalAttendHours(emp_times, date_count) {
                   parseInt(date[2]),
                   emp_times[i][10],
                 ];
-          
+               
                 count = 0;
                 t_attend_hours = 0;
           
              await   connection.execute(update_trans_late_query, value, { autoCommit: true });
               }
             }
+           
         } catch (error) {
                 console.log("Calcualte Total Attend",error);
+        }finally{
+            if(connection){
+                try {
+                        await connection.close();
+                } catch (error) {
+                        console.error(error);
+                }
+            }
         }
   
 }

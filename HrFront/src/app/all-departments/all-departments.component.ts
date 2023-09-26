@@ -40,7 +40,7 @@ export class AllDepartmentsComponent implements OnInit {
   getAllDepts(){
     this.alldeptservice.getAllDepts().subscribe(response=>{
       this.departments=response.departments;
-   this.final_departs=this.departments.map(val=>({dept_desc:val[0],dept_id:val[1],emp_count:val[2]}));
+   this.final_departs=this.departments.map(val=>({dept_id:val[0],dept_desc:val[1],emp_count:val[2]}));
 
 
    this.sortedData=this.final_departs.slice();

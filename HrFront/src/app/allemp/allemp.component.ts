@@ -19,6 +19,7 @@ export class AllempComponent implements OnInit {
   alertShown: boolean = false;
   state: string = "";
   sortedEmps: Employee[] = [];
+  filter_emp:string="";
 
   departments = [];
   final_departs: Department[] = [];
@@ -36,6 +37,9 @@ export class AllempComponent implements OnInit {
       this.sortedEmps = this.final_emps.slice();
       this.final_departs = this.departments.map(val => ({ dept_desc: val[0], dept_id: val[1] }));
 
+      console.log(this.final_emps);
+
+
     });
 
 
@@ -47,17 +51,25 @@ export class AllempComponent implements OnInit {
     dialogConfig.width = "30%";
     dialogConfig.height = "80vh";
 
+
     dialogConfig.data = { emp, depts: this.final_departs };
 
     const dialogRef = this.dialog.open(EditempComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((data) => {
-      this.editEmployee(data["employeename"], data["departmentName"], data["role"], data["emp_status"]);
+    if(data){
+
+      this.editEmployee(data["employeename"], data["departmentName"], data["role"],data["emp_status"]);
+    }
+
+
     });
 
   }
 
   editEmployee(empname: string, departname: string, role: string, status: string) {
+    console.log(empname,departname,role,status);
+
     this.employeeService.editEmployeeData(empname, departname, role, status).subscribe({
       next: (event: any) => {
         if (event instanceof HttpResponse) {

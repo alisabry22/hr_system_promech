@@ -46,9 +46,9 @@
           <th class="th-sm" mat-sort-header="totalemp" scope="col">Total Employee</th>
         </tr>
       </thead>
-      <tbody *ngFor="let dept of sortedData | filterDepartment:filter_text">
+      <tbody>
 
-        <tr >
+        <tr scope="row" *ngFor="let dept of sortedData | FilterDepartmentPipe:filter_text">
           <td>{{dept.dept_id}}</td>
           <td>{{dept.dept_desc}}</td>
           <td>{{dept.emp_count}}</td>

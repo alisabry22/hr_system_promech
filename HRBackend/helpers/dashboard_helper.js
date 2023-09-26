@@ -98,5 +98,29 @@ function GetLast5JoinedEmployees(){
     })
 }
 
+function getTotalSections(){
+    return new Promise(async function(resolve,reject){
+        let connection;
+        try {
+            var emp_count_query="select count(*) as total_sect from at_sect";
+            connection=await oracleConnection();
 
-module.exports={GetEmployeeTotalCount,GetDepartmentTotalCount,GetJobsTotalCount,GetLast5JoinedEmployees};
+           const result= await connection.execute(emp_count_query);
+          resolve(result.rows[0][0]);
+
+        } catch (error) {
+                reject(error);
+        }finally{
+            if(connection){
+                try {
+                    await connection.release();
+                } catch (error) {
+                        console.error(error);
+                }
+            }
+        }
+    })
+}
+
+
+module.exports={GetEmployeeTotalCount,GetDepartmentTotalCount,GetJobsTotalCount,GetLast5JoinedEmployees,getTotalSections};

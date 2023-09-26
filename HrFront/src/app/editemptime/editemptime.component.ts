@@ -30,12 +30,13 @@ export class EditemptimeComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
 }
 save(){
   this.empTime.trans_amt=this.editEmpForm.value["trans"];
   this.empTime.remarks=this.editEmpForm.value["remarks"];
-  
+
+
 this.dialogRef.close(this.empTime);
 }
 

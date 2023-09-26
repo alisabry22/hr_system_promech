@@ -4,7 +4,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { HttperrorComponent } from '../httperror/httperror.component';
 import { Employee } from 'shared/models/employee';
-import { SectionModel } from 'shared/models/section';
+import{BreakpointObserver,BreakpointState,Breakpoints} from '@angular/cdk/layout';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -22,7 +22,19 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getDashboardData();
   }
-  constructor(private dashboardServices: DashboardServicesService, public dialog: MatDialog) { }
+  constructor(private responsive: BreakpointObserver,private dashboardServices: DashboardServicesService, public dialog: MatDialog) {
+    this.responsive.observe(['(min-width:500px)'])
+    .subscribe((state:BreakpointState)=>{
+      if(state.matches){
+        console.log("view port width is 500px or greater");
+
+      }else{
+        console.log('Viewport width is less than 500px!');
+
+      }
+    });
+  }
+
 
   getDashboardData() {
 
@@ -39,6 +51,7 @@ export class DashboardComponent implements OnInit {
 
           } else {
 
+            console.log(event);
 
 
             this.state = event.state;

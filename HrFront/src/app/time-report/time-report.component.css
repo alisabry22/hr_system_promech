@@ -1,24 +1,38 @@
 
 table {
-    width: 100%;
-  
-    font-size: 16px;
-  
+    font-size: 14px;
   }
-  
+  .custom-select{
+  width: 30%;
+  float: left;
+  margin-bottom: 10px;
+}
+.table-responsive{
+  overflow-x: clip;
+}
+
+  table thead  th{
+    position: sticky;
+
+    top: 0;
+    z-index: 999;
+    background-color: #087f5b;
+    color: #fff;
+  }
   table th{
     font-size: 14px;
     text-decoration: none;
     font-weight: 500;
+
   }
   .departmentInput {
       margin:10px 30px;
       padding:10px 10px;
-      width:20%;
+
       outline:none;
       border:1px solid #bbb;
       border-radius:20px;
-      display:inline-block;
+
       -webkit-box-sizing:border-box;
          -moz-box-sizing:border-box;
               box-sizing:border-box;
@@ -32,27 +46,24 @@ table {
   th {
     padding: 16px 16px;
     text-align: left;
-  
+
   }
-  
+
   thead tr {
     background-color: #087f5b;
     color: #fff;
   }
-  
-  
-  .headerline{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-  }
+
+
   .datePicker{
     align-items: right;
   }
-  
+
   tbody tr:hover{
     cursor: pointer;
   }
-  
-  
-  
+  .row .btn {
+    margin: 5px;
+  }
+
+

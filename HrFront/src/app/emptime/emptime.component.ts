@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpTime } from 'shared/models/emptime';
 import { GetemptimeService } from '../services/getemptime.service';
-import { HttpResponse } from '@angular/common/http';
-import { Observable, finalize } from 'rxjs';
 import { EditemptimeComponent } from '../editemptime/editemptime.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Employee } from 'shared/models/employee';
 @Component({
   selector: 'app-emptime',
   templateUrl: './emptime.component.html',
@@ -17,6 +14,9 @@ export class EmptimeComponent implements OnInit {
   showLoading: boolean = false;
   pagination: number = 1;
   filter_text: string = "";
+  message: string = "";
+  alertShown: boolean = false;
+  state: string = "";
   ngOnInit(): void {
 
     this.showLoading = true;
@@ -71,15 +71,22 @@ export class EmptimeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((data: EmpTime) => {
 
-
-
-
+      if(data){
         this.empTimeService.editEmployeeTimeSheet(data).subscribe(response=>{
           console.log(response);
          if(response.state==="success"){
+          this.message=response.message;
+          this.state=response.state;
+          this.alertShown=true;
+
+
           this.ngOnInit();
          }
         });
+      }
+
+
+
 
 
     }
@@ -88,6 +95,8 @@ export class EmptimeComponent implements OnInit {
 
 
   }
-
+  closeAlert(){
+    this.alertShown=false;
+  }
 
 }

@@ -45,8 +45,11 @@ import {MatIconModule} from '@angular/material/icon';
 import { TimeReportComponent } from './time-report/time-report.component';
 import { TransReportComponent } from './trans-report/trans-report.component';
 import { FilterTimeReportPipe } from 'shared/filters/filter_report_empTime';
-import { filterDateTimeReport } from 'shared/filters/filter_report_bydate';
+import{FilterEmpNamePipe} from  'shared/filters/filter-emp-name.pipe';
+import{FilterDepartmentPipe} from  'shared/filters/filter_department_name.pipe';
+
 import {DatePipe} from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -77,9 +80,11 @@ import {DatePipe} from '@angular/common';
     TimeReportComponent,
     TransReportComponent,
     FilterTimeReportPipe,
-    filterDateTimeReport,
-    
-    
+    FilterEmpNamePipe,
+    FilterDepartmentPipe,
+   // filterDateTimeReport,
+
+
   ],
   imports: [
     BrowserModule,
@@ -102,8 +107,9 @@ import {DatePipe} from '@angular/common';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
-    DatePipe
-    
+    DatePipe,
+
+
 
 
 

@@ -1,16 +1,15 @@
 
 
-const oracleConnection = require("./oracle_connection");
+const { GetAllTimeReport } = require("../helpers/reports_helper");
+
 GetAllTimeRepoData=async(req,res)=>{
-
-    let connection=await oracleConnection();
-    var get_time_Repo_query="select * from at_trans";
-
-   const result=await connection.execute(get_time_Repo_query);
-        connection.close();
-        return res.send({state:"success",timerepo:result})
+  try {
+    const result=await GetAllTimeReport();
+    return res.send({state:"success",timerepo:result})
+  } catch (error) {
+        return res.send({state:"error",message:error});
+  }
    
-
 }
 
 

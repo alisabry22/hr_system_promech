@@ -3,7 +3,7 @@
   border-radius: 10px;
   box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.3);
   width: 700px;
-  height: 450px;
+
   margin: auto;
   background-color: #ffffff;
 	padding-bottom:10px;
@@ -26,7 +26,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border: 3px dashed #a3a3a3;
+  border: 2px solid #c8c8c8;
   border-radius: 5px;
 }
 

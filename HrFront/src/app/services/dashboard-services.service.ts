@@ -11,7 +11,7 @@ export class DashboardServicesService {
   constructor(private http:HttpClient) { }
 
   getAllDashboardData():Observable<any>{
-    console.log(GET_DASHBOARD_DATA);
+
     return this.http.get(GET_DASHBOARD_DATA);
 
   }

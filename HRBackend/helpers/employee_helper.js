@@ -121,4 +121,59 @@ function GetAllEmpTime (){
     })
 }
 
-module.exports={getAllEmployeesQuery,AddNewEmployeeHelper,GetAllEmpTime};
+function UpdateEmployeeAtEmps(empname,deptcode,ruleno,empstatus){
+    return new Promise(async function(resolve,reject){
+        let connection;
+        var updateQuery ="update at_emps set emp_name=:1 , dept_code=:2 ,rule_no=:3,status=:4 where emp_name=:1";
+
+        try {
+            connection=await oracleConnection();
+            const result=await connection.execute(updateQuery,[
+                empname,
+                deptcode,
+                ruleno,
+                parseInt(empstatus),
+                
+            ],{autoCommit:true});
+
+            resolve(result.rowsAffected);   
+        } catch (error) {
+            reject(error);
+        }finally{
+            if(connection){
+                try {
+                    await connection.release();
+                } catch (error) {
+                        console.error(error);
+                }
+            }
+        }
+   
+    })
+}
+
+function UpdateAtEmpTimeHelper(trans,remarks,card_id,company_name,date){
+    return new Promise(async function(resolve,reject){
+        let connection;
+            try {
+                
+        const update_emp_query ="update at_emp_time set  trans_amt=:1 , remarks=:2 where card_id=:3 and company_name=:4 and date_day=:5";
+        var binds = [parseInt(trans), remarks, parseInt(card_id), company_name, new Date(date)];
+        
+             connection = await oracleConnection(); 
+              const result=await  connection.execute(update_emp_query,binds,{autoCommit:true}); 
+              resolve(result.rowsAffected);
+            } catch (error) {
+                console.log(error);
+                reject(error);
+            }finally{
+                if(connection){
+                    await connection.release();
+                }else{
+                    console.error(error);
+                }
+            }
+    })
+}
+
+module.exports={getAllEmployeesQuery,AddNewEmployeeHelper,GetAllEmpTime,UpdateEmployeeAtEmps,UpdateAtEmpTimeHelper};

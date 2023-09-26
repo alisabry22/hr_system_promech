@@ -15,14 +15,14 @@ export class GetemptimeService {
     return this.http.get(GET_ALL_EMP_TIME);
   }
 
-  //edit employee 
+  //edit employee
   editEmployeeTimeSheet(empTime:EmpTime):Observable<any>{
     let body = new URLSearchParams();
     body.set('card_id',empTime.card_id!);
     body.set('date',empTime.date_day!);
     body.set('company_name',empTime.company_name!);
-    body.set("trans",empTime.trans_amt!.toString());
-    body.set("remarks",empTime.remarks!);
+    body.set("trans",empTime.trans_amt!=null?empTime.trans_amt.toString():"0");
+    body.set("remarks",empTime.remarks!=null?empTime.remarks.toString():"");
     return this.http.post(EDIT_EMP_TIME,body.toString(),{headers:{'Content-Type': 'application/x-www-form-urlencoded'}});
   }
 }

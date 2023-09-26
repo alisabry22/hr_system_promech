@@ -1,9 +1,9 @@
 
-.card {
+.container {
   border-radius: 10px;
   box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.3);
   width: 700px;
-  height: 85vh;
+
   margin: auto;
   background-color: #ffffff;
 	padding-bottom:10px;
@@ -12,30 +12,16 @@
   align-content: center;
 
 }
-.card h1{
+ h1{
   text-align: center;
-}
-.cardid_date{
-  width:40%;
-  float: left;
-  padding-right: 20px;
-  margin-bottom: 20px;
+  justify-content: center;
+  margin-bottom:60px;
 }
 
-.vacation_child{
-  width: 50%;
-  float: left;
-  padding-right: 20px;
-  margin-bottom: 20px;
 
-}
-
-.job_type{
-  width: 50%;
-  float: left;
+.row .custom-select{
   margin-bottom: 10px;
 }
-
 
 input[type="submit"]{
 

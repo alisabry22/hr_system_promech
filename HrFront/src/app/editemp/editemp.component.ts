@@ -17,12 +17,14 @@ export class EditempComponent implements OnInit {
   emp_status:string="";
   departments:Department[]=[];
   constructor(private fb:FormBuilder,private dialogRef:MatDialogRef<EditempComponent>,@Inject (MAT_DIALOG_DATA)data:any){
-    
+
     this.employeename=data["emp"].employee_name!;
     this.departmentName=data["emp"].department_name!;
     this.role=data["emp"].rule!;
     this.departments=data["depts"];
     this.emp_status=data["emp"].status;
+    console.log(this.emp_status);
+
 
   }
   ngOnInit(): void {
@@ -33,10 +35,12 @@ export class EditempComponent implements OnInit {
       );
   }
   close(){
-    this.dialogRef.close();
+
+
+    this.dialogRef.close(null);
   }
   save(){
-    
+
     this.dialogRef.close(this.form.value);
   }
 

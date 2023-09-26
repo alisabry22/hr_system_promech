@@ -28,4 +28,31 @@ function GetAllDepartmentsQuery(){
     })
 }
 
-module.exports={GetAllDepartmentsQuery};
+function GetDepartmentCode (departmentName){
+    return new Promise(async function(resolve,reject){
+        let connection;
+        try {
+            connection=await oracleConnection();
+
+            var get_dept_query = `select dept_code from at_dept where dept_desc=:1`;
+      
+            const result=await connection.execute(get_dept_query,[departmentName]);
+                resolve(result.rows[0][0]);
+           
+            
+        } catch (error) {
+            reject(error);
+            
+        }finally{
+            if(connection){
+                try {
+                    await connection.release();
+                } catch (error) {
+                        console.error(error);
+                }
+            }
+        }
+    })
+}
+
+module.exports={GetAllDepartmentsQuery,GetDepartmentCode};

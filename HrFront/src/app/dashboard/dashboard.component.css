@@ -1,107 +1,51 @@
 .container{
-
   height: 100vh;
   border-radius: 0.313rem;
-
 }
 
-.cards{
 
-  height:40%;
-  width: 100vh;
-  margin: auto;
-
-
-
-
+.row{
+  margin-bottom: 20px;
 }
-
-.center_cards{
-  width: 60%;
-  height: 100%;
-  justify-content: center;
-  margin: auto;
-  align-items: center;
-
-}
-
-.cards .firstrow{
-  width: 100vh;
-
-
-  height: 50%;
-  display: inline-block;
-  margin: 0 auto;
-
-
-}
-.cards .secondrow{
-  width: 100vh;
-  height: 50%;
-  justify-content: space-between;
-  display: inline-block;
-  margin: 0 auto;
-
-
-}
-.cards .firstrow .card{
-
-float: left;
-width: 30%;
-
-  align-items: center;
-  justify-content: space-between;
+.row .col-4{
   background-color  : #fff;
-  padding: 10px;
+  margin:10px;
+  box-shadow: 0 0 0.6rem 0 #8690a3;
   border-radius: 0.413rem;
-  box-shadow: 0 0 1.09rem 0 #8690a3;
-  margin: 10px;
-  text-align: center;
-
+   text-align: center;
+   padding: 10px;
+   width: 200px;
 }
-.cards .secondrow .card{
-  width: 30%;
-  float: left;
-
-  align-items: center;
-  text-align: center;
-  justify-content: space-between;
-  background-color  : #fff;
-  padding: 10px;
-  border-radius: 0.413rem;
-  box-shadow: 0 0 1.09rem 0 #8690a3;
-  margin: 10px;
-
-}
-
-
-
-
 
 a{
   text-decoration: none;
   color: black;
 }
 
-.latest_users{
-
-  width: 45%;
-  height: 10%;
-  color: black;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
+.stats{
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   text-align: center;
-  border: 20px grey  ;
+}
+.table-responsive{
+  justify-content: center;
+  align-items: center;
 }
 .users{
 
-    width: 100%;
+   width: 90%;
 
-    font-size: 16px;
-
-
+  color: black;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0.063rem 0 0.6rem 0 #8690a3;
+  text-align: center;
+  border: 20px grey  ;
+  margin: 10px;
 }
+
+
 table th{
   font-size: 14px;
   text-decoration: none;
@@ -124,22 +68,9 @@ th {
 
 }
 
-.top_dept_emp
-{
 
-  width: 45%;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0.063rem 0 1.25rem 0 #8690a3;
-  text-align: center;
-  border: 20px grey  ;
-}
 
-.stats{
-  margin: auto;
-  justify-content: space-evenly;
-  display: flex;
-}
+
 
 
 

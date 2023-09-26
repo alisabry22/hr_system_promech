@@ -14,5 +14,7 @@ export class EmpTimeReport{
     total_permission?:number;
     rule_no?:number;
     company_name?:string;
+    dept_name?:string;
+    sect_desc?:string;
 
 }

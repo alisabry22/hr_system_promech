@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 </head>
 <body>
@@ -17,9 +17,10 @@
     <!-- all Employees card  -->
 
       <div class="cards">
-        <div class="center_cards">
-          <div class="firstrow">
-            <div class="card">
+
+        <!-- first row -->
+          <div class="row justify-content-md-center">
+            <div class="col-4">
               <a routerLink="/allemp">
 
               <span>
@@ -30,7 +31,7 @@
             </a>
             </div>
 
-            <div class="card">
+            <div class="col-4">
               <a routerLink="/departments">
 
 
@@ -42,9 +43,10 @@
 
             </div>
           </div>
-
-          <div class="secondrow">
-            <div  class="card">
+          <div class="w-100"></div>
+ <!-- second row -->
+          <div class="row justify-content-md-center">
+            <div  class="col-4">
               <a routerLink="/jobs">
 
               <span>
@@ -54,7 +56,7 @@
 
             </a>
             </div>
-            <div  class="card">
+            <div  class="col-4">
               <a >
 
               <span>
@@ -65,7 +67,7 @@
             </a>
             </div>
           </div>
-        </div>
+
 
 
 
@@ -83,67 +85,70 @@
       </div>
 
 
-
-
-
-
-
-
-
-
-
   <!-- latest users in system -->
 
   <div class="stats">
 
-    <div class="latest_users">
-      <h2>Recent Employees</h2>
-      <div >
-        <table class="users" *ngIf="latest_emps">
-          <tr>
-            <th>Employee Name</th>
-            <th>Department</th>
-            <th>Hire Date</th>
-          </tr>
+    <div class="row justify-content-md-center align-items-center">
 
-          <tbody *ngFor="let emp of latest_emps">
+      <div class="col">
+              <h2>Recent Employees</h2>
+        <div class="table-responsive">
+          <table class="users" *ngIf="latest_emps">
             <tr>
-              <td>{{emp.employee_name}}</td>
-              <td>{{emp.department_name}}</td>
-              <td>{{emp.hire_date?.substring(0,10)}}</td>
-
+              <th scope="col">Employee Name</th>
+              <th scope="col">Department</th>
+              <th scope="col">Hire Date</th>
             </tr>
-          </tbody>
 
-        </table>
+            <tbody *ngFor="let emp of latest_emps">
+              <tr>
+                <td>{{emp.employee_name}}</td>
+                <td>{{emp.department_name}}</td>
+                <td>{{emp.hire_date?.substring(0,10)}}</td>
+
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+      <!-- second table -->
+      <div class="col">
+        <h2>
+          TOP Employee
+        </h2>
+        <div class="table-responsive">
+          <table class="users" *ngIf="latest_emps">
+            <tr>
+              <th scope="col">Employee Name</th>
+              <th scope="col">Department</th>
+              <th scope="col">Hire Date</th>
+            </tr>
+
+            <tbody *ngFor="let emp of latest_emps">
+              <tr>
+                <td>{{emp.employee_name}}</td>
+                <td>{{emp.department_name}}</td>
+                <td>{{emp.hire_date?.substring(0,10)}}</td>
+
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+        <div >
+
+        </div>
+
       </div>
     </div>
 
-    <div class="top_dept_emp">
-      <h2>
-        TOP Employee
-      </h2>
-      <div >
-        <table class="users" *ngIf="latest_emps">
-          <tr>
-            <th>Employee Name</th>
-            <th>Department</th>
-            <th>Total Attend</th>
-          </tr>
 
-          <tbody *ngFor="let emp of latest_emps">
-            <tr>
-              <td>{{emp.employee_name}}</td>
-              <td>{{emp.department_name}}</td>
-              <td>{{emp.hire_date?.substring(0,10)}}</td>
-
-            </tr>
-          </tbody>
-
-        </table>
-      </div>
-
-    </div>
 
   </div>
 
