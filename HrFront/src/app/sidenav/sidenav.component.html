@@ -15,7 +15,7 @@
         <i class="sidenav-link-icon" [class]="data.icon"></i>
         <span class="sidenav-link-text" *ngIf="collapsed"> {{data.label}}</span>
         <i *ngIf="data.items && collapsed" class="menu-collabse-icon"
-          [ngClass]="!data.expanded?'fal fa-angle-right':'fal fa-angle-down'">
+          [ngClass]="!data.expanded?'pi pi-angle-left':'pi pi-angle-down'">
         </i>
 
       </a>
@@ -29,7 +29,7 @@
       </a>
 
       <div *ngIf="collapsed && data.items && data.items.length>0" >
-        <app-sublevel-menu [data]="data" [multiple]="multiple" [collabsed]="collapsed" 
+        <app-sublevel-menu [data]="data" [multiple]="multiple" [collabsed]="collapsed"
           [expanded]="data.expanded"></app-sublevel-menu>
 
 

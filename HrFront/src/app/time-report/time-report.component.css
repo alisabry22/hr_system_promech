@@ -2,11 +2,7 @@
 table {
     font-size: 14px;
   }
-  .custom-select{
-  width: 30%;
-  float: left;
-  margin-bottom: 10px;
-}
+
 .table-responsive{
   overflow-x: clip;
 }
@@ -66,4 +62,9 @@ table {
     margin: 5px;
   }
 
+  .custom-select{
+    width: 30%;
+    float: left;
+    margin-bottom: 10px;
+  }
 

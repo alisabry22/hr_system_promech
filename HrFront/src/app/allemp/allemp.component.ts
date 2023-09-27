@@ -113,8 +113,12 @@ export class AllempComponent implements OnInit {
           return compare(a.department_name!, b.department_name!, isAsc);
         case 'jobtitle':
           return compare(a.job_title!, b.job_title!, isAsc);
+        case 'status':
+            return compare(a.status!, b.status!, isAsc);
         case 'role':
           return compare(a.rule!, b.rule!, isAsc);
+        case 'hiredate':
+          return compare(a.hire_date!,b.hire_date!,isAsc);
         default:
           return 0;
       }

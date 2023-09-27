@@ -3,13 +3,13 @@ import { INavbarData } from "./helper";
 export const navbarData:INavbarData[]=[
   {
   routeLink:'dashboard',
-    icon:'fal fa-home',
+    icon:'pi pi-home',
     label:'Dashboard',
 
   },
   {
     routeLink:'allemp',
-      icon:'fal fa-user',
+      icon:'pi pi-user',
       label:'Employees',
       items:[
         {routeLink:'allemp', label:"All Employee"},
@@ -20,38 +20,38 @@ export const navbarData:INavbarData[]=[
     },
     {
       routeLink:'departments',
-        icon:'fal fa-folder',
+        icon:'pi pi-folder',
         label:'Departments',
 
       },
 
       {
         routeLink:'jobs',
-          icon:"fas fa-user-md",
+          icon:"pi pi-briefcase",
           label:'Jobs',
-  
+
         },
     {
       routeLink:'emptime',
-        icon:'far fa-clock',
+        icon:'pi pi-stopwatch',
         label:'Employee Time',
       },
 
       {
         routeLink:'splitexcel',
-          icon:'fal fa-file-excel',
+          icon:'pi pi-file-excel',
           label:'Split Sheets',
         },
         {
           routeLink:'uploadsheet',
-            icon:'fal fa-upload',
+            icon:'pi pi-upload',
             label:'Upload Sheet',
           },
           {
             routeLink:'reports',
-              icon:'fal fa-file',
+              icon:'pi pi-file',
               label:'Reports',
             },
-          
+
 
 ]

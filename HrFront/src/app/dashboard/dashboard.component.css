@@ -1,11 +1,14 @@
-.container{
+/* .container{
   height: 100vh;
   border-radius: 0.313rem;
-}
+} */
 
 
 .row{
   margin-bottom: 20px;
+}
+.p-button{
+  border-radius:10px;
 }
 .row .col-4{
   background-color  : #fff;

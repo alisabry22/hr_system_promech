@@ -29,7 +29,9 @@
   border: 2px solid #c8c8c8;
   border-radius: 5px;
 }
-
+.output_p{
+  font-size: 60px;
+}
 .drop_box h4 {
   font-size: 16px;
   font-weight: 400;

@@ -29,7 +29,6 @@ import { DepartmentSearch } from 'shared/models/search.pipe';
 import { EditemptimeComponent } from './editemptime/editemptime.component';
 import { EmployeeSearchPipe } from 'shared/models/employeesearch.pipe';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditempComponent } from './editemp/editemp.component';
 import {MatSelectModule} from '@angular/material/select';
 import { HttperrorComponent } from './httperror/httperror.component';
@@ -47,10 +46,9 @@ import { TransReportComponent } from './trans-report/trans-report.component';
 import { FilterTimeReportPipe } from 'shared/filters/filter_report_empTime';
 import{FilterEmpNamePipe} from  'shared/filters/filter-emp-name.pipe';
 import{FilterDepartmentPipe} from  'shared/filters/filter_department_name.pipe';
-
 import {DatePipe} from '@angular/common';
-
-
+import {ButtonModule} from 'primeng/button';
+import { TableModule } from 'primeng/table';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,6 +80,8 @@ import {DatePipe} from '@angular/common';
     FilterTimeReportPipe,
     FilterEmpNamePipe,
     FilterDepartmentPipe,
+
+
    // filterDateTimeReport,
 
 
@@ -100,7 +100,6 @@ import {DatePipe} from '@angular/common';
     MatInputModule,
     MatSortModule,
     MatCheckboxModule,
-    FontAwesomeModule,
     MatSelectModule,
     MatTooltipModule,
     MatButtonModule,
@@ -108,6 +107,8 @@ import {DatePipe} from '@angular/common';
     MatNativeDateModule,
     MatIconModule,
     DatePipe,
+    ButtonModule,
+    TableModule
 
 
 

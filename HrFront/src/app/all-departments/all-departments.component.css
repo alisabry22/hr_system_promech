@@ -1,4 +1,7 @@
 
+.table-responsive{
+  overflow-x: clip;
+}
 table {
   width: 100%;
 
@@ -18,7 +21,7 @@ table th{
 
 td,
 th {
-  padding: 20px 20px;
+  padding: 16px 16px;
   text-align: left;
 
 }
@@ -26,7 +29,13 @@ thead tr {
   background-color: #087f5b;
   color: #fff;
 }
-
+table th{
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #087f5b;
+  color: #fff;
+}
 tbody tr:hover{
   cursor: pointer;
 }

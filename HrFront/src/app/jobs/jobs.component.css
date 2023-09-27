@@ -1,32 +1,35 @@
 
+.table-responsive{
+  overflow-x: clip;
+}
 table {
     width: 100%;
-  
+
     font-size: 16px;
-  
+
   }
-  
+
   table th{
     font-size: 14px;
     text-decoration: none;
     text-align: center;
     font-weight: 500;
-  
+
       width: 15%;
-  
+
   }
-  
+
   td,
   th {
-    padding: 20px 20px;
+    padding: 16px 16px;
     text-align: left;
-  
+
   }
   thead tr {
     background-color: #087f5b;
     color: #fff;
   }
-  
+
   tbody tr:hover{
     cursor: pointer;
   }
@@ -50,18 +53,24 @@ table {
   td:nth-child(1) {
     width: 50px;
   }
-  
- 
-  
-  
+
+
+  table th{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #087f5b;
+    color: #fff;
+  }
+
   .department{
     background-color: grey;
-  
+
   }
   .adddept{
     padding: 20px;
     display: flex;
-    
+
   }
   .imgsource{
     padding-left: 50px;
@@ -83,5 +92,4 @@ table {
   .fa-plus-circle:hover{
     cursor: pointer;
   }
-  
-  
+
