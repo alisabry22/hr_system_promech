@@ -8,6 +8,8 @@ import { DatePipe } from '@angular/common';
 import { Department } from 'shared/models/department';
 import { SectionModel } from 'shared/models/section';
 import { Sort } from '@angular/material/sort';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -57,16 +59,24 @@ export class TimeReportComponent implements OnInit {
     this.getAllTimeReports();
     this.getAllDepts();
   }
-  constructor(private timeRepoService: TimerepoService, public datepipe: DatePipe) {
+  constructor(private router:Router,private timeRepoService: TimerepoService, public datepipe: DatePipe) {
 
   }
   getAllDepts() {
-    this.timeRepoService.getAllDepts().subscribe(response => {
+    this.timeRepoService.getAllDepts().subscribe({
+      next:(event:any)=>{
+        this.get_depts = event.departments;
+        var sect: [] = event.sects;
+        this.sections = sect.map(val => ({ sect_code: val[0], sect_description: val[1] }));
+        this.departments = this.get_depts.map(val => ({ dept_id: val[0], dept_desc: val[1] }));
+      },
+      error:(event:any)=>{
+        if(event instanceof HttpErrorResponse && event.status==403){
+          this.router.navigate(["login"]);
+        }
+      }
 
-      this.get_depts = response.departments;
-      var sect: [] = response.sects;
-      this.sections = sect.map(val => ({ sect_code: val[0], sect_description: val[1] }));
-      this.departments = this.get_depts.map(val => ({ dept_id: val[0], dept_desc: val[1] }));
+
 
     })
   }

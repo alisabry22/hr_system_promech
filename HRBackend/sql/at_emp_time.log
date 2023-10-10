@@ -1,5 +1,5 @@
 
-SQL*Loader: Release 11.2.0.2.0 - Production on Mon Sep 25 16:39:46 2023
+SQL*Loader: Release 11.2.0.2.0 - Production on Tue Oct 10 11:32:45 2023
 
 Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
 
@@ -37,7 +37,7 @@ COMPANY_NAME                         NEXT     *   ,       CHARACTER
 
 
 Table AT_EMP_TIME:
-  1748 Rows successfully loaded.
+  1617 Rows successfully loaded.
   0 Rows not loaded due to data errors.
   0 Rows not loaded because all WHEN clauses were failed.
   0 Rows not loaded because all fields were null.
@@ -47,12 +47,12 @@ Space allocated for bind array:                 181632 bytes(64 rows)
 Read   buffer bytes: 1048576
 
 Total logical records skipped:          1
-Total logical records read:          1748
+Total logical records read:          1617
 Total logical records rejected:         0
 Total logical records discarded:        0
 
-Run began on Mon Sep 25 16:39:46 2023
-Run ended on Mon Sep 25 16:39:46 2023
+Run began on Tue Oct 10 11:32:45 2023
+Run ended on Tue Oct 10 11:32:45 2023
 
-Elapsed time was:     00:00:00.45
+Elapsed time was:     00:00:00.23
 CPU time was:         00:00:00.13

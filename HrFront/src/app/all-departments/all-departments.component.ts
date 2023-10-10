@@ -6,6 +6,7 @@ import { AddDepartmentComponent } from '../add-department/add-department.compone
 import { HttpErrorResponse } from '@angular/common/http';
 import { Sort } from '@angular/material/sort';
 import { DeleteDepartmentComponent } from '../delete-department/delete-department.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class AllDepartmentsComponent implements OnInit {
     this.getAllDepts();
 
   }
-  constructor(private alldeptservice:AlldepartmentService,private dialog:MatDialog){
+  constructor(private router:Router,private alldeptservice:AlldepartmentService,private dialog:MatDialog){
 
   }
 
@@ -38,12 +39,20 @@ export class AllDepartmentsComponent implements OnInit {
 
 
   getAllDepts(){
-    this.alldeptservice.getAllDepts().subscribe(response=>{
-      this.departments=response.departments;
-   this.final_departs=this.departments.map(val=>({dept_id:val[0],dept_desc:val[1],emp_count:val[2]}));
+    this.alldeptservice.getAllDepts().subscribe({
+      next:(event:any)=>{
+        this.departments=event.departments;
+        this.final_departs=this.departments.map(val=>({dept_id:val[0],dept_desc:val[1],emp_count:val[2]}));
 
 
-   this.sortedData=this.final_departs.slice();
+        this.sortedData=this.final_departs.slice();
+      },
+      error:(event:any)=>{
+        if(event instanceof HttpErrorResponse && event.status==403){
+          this.router.navigate(['login']);
+        }
+      }
+
     });
 
   }

@@ -3,6 +3,8 @@ import { EmpTime } from 'shared/models/emptime';
 import { GetemptimeService } from '../services/getemptime.service';
 import { EditemptimeComponent } from '../editemptime/editemptime.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-emptime',
   templateUrl: './emptime.component.html',
@@ -24,27 +26,35 @@ export class EmptimeComponent implements OnInit {
     this.showLoading = false;
 
   }
-  constructor(private empTimeService: GetemptimeService, private dialog: MatDialog) { }
+  constructor(private router:Router,private empTimeService: GetemptimeService, private dialog: MatDialog) { }
 
 
   getAllEmpTime() {
-    this.empTimeService.getAllEmpTime().subscribe(response => {
+    this.empTimeService.getAllEmpTime().subscribe( {
+      next:(event:any)=>{
+        this.getemps = event.emptime;
 
-      this.getemps = response.emptime;
+        this.get_emps_time = this.getemps.map(val => ({
+          card_id: val[0],
+          emp_name: val[1],
+          date_day: val[2],
+          clock_in: val[3],
+          clock_out: val[4],
+          late: val[5],
+          early: val[6],
+          absent_flag: val[7],
+          remarks: val[8],
+          trans_amt: val[9],
+          company_name:val[10],
+        }));
+      },
+      error:(event:any)=>{
+        if(event instanceof HttpErrorResponse &&event.status==403){
+          this.router.navigate(['login']);
+        }
+      }
 
-      this.get_emps_time = this.getemps.map(val => ({
-        card_id: val[0],
-        emp_name: val[1],
-        date_day: val[2],
-        clock_in: val[3],
-        clock_out: val[4],
-        late: val[5],
-        early: val[6],
-        absent_flag: val[7],
-        remarks: val[8],
-        trans_amt: val[9],
-        company_name:val[10],
-      }));
+
 
     });
 

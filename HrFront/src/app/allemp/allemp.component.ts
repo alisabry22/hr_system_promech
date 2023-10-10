@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeserviceService } from '../services/employeeservice.service';
 import { Employee } from 'shared/models/employee';
 import { Department } from 'shared/models/department';
@@ -23,21 +23,33 @@ export class AllempComponent implements OnInit {
 
   departments = [];
   final_departs: Department[] = [];
-  constructor(private route: ActivatedRoute, private employeeService: EmployeeserviceService, private dialog: MatDialog) {
+  constructor(private router: Router, private employeeService: EmployeeserviceService, private dialog: MatDialog) {
 
   }
   ngOnInit(): void {
-    this.employeeService.getAllEmployees().subscribe((response) => {
+    this.employeeService.getAllEmployees().subscribe( {
+      next:(event:any)=>{
+        console.log(event);
 
-      this.state = response.state;
-      this.employees = response.allemp;
-      this.departments = response.alldept;
+        this.state = event.state;
+        this.employees = event.allemp;
+        this.departments = event.alldept;
 
-      this.final_emps = this.employees.map((val => ({ card_id: val[0], employee_name: val[1],job_title:val[2],hire_date:val[3],status:val[5],sect_code:val[6],department_name:val[7],rule:val[8]})));
-      this.sortedEmps = this.final_emps.slice();
-      this.final_departs = this.departments.map(val => ({ dept_desc: val[0], dept_id: val[1] }));
+        this.final_emps = this.employees.map((val => ({ card_id: val[0], employee_name: val[1],job_title:val[2],hire_date:val[3],status:val[5],sect_code:val[6],department_name:val[7],rule:val[8]})));
+        this.sortedEmps = this.final_emps.slice();
+        this.final_departs = this.departments.map(val => ({ dept_desc: val[0], dept_id: val[1] }));
 
-      console.log(this.final_emps);
+        console.log(this.final_emps);
+
+
+      },
+      error:(event:any)=>{
+        if(event instanceof HttpErrorResponse){
+          if(event.status==403)
+          this.router.navigate(['login']);
+        }
+      }
+
 
 
     });
@@ -77,6 +89,8 @@ export class AllempComponent implements OnInit {
           this.message = event.body.message;
           this.alertShown = true;
         } else if (event instanceof HttpErrorResponse) {
+
+
           this.state = event.error;
           this.message = event.message;
           this.alertShown = true;

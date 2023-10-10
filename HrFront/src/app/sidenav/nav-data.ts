@@ -52,6 +52,11 @@ export const navbarData:INavbarData[]=[
               icon:'pi pi-file',
               label:'Reports',
             },
+            {
+              routeLink:'history',
+                icon:'pi pi-history',
+                label:'history',
+              },
 
 
 ]

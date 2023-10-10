@@ -12,7 +12,7 @@ import { SpliexcelComponent } from './spliexcel/spliexcel.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReportsComponent } from './reports/reports.component';
 import { EmptimeComponent } from './emptime/emptime.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { UploadfileComponent } from './uploadfile/uploadfile.component';
 import { UploadSheetComponent } from './upload-sheet/upload-sheet.component';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
@@ -49,6 +49,10 @@ import{FilterDepartmentPipe} from  'shared/filters/filter_department_name.pipe';
 import {DatePipe} from '@angular/common';
 import {ButtonModule} from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { LoginComponent } from './login/login.component';
+import { authGuard } from './services/auth.guard';
+import { AuthInterceptor } from './services/authinterceptor';
+import { HistoryempComponent } from './historyemp/historyemp.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +84,8 @@ import { TableModule } from 'primeng/table';
     FilterTimeReportPipe,
     FilterEmpNamePipe,
     FilterDepartmentPipe,
+    LoginComponent,
+    HistoryempComponent,
 
 
    // filterDateTimeReport,
@@ -116,7 +122,9 @@ import { TableModule } from 'primeng/table';
 
 
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

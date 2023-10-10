@@ -5,6 +5,7 @@ import { job } from 'shared/models/job';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { MatDatepickerInput, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { SectionModel } from 'shared/models/section';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-addemployee',
   templateUrl: './addemployee.component.html',
@@ -31,9 +32,15 @@ export class AddemployeeComponent implements OnInit {
   employeeType:string="";
   hiredate:Date=new Date();
 
-  constructor(private addempservice:AddemployeeService){}
+  constructor(private addempservice:AddemployeeService,private router:Router){}
   ngOnInit(): void {
-    this.getAllEmployees();
+    var token= sessionStorage.getItem("token");
+    if(!token){
+      this.router.navigate(["login"]);
+    }else{
+      this.getAllEmployees();
+    }
+
   }
   getAllEmployees(){
     this.addempservice.getAllDepartments().subscribe((response)=>{

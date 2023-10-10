@@ -4,6 +4,7 @@ import { job } from 'shared/models/job';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddJobComponent } from '../add-job/add-job.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-jobs',
@@ -20,7 +21,7 @@ export class JobsComponent implements OnInit{
   final_jobs:job[]=[];
   filter_text:string="";
 
-  constructor(private jobservice:JobService,private dialog:MatDialog){
+  constructor(private jobservice:JobService,private dialog:MatDialog,private router:Router){
 
   }
   ngOnInit(): void {
@@ -41,6 +42,11 @@ export class JobsComponent implements OnInit{
         }
 
 
+      },
+      error:(event:any)=>{
+        if(event instanceof HttpErrorResponse && event.status==403){
+          this.router.navigate(["login"]);
+        }
       }
     })
   }

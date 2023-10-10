@@ -4,9 +4,10 @@ const  multer=require("multer");
 const PATH="./uploads";
 const uploadToDatabase=require("../middlewares/upload");
 const {Promech,promech12, penta3d}=require("../controllers/upload_controller")
-const bodyparser=require("body-parser");
 const uploadSheetToDatabase = require("../controllers/uploadsheet_to_database");
-router.use(bodyparser.urlencoded({extended:false}));
+const { verifyToken } = require("../helpers/auth_helpers");
+router.use(express.urlencoded({extended:false}));
+
 let storage=multer.diskStorage({
     destination:(req,res,cb)=>{
         cb(null,PATH);
@@ -22,7 +23,7 @@ let upload=multer({
 router.post("/uploadsheet",uploadToDatabase.array("uploadfile",3),uploadSheetToDatabase);
    
 // for uploading files from angular to node js 
-router.post("/uploadfile",upload.single('file'),(req,res)=>{
+router.post("/uploadfile",verifyToken,upload.single('file'),(req,res)=>{
    console.log(req.body);
     try {
         if(req.file==undefined|| !req.body.fileType){

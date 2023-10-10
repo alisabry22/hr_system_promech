@@ -1,0 +1,34 @@
+<section class="vh-100">
+  <div  *ngIf="(state=='error' && alertShown)" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Error </strong> {{message}}
+    <button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="container">
+
+        <div class="img">
+          <img src='./assets/pro.jpg'class="img-fluid" alt="image">
+        </div>
+
+
+      <div class="outline">
+        <div class="login-container">
+          <div class="card">
+            <h2>Log In</h2>
+            <form (ngSubmit)="login($event)">
+              <input type="text" id="username" name="username" placeholder="username" required />
+              <input type="password" id="password" name="password" placeholder="Password"  required/>
+              <button type="submit">Login</button>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+
+      </div>
+
+
+</section>

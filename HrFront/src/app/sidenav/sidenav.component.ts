@@ -4,6 +4,8 @@ import { navbarData } from './nav-data';
 import { Output } from '@angular/core';
 import { INavbarData } from './helper';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { LoginService } from '../services/login.service';
 interface SidenavToggle{
   screenWidth:number;
   collapsed:boolean;
@@ -15,10 +17,13 @@ interface SidenavToggle{
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-
+  isLoggedIn$!: Observable<boolean>;
 
   ngOnInit(): void {
+    this.isLoggedIn$ = this.loginService.isLoggedIn;
     this.screenWidth=window.innerWidth;
+
+    console.log("is logged in ",this.isLoggedIn$);
 
   }
 
@@ -36,7 +41,7 @@ onResize(event:any){
   }
 }
 
-constructor(public router:Router){}
+constructor(public router:Router,private loginService:LoginService){}
 closeSidenav():void{
   this.collapsed=false;
   this.onToggleSideNav.emit({collapsed:this.collapsed,screenWidth:this.screenWidth});

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
 import { UploadfileService } from '../services/uploadfile.service';
-import { NgStyle } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-spliexcel',
   templateUrl: './spliexcel.component.html',
@@ -12,7 +12,10 @@ export class SpliexcelComponent implements OnInit {
   uploaded:boolean=false;
 
   ngOnInit(): void {
-
+  var token= sessionStorage.getItem("token");
+  if(!token){
+    this.router.navigate(["login"]);
+  }
   }
    file!: File;
    state:String="";
@@ -20,7 +23,7 @@ export class SpliexcelComponent implements OnInit {
    message:String="";
    alertShown:boolean=false;
    fileType="Promech";
-    constructor(private uploadfile:UploadfileService){}
+    constructor(private uploadfile:UploadfileService,private router:Router){}
     onFileSelected(event:any){
       if(event.target.files.length>0){
 
@@ -63,6 +66,11 @@ export class SpliexcelComponent implements OnInit {
               this.state=event.error;
               this.message=event.message;
               this.alertShown=true;
+            }
+          },
+          error:(event:any)=>{
+            if(event instanceof HttpErrorResponse && event.status==403){
+              this.router.navigate(["login"]);
             }
           }
 

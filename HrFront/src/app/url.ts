@@ -1,4 +1,8 @@
-const BASE_URL='http://localhost:3000';
+const BASE_URL='http://192.168.0.69:3000';
+
+
+//auth router
+export const LOGIN_REQUEST_URL=BASE_URL+'/login';
 //dashboard router
 export const GET_DASHBOARD_DATA=BASE_URL+'/dashboard';
 export const UPLOAD_SHEET_TO_DATABASE=BASE_URL+'/uploadsheet';

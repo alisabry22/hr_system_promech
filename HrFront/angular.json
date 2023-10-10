@@ -75,7 +75,8 @@
               "browserTarget": "HrFront:build:production"
             },
             "development": {
-              "browserTarget": "HrFront:build:development"
+              "browserTarget": "HrFront:build:development",
+              "disableHostCheck": true
             }
           },
           "defaultConfiguration": "development"

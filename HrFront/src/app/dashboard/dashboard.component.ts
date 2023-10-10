@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttperrorComponent } from '../httperror/httperror.component';
 import { Employee } from 'shared/models/employee';
 import{BreakpointObserver,BreakpointState,Breakpoints} from '@angular/cdk/layout';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -22,17 +23,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getDashboardData();
   }
-  constructor(private responsive: BreakpointObserver,private dashboardServices: DashboardServicesService, public dialog: MatDialog) {
-    this.responsive.observe(['(min-width:500px)'])
-    .subscribe((state:BreakpointState)=>{
-      if(state.matches){
-        console.log("view port width is 500px or greater");
+  constructor(private router: Router,private dashboardServices: DashboardServicesService, public dialog: MatDialog) {
 
-      }else{
-        console.log('Viewport width is less than 500px!');
-
-      }
-    });
   }
 
 
@@ -44,10 +36,14 @@ export class DashboardComponent implements OnInit {
 
         next: (event: any) => {
 
+
           if (event instanceof HttpErrorResponse) {
-            this.state = "error";
-            this.message = event.message;
-            this.alertShown = true;
+
+              this.state = "error";
+              this.message = event.message;
+              this.alertShown = true;
+
+
 
           } else {
 
@@ -67,7 +63,12 @@ export class DashboardComponent implements OnInit {
 
         },
         error: (event: any) => {
-          this.openDialog();
+          if(event instanceof HttpErrorResponse){
+            this.router.navigate(['login']);
+          }else{
+            this.openDialog();
+          }
+
         }
 
 

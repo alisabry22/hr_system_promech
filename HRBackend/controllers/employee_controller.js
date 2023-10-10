@@ -15,9 +15,9 @@ const getAllEmployees = async (req, res) => {
     var emps_result = await getAllEmployeesQuery();
     var depts_result = await GetAllDepartmentsQuery();
 
-    res.send({ state: "success", allemp: emps_result, alldept: depts_result });
+    res.status(200).send({ state: "success", allemp: emps_result, alldept: depts_result });
   } catch (error) {
-    return res.send({ state: "error", message: error.message });
+    return res.status(500).send({ state: "error", message: error.message });
   }
 };
 

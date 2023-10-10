@@ -3,6 +3,7 @@ const xlsx = require("xlsx");
 const oracleConnection = require("../controllers/oracle_connection");
 const {GetDistinctDaysAtEmpTime,GetAllEmpTimeWithHisRule,} = require("./common_helpers");
 const moment=require("moment");
+const { log } = require("console");
 
 function UploadSheetsToDatabaseHelper() {
   return new Promise(async function (resolve, reject) {
@@ -84,9 +85,7 @@ function manuplateDate(worksheet) {
   return xlsx.utils.json_to_sheet(excelData);
 }
 
-// function dateIsValid(date) {
-//   return !Number.isNaN(new Date(date).getTime());
-// }
+
 
 async function SubmitDataToAtTransTable() {
     //we need for each employee to calculate all things and add new row in at_trans
@@ -128,10 +127,10 @@ async function SubmitDataToAtTransTable() {
                calculateTotalLateData(emp_times, date_count);
               //calculating total absent for each emp
         
-               CalculateTotalAbsent(emp_times, date_count);
+          CalculateTotalAbsent(emp_times, date_count);
             //   //calculating total attendance
-              CalculateTotalAttendHours(emp_times, date_count);
-   
+               CalculateTotalAttendHours(emp_times, date_count);
+          return true;
     } catch (error) {
         console.log("error",error);
      
@@ -158,7 +157,7 @@ async function calculateTotalLateData(emp_times, date_count) {
           var clock_slice = clock_in.split(":");
           var time1;
           var time2;
-          if (emp_times[i][12] === 1) {
+          if (emp_times[i][12] == 1) {
             //it means he is manager
             time1 = new Date(2000, 0, 1, clock_slice[0], clock_slice[1]);
             time2 = new Date(2000, 0, 1, 10, 30);
@@ -172,18 +171,20 @@ async function calculateTotalLateData(emp_times, date_count) {
           diff = time1 - time2;
     
           if (Math.sign(diff) == 1) {
+         
             t_late_milliseconds += diff;
           }
       }else {
         //معناها هنا انه مبصمش علي البصمه هشوف بقي لو مبصمش وكمان مش غايب عشان احسب عليه ساعه تأخير
   
         if (emp_times[i][7]!= "True") {
+         
           t_late_milliseconds += 3600000;
         }
       }
-      if(emp_times[i][2]==="Alisabry"){
-               console.log(`${emp_times[i][2]}:${t_late_milliseconds}`); 
-      }
+
+    
+      
       
      
       count++;
@@ -205,10 +206,12 @@ async function calculateTotalLateData(emp_times, date_count) {
           parseInt(date[2]),
           emp_times[i][10].toString(),
         ];
+       
         await connection.execute(update_trans_late_query, value, { autoCommit: true });
       }
       
     }
+    console.log("success add total late");
     } catch (error) {
             console.log("Calculate total late",error);
   
@@ -263,6 +266,7 @@ async function CalculateTotalAbsent(emp_times, date_count) {
      await connection.execute(update_trans_late_query, value, { autoCommit: true });
     }
   }
+  console.log("success add total absent");
 
     } catch (error) {
         console.log("Calculate Total Absent",error);
@@ -293,7 +297,6 @@ async function CalculateTotalAttendHours(emp_times, date_count) {
                    if(emp_times[i][3].toString().length>1&&emp_times[i][4].toString().length>1){
                     clock_in_slice = emp_times[i][3].toString().split(":");
                     clock_out_slice = emp_times[i][4].toString().split(":");
-                    console.log(clock_in_slice,clock_out_slice,emp_times[i][0],emp_times[i][1]);
                     time1 = new Date(2000, 0, 1, parseInt(clock_in_slice[0]), parseInt(clock_in_slice[1]));
                     time2 = new Date(2000, 0, 1, parseInt(clock_out_slice[0]), parseInt(clock_out_slice[1]));
                     diff = time2 - time1;
@@ -327,7 +330,7 @@ async function CalculateTotalAttendHours(emp_times, date_count) {
              await   connection.execute(update_trans_late_query, value, { autoCommit: true });
               }
             }
-           
+            console.log("success add total Attend");
         } catch (error) {
                 console.log("Calcualte Total Attend",error);
         }finally{

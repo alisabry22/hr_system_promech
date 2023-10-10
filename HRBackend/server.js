@@ -9,10 +9,12 @@ const dashobard_router = require("./routes/dashboard_router");
 const deptrouter = require("./routes/department_router");
 const jobsRouter=require('./routes/jobs_router');
 const reportsRouter=require('./routes/reports_router');
+const authRouter=require('./routes/auth_router');
 process.env.ORA_SDTZ="UTC";
 app.use(cors());
-
+app.use(express.urlencoded({extended:false}));
 app.use(dashobard_router);
+app.use(authRouter);
 app.use(split_router);
 app.use("/emps",employee_router);
 app.use("/dept",deptrouter);
@@ -22,4 +24,4 @@ app.use('/report',reportsRouter);
 
 
 
-app.listen(3000,()=>console.log("listenting on port 3000"))
+app.listen(3000,'192.168.0.69',()=>console.log("listenting on port 3000"))
