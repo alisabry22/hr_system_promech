@@ -33,7 +33,6 @@ const AddNewDepartment=async(req,res)=>{
                     
                  connection.execute(select_max_dept_code_query,function(err,result){
                    if(err)throw err;  
-                   console.log(result[0].deptcode++,dept_name);  
                    connection.execute(addDept,[result[0].deptcode++,dept_name],function(err,result1){
                     if(err)throw err;
                     connection.end();

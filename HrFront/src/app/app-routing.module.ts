@@ -4,7 +4,6 @@ import { AllempComponent } from './allemp/allemp.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmptimeComponent } from './emptime/emptime.component';
 import { SpliexcelComponent } from './spliexcel/spliexcel.component';
-import { ReportsComponent } from './reports/reports.component';
 import { UploadSheetComponent } from './upload-sheet/upload-sheet.component';
 import { UploadfileComponent } from './uploadfile/uploadfile.component';
 import { AddemployeeComponent } from './addemployee/addemployee.component';
@@ -25,7 +24,7 @@ const routes: Routes = [
   {path:'emptime',component:EmptimeComponent,},
   {path:'splitexcel',component:SpliexcelComponent,},
   {path:'uploadsheet',component:UploadSheetComponent,},
-  {path:'reports',component:ReportsComponent,},
+
   {path:'uploadfile',component:UploadfileComponent,},
   {path:'jobs',component:JobsComponent,},
   {path:'timereport',component:TimeReportComponent,},

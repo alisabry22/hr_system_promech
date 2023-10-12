@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Mails Form</h2>
+
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="Month" name="month" formControlName="month">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="From" name="from" formControlName="from">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="title" name="title" formControlName="title">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="body" name="body" formControlName="body">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="cc" name="cc" formControlName="cc">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn btn-secondary" (click)="close()">Close</button>
+  <button class="btn btn-primary" (click)="save()">Save</button>
+</mat-dialog-actions>

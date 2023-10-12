@@ -3,59 +3,99 @@
 <mat-dialog-content [formGroup]="form">
   <mat-form-field appearance="outline">
     <mat-label>Employee Name</mat-label>
-    <input matInput  readonly placeholder="Employee Name" name="employeename"  formControlName="employeename">
+    <input
+      matInput
+      readonly
+      placeholder="Employee Name"
+      name="employeename"
+      formControlName="employeename"
+    />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Email Address</mat-label>
+    <input
+      matInput
+      placeholder="Email Address"
+      name="emailaddress"
+      formControlName="emailaddress"
+    />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Manager Email Address</mat-label>
+    <input
+      matInput
+      placeholder="Manager Email Address"
+      name="manager_email_address"
+      formControlName="manager_email_address"
+    />
   </mat-form-field>
 
- <!-- select employee Deartment -->
+  <!-- select employee Deartment -->
   <mat-form-field appearance="fill">
     <mat-label>Department</mat-label>
-    <mat-select   *ngIf="departmentName" formControlName="departmentName" >
-       <mat-option [value]="departmentName">
-         {{departmentName}}
-       </mat-option>
-       <mat-option *ngFor="let dept of departments" value="{{dept.dept_desc}}" [hidden]="dept.dept_desc===departmentName">{{dept.dept_desc}}</mat-option>
-
-     </mat-select>
-     <mat-select  *ngIf="!departmentName" formControlName="departmentName" >
-
-       <mat-option *ngFor="let dept of departments" value="{{dept.dept_desc}}">{{dept.dept_desc}}</mat-option>
-
-     </mat-select>
+    <mat-select *ngIf="departmentName" formControlName="departmentName">
+      <mat-option [value]="departmentName">
+        {{ departmentName }}
+      </mat-option>
+      <mat-option
+        *ngFor="let dept of departments"
+        value="{{ dept.dept_desc }}"
+        [hidden]="dept.dept_desc === departmentName"
+        >{{ dept.dept_desc }}</mat-option
+      >
+    </mat-select>
+    <mat-select *ngIf="!departmentName" formControlName="departmentName">
+      <mat-option
+        *ngFor="let dept of departments"
+        value="{{ dept.dept_desc }}"
+        >{{ dept.dept_desc }}</mat-option
+      >
+    </mat-select>
   </mat-form-field>
 
+  <!-- select employee Role -->
 
- <!-- select employee Role -->
+  <mat-form-field appearance="fill">
+    <mat-label>Select Role</mat-label>
+    <mat-select
+      appearance="outline"
+      formControlName="role"
+      placeholder="Role"
+      *ngIf="role"
+    >
+      <mat-option value="{{ role }}">{{ role }}</mat-option>
+      <mat-option *ngIf="role === 'Employee'" value="Manager"
+        >Manager</mat-option
+      >
+      <mat-option *ngIf="role === 'Manager'" value="Employee"
+        >Employee</mat-option
+      >
+    </mat-select>
+    <mat-select
+      appearance="outline"
+      formControlName="role"
+      placeholder="Role"
+      *ngIf="!role"
+    >
+      <mat-option value="Employee">Employee</mat-option>
+      <mat-option value="Manager">Manager</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Select Role</mat-label>
-      <mat-select appearance="outline"  formControlName="role" placeholder="Role" *ngIf="role">
-        <mat-option value="{{role}}" >{{role}}</mat-option>
-        <mat-option *ngIf="role==='Employee'" value="Manager">Manager</mat-option>
-        <mat-option *ngIf="role==='Manager'" value="Employee">Employee</mat-option>
-
-      </mat-select>
-     <mat-select appearance="outline" formControlName="role" placeholder="Role" *ngIf="!role">
-        <mat-option value="Employee">Employee</mat-option>
-        <mat-option value="Manager">Manager</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-     <!-- select employee status -->
+  <!-- select employee status -->
   <mat-form-field appearance="fill">
     <mat-label>Employee Status</mat-label>
-    <mat-select   *ngIf="emp_status" formControlName="emp_status" >
-       <mat-option [value]="emp_status"> {{emp_status=="1"?"Active":"InActive"}}</mat-option>
+    <mat-select *ngIf="emp_status" formControlName="emp_status">
+      <mat-option [value]="emp_status">
+        {{ emp_status == "1" ? "Active" : "InActive" }}</mat-option
+      >
 
-       <mat-option value="2" *ngIf="emp_status=='1' " >InActive </mat-option>
-       <mat-option value="1" *ngIf="emp_status=='2' " > Active</mat-option>
-       
-
-     </mat-select>
+      <mat-option value="2" *ngIf="emp_status == '1'">InActive </mat-option>
+      <mat-option value="1" *ngIf="emp_status == '2'"> Active</mat-option>
+    </mat-select>
   </mat-form-field>
-
-
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button class="btn btn-secondary"(click)="close()">Close</button>
-  <button class="btn btn-primary"(click)="save()">Save</button>
+  <button class="btn btn-secondary" (click)="close()">Close</button>
+  <button class="btn btn-primary" (click)="save()">Save</button>
 </mat-dialog-actions>

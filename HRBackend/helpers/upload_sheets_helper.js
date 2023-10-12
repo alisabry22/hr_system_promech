@@ -4,10 +4,13 @@ const oracleConnection = require("../controllers/oracle_connection");
 const {GetDistinctDaysAtEmpTime,GetAllEmpTimeWithHisRule,} = require("./common_helpers");
 const moment=require("moment");
 const { log } = require("console");
+const { connect } = require("http2");
 
 function UploadSheetsToDatabaseHelper() {
   return new Promise(async function (resolve, reject) {
+    let connection;
     try {
+      
       var promech = xlsx.readFile("./sql/promech.xlsx");
       var penta3d = xlsx.readFile("./sql/penta3d.xlsx");
       var promech12 = xlsx.readFile("./sql/promech12.xlsx");
@@ -60,6 +63,9 @@ function UploadSheetsToDatabaseHelper() {
       sql_loader ="sqlldr userid=attend/attend control=D:\\hr_system\\HRBackend\\sql\\at_emp_time.ctl log=D:\\hr_system\\HRBackend\\sql\\at_emp_time.log skip=1";
       
       childprocess.execSync(sql_loader);
+
+      var runprecedure=await connection.execute(`BEGIN trans_attend_data_over(); END;`);
+      console.log(runprecedure);
       resolve(true);
      
 
@@ -95,7 +101,7 @@ async function SubmitDataToAtTransTable() {
              connection=await oracleConnection();
            
         const date_count = await GetDistinctDaysAtEmpTime();
-
+      console.log("date_count",date_count);
         var emp_times = await GetAllEmpTimeWithHisRule();
        
     

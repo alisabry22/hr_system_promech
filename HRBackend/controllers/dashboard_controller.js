@@ -3,7 +3,6 @@ const{GetEmployeeTotalCount,GetDepartmentTotalCount,GetJobsTotalCount,GetLast5Jo
 
 const getDashboardData = async (req, res) => {
   try {
-    console.log(req.headers);
     const emp_count = await GetEmployeeTotalCount();
     const dept_count = await GetDepartmentTotalCount();
     const jobs_count = await GetJobsTotalCount();

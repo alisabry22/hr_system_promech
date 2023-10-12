@@ -48,7 +48,7 @@ export const navbarData:INavbarData[]=[
             label:'Upload Sheet',
           },
           {
-            routeLink:'reports',
+            routeLink:'timereport',
               icon:'pi pi-file',
               label:'Reports',
             },

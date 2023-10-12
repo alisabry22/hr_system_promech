@@ -10,7 +10,6 @@ import { BodyComponent } from './body/body.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { SpliexcelComponent } from './spliexcel/spliexcel.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ReportsComponent } from './reports/reports.component';
 import { EmptimeComponent } from './emptime/emptime.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { UploadfileComponent } from './uploadfile/uploadfile.component';
@@ -52,7 +51,9 @@ import { TableModule } from 'primeng/table';
 import { LoginComponent } from './login/login.component';
 import { authGuard } from './services/auth.guard';
 import { AuthInterceptor } from './services/authinterceptor';
+import { EmployeeHistorySearchPipe } from 'shared/models/emp_history.pipe';
 import { HistoryempComponent } from './historyemp/historyemp.component';
+import { SendMailsComponent } from './send-mails/send-mails.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,7 @@ import { HistoryempComponent } from './historyemp/historyemp.component';
     SidenavComponent,
     SpliexcelComponent,
     DashboardComponent,
-    ReportsComponent,
+
     EmptimeComponent,
     UploadfileComponent,
     UploadSheetComponent,
@@ -86,6 +87,8 @@ import { HistoryempComponent } from './historyemp/historyemp.component';
     FilterDepartmentPipe,
     LoginComponent,
     HistoryempComponent,
+    EmployeeHistorySearchPipe,
+    SendMailsComponent
 
 
    // filterDateTimeReport,

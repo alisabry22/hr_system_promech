@@ -20,6 +20,8 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 output/
+*.xlsx
+*.xls
 
 
 # Visual Studio Code

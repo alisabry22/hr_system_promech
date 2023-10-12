@@ -74,7 +74,39 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+      <!-- email and manager email address -->
+      <div class="row justify-content-md-center">
+        <div class="vacation_child col">
+          <label
+            for="formGroupExampleInput"
+            class="form-label"
+            for="email_address"
+            >Email Address</label
+          >
+          <input
+            type="text"
+            name="email_address"
+            placeholder="Email Address"
+            class="form-control"
+          />
+        </div>
 
+        <div class="vacation_child col">
+          <label
+            for="formGroupExampleInput"
+            class="form-label"
+            for="manager_email_address"
+            >Manager Email Address</label
+          >
+          <input
+            type="text"
+            name="manager_email_address"
+            placeholder="Manager Email Address"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <!--vacations-->
       <div class="row justify-content-md-center">
         <div class="vacation_child col">
           <label
@@ -149,11 +181,20 @@
 
       <div class="row pl-4">
         <h4>Select Role</h4>
-        <div class="form-check ">
-          <input class="form-check-input" type="radio" value="Employee" name="flexRadioDefault"id="flexRadioDefault2"checked/>
-          <label class="form-check-label" for="flexRadioDefault2">Employee</label>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            value="Employee"
+            name="flexRadioDefault"
+            id="flexRadioDefault2"
+            checked
+          />
+          <label class="form-check-label" for="flexRadioDefault2"
+            >Employee</label
+          >
         </div>
-        <div class="form-check ">
+        <div class="form-check">
           <input
             class="form-check-input"
             value="Manager"
@@ -166,8 +207,6 @@
           </label>
         </div>
       </div>
-
-
 
       <input class="btn-submit" type="submit" value="Submit" />
     </form>
