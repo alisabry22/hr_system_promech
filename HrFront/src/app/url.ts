@@ -29,3 +29,4 @@ export const GET_ALL_TIME_REPO = BASE_URL + '/report/timerepo';
 
 //send email
 export const SEND_EMAIL_REQUEST = BASE_URL + '/emps/sendemail';
+export const GET_ALL_EMAILS_REQUEST = BASE_URL + '/emps/loademails';

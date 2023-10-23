@@ -9,6 +9,7 @@ import {
 } from '@angular/material/datepicker';
 import { SectionModel } from 'shared/models/section';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-addemployee',
   templateUrl: './addemployee.component.html',
@@ -17,6 +18,7 @@ import { Router } from '@angular/router';
 export class AddemployeeComponent implements OnInit {
   departments = [];
   final_departs: Department[] = [];
+
   jobs = [];
   sections = [];
   sections_model: SectionModel[] = [];
@@ -36,7 +38,7 @@ export class AddemployeeComponent implements OnInit {
   casualVacation: string = '';
   employeeType: string = '';
   hiredate: Date = new Date();
-
+  manager_emails: string[] = [];
   constructor(
     private addempservice: AddemployeeService,
     private router: Router
@@ -51,12 +53,13 @@ export class AddemployeeComponent implements OnInit {
   }
   getAllEmployees() {
     this.addempservice.getAllDepartments().subscribe((response) => {
-      console.log(response.sects);
+      console.log(response);
 
       this.state = response.state;
       this.departments = response.departments;
       this.jobs = response.jobs;
       this.sections = response.sects;
+      this.manager_emails = response.manager_emails;
       this.final_departs = this.departments.map((val) => ({
         dept_id: val[0],
         dept_desc: val[1],

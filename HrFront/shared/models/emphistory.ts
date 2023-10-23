@@ -1,21 +1,18 @@
-export class EmpHistory{
-  card_id!:string;
-  date_day!:string;
-  rule_no!:number;
-  dept_code!:number;
-  sect_code!:number;
-  job_code!:number;
-  in_hour!:number;
-  IN_MIN!:number;
-  exit_hour!:number;
-  exit_min!:number;
-  late_hour!:number;
-  late_min!:number;
-  trans_amt!:number;
-  remarks!:string;
-  absent!:boolean;
-  early_hour!:number;
-  early_min!:number;
-  emp_name!:string;
-  company_name!:string;
+export class EmpHistory {
+  card_id!: string;
+  date_day!: string;
+  rule_no!: number;
+  formated_date!: string;
+  dept_code!: number;
+  sect_code!: number;
+  job_code!: number;
+  clock_in!: string;
+  clock_out!: string;
+  late!: string;
+  trans_amt!: number;
+  remarks!: string;
+  absent!: boolean;
+  early!: string;
+  emp_name!: string;
+  company_name!: string;
 }

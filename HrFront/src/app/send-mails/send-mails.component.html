@@ -2,10 +2,31 @@
 
 <mat-dialog-content [formGroup]="form">
   <mat-form-field appearance="outline">
-    <input matInput placeholder="Month" name="month" formControlName="month">
+    <input matInput placeholder="Month" name="month" readonly="true" formControlName="month">
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <input matInput placeholder="From" name="from" formControlName="from">
+    <mat-label>From</mat-label>
+    <input matInput placeholder="example@promech-eg.com" name="from" formControlName="from">
+
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>CC</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Email Selection">
+      <mat-chip-row *ngFor="let email of selected_emails" (removed)="remove(email)">
+        {{email}}
+        <button matChipRemove [attr.aria-label]="'remove ' + email">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    </mat-chip-grid>
+    <input placeholder="New email..." #emailInput formControlName="cc" [matChipInputFor]="chipGrid"
+      [matAutocomplete]="auto" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)" />
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let email of filteredEmails | async" [value]="email">
+        {{email}}
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <input matInput placeholder="title" name="title" formControlName="title">
@@ -13,11 +34,9 @@
   <mat-form-field appearance="outline">
     <input matInput placeholder="body" name="body" formControlName="body">
   </mat-form-field>
-  <mat-form-field appearance="outline">
-    <input matInput placeholder="cc" name="cc" formControlName="cc">
-  </mat-form-field>
+
 </mat-dialog-content>
 <mat-dialog-actions>
   <button class="btn btn-secondary" (click)="close()">Close</button>
-  <button class="btn btn-primary" (click)="save()">Save</button>
+  <button class="btn btn-primary" (click)="save()">Send</button>
 </mat-dialog-actions>

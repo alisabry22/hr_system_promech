@@ -8,18 +8,48 @@ const nodemailer = require("nodemailer");
 //   };
 const node_transporter = nodemailer.createTransport({
   service: "gmail", // secure SMTP
-  // false for TLS - as a boolean not string - but the default is false so just remove this completely
+  secure: false,
   auth: {
-    user: "smoothbaron@gmail.com",
-    pass: "dspq tdpm irdg xhnv",
+    user: "hr.pro352@gmail.com",
+    pass: "owkw gjej vpdr epfw",
   },
+  // secure SMTP
+
+  // false for TLS - as a boolean not string - but the default is false so just remove this completely
+
+  //working smtp configuration
+  // host: "smtp.office365.com", // Office 365 server
+  // port: 587,
+  // secureConnection: false,
+  // auth: {
+  //   user: "promech@promech-eg.com",
+  //   pass: "qfgqspjtgqhclxwy",
+  // },
+  // tls: {
+  //   ciphers: "SSLv3",
+  //   rejectUnauthorized: false,
+  // },
+  // requireTLS: true,
+});
+node_transporter.verify((err, success) => {
+  if (err) {
+    console.log("from node mailer file error", err);
+  } else {
+    console.log(success);
+  }
 });
 
-// transporter.sendMail(mailOptions ,function(error,info){
-//   if(err){
-//     console.log(err);
-//   }else{
-//     console.log('Email sent: ' + info.response);
-//   }
-// });
-module.exports = { node_transporter };
+function SendEmailToEmployee(mail_options){
+  return new Promise(async function (resolve,reject){
+    node_transporter.sendMail(mail_options,(err,info)=>{
+      if(err){
+
+        resolve(false);
+      }else{
+        resolve(true);
+      }
+    })
+  })
+}
+
+module.exports = { node_transporter,SendEmailToEmployee };

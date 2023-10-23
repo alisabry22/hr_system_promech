@@ -1,34 +1,14 @@
 <div class="container">
-  <div
-    *ngIf="state == 'success' && alertShown"
-    class="alert alert-success alert-dismissible fade show"
-    role="alert"
-  >
+  <div *ngIf="state == 'success' && alertShown" class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>Congratulations </strong>{{ message }}
-    <button
-      type="button"
-      (click)="closeAlert()"
-      class="close"
-      data-dismiss="alert"
-      aria-label="Close"
-    >
+    <button type="button" (click)="closeAlert()" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
-  <div
-    *ngIf="state == 'error' && alertShown"
-    class="alert alert-warning alert-dismissible fade show"
-    role="alert"
-  >
+  <div *ngIf="state == 'error' && alertShown" class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>Error </strong> {{ message }}
-    <button
-      type="button"
-      class="close"
-      (click)="closeAlert()"
-      data-dismiss="alert"
-      aria-label="Close"
-    >
+    <button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -37,105 +17,53 @@
     <form class="row g-4" (ngSubmit)="addEmployee($event)">
       <div class="row">
         <div class="cardid_date col">
-          <label for="formGroupExampleInput" class="form-label" for="Card Id"
-            >Card ID</label
-          >
-          <input
-            type="text"
-            name="cardId"
-            placeholder="Card ID"
-            class="form-control"
-          />
+          <label for="formGroupExampleInput" class="form-label" for="Card Id">Card ID</label>
+          <input type="text" name="cardId" placeholder="Card ID" class="form-control" />
         </div>
         <div class="cardid_date col">
-          <label for="formGroupExampleInput" class="form-label" for="firstName"
-            >Employee Name</label
-          >
-          <input
-            type="text"
-            name="employeeName"
-            placeholder="Employee Name"
-            class="form-control"
-          />
+          <label for="formGroupExampleInput" class="form-label" for="firstName">Employee Name</label>
+          <input type="text" name="employeeName" placeholder="Employee Name" class="form-control" />
         </div>
       </div>
 
       <mat-form-field>
         <mat-label>Hire Date</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          (dateChange)="getChangedDate($event)"
-        />
+        <input matInput [matDatepicker]="picker" (dateChange)="getChangedDate($event)" />
         <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <!-- email and manager email address -->
       <div class="row justify-content-md-center">
         <div class="vacation_child col">
-          <label
-            for="formGroupExampleInput"
-            class="form-label"
-            for="email_address"
-            >Email Address</label
-          >
-          <input
-            type="text"
-            name="email_address"
-            placeholder="Email Address"
-            class="form-control"
-          />
+          <label for="formGroupExampleInput" class="form-label" for="email_address">Email Address</label>
+          <input type="text" name="email_address" placeholder="Employee Email Address" class="form-control" />
         </div>
 
         <div class="vacation_child col">
-          <label
-            for="formGroupExampleInput"
-            class="form-label"
-            for="manager_email_address"
-            >Manager Email Address</label
-          >
-          <input
-            type="text"
-            name="manager_email_address"
-            placeholder="Manager Email Address"
-            class="form-control"
-          />
+          <mat-form-field class="manager_class">
+
+            <input type="text" name="manager_email_address" matInput [matAutocomplete]="auto"
+              placeholder="Manager Email Address" class="form-control" />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let email_address of manager_emails" [value]="email_address">
+                {{email_address}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
         </div>
       </div>
       <!--vacations-->
       <div class="row justify-content-md-center">
         <div class="vacation_child col">
-          <label
-            for="formGroupExampleInput"
-            class="form-label"
-            for="ordinary_vacation"
-            >Ordinary vacation</label
-          >
-          <input
-            type="text"
-            name="ordinary_vacation"
-            placeholder="Ordinary vacation"
-            class="form-control"
-          />
+          <label for="formGroupExampleInput" class="form-label" for="ordinary_vacation">Ordinary vacation</label>
+          <input type="text" name="ordinary_vacation" placeholder="Ordinary vacation" class="form-control" />
         </div>
 
         <div class="vacation_child col">
-          <label
-            for="formGroupExampleInput"
-            class="form-label"
-            for="casual_vacation"
-            >Casual vacation</label
-          >
-          <input
-            type="text"
-            name="casual_vacation"
-            placeholder="Casual vacation"
-            class="form-control"
-          />
+          <label for="formGroupExampleInput" class="form-label" for="casual_vacation">Casual vacation</label>
+          <input type="text" name="casual_vacation" placeholder="Casual vacation" class="form-control" />
         </div>
       </div>
 
@@ -182,26 +110,12 @@
       <div class="row pl-4">
         <h4>Select Role</h4>
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            value="Employee"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
-            checked
-          />
-          <label class="form-check-label" for="flexRadioDefault2"
-            >Employee</label
-          >
+          <input class="form-check-input" type="radio" value="Employee" name="flexRadioDefault" id="flexRadioDefault2"
+            checked />
+          <label class="form-check-label" for="flexRadioDefault2">Employee</label>
         </div>
         <div class="form-check">
-          <input
-            class="form-check-input"
-            value="Manager"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
-          />
+          <input class="form-check-input" value="Manager" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
           <label class="form-check-label" for="flexRadioDefault1">
             Manager
           </label>

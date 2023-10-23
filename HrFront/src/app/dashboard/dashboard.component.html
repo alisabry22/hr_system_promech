@@ -1,103 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 </head>
+
 <body>
-  <div  *ngIf="(state=='error' && alertShown)" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <div *ngIf="(state=='error' && alertShown)" class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>Error </strong> {{message}}
     <button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
-    <!-- all Employees card  -->
+  <!-- all Employees card  -->
 
-<div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
-  <div class="grid">
-    <!--Count total Employee card -->
+  <div class="surface-ground px-4 py-5 md:px-6 lg:px-8">
+    <div class="grid">
+      <!--Count total Employee card -->
 
       <div class="col-12 md:col-6 lg:col-3">
         <a routerLink="/allemp">
-        <div class="surface-card shadow-2 p-3 border-round">
+          <div class="surface-card shadow-2 p-3 border-round">
             <div class="flex justify-content-between mb-3">
-                <div>
-                    <span class="block text-500 font-medium mb-3">All Employees</span>
-                    <div class="text-900 font-medium text-xl">{{totalemp}}</div>
-                </div>
-                <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width:2.5rem;height:2.5rem">
-                    <i class="pi pi-user text-blue-500 text-xl"></i>
-                </div>
+              <div>
+                <span class="block text-500 font-medium mb-3">All Employees</span>
+                <div class="text-900 font-medium text-xl">{{totalemp}}</div>
+              </div>
+              <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                style="width:2.5rem;height:2.5rem">
+                <i class="pi pi-user text-blue-500 text-xl"></i>
+              </div>
             </div>
 
+          </div>
+        </a>
+      </div>
+
+      <!--Count total Department card -->
+      <div class="col-12 md:col-6 lg:col-3">
+        <a routerLink="/departments">
+
+          <div class="surface-card shadow-2 p-3 border-round">
+            <div class="flex justify-content-between mb-3">
+              <div>
+                <span class="block text-500 font-medium mb-3">Total Departments</span>
+                <div class="text-900 font-medium text-xl">{{totaldept}}</div>
+              </div>
+              <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                style="width:2.5rem;height:2.5rem">
+                <i class="pi pi-desktop text-orange-500 text-xl"></i>
+              </div>
+            </div>
+
+          </div>
+        </a>
+      </div>
+
+
+
+      <!--Count total Jobs card -->
+
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <a routerLink="/jobs">
+          <div class="surface-card shadow-2 p-3 border-round">
+            <div class="flex justify-content-between mb-3">
+              <div>
+                <span class="block text-500 font-medium mb-3">Total Jobs</span>
+                <div class="text-900 font-medium text-xl">{{totaljobs}}</div>
+              </div>
+              <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                style="width:2.5rem;height:2.5rem">
+                <i class="pi pi-briefcase text-cyan-500 text-xl"></i>
+              </div>
+            </div>
+
+          </div>
+        </a>
+      </div>
+
+
+
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <div class="surface-card shadow-2 p-3 border-round">
+          <div class="flex justify-content-between mb-3">
+            <div>
+              <span class="block text-500 font-medium mb-3">Total Sections</span>
+              <div class="text-900 font-medium text-xl">{{totalsects}}</div>
+            </div>
+            <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
+              style="width:2.5rem;height:2.5rem">
+              <i class="pi pi-eraser text-purple-500 text-xl"></i>
+            </div>
+          </div>
+
         </div>
-      </a>
+      </div>
+
     </div>
-
-    <!--Count total Department card -->
-          <div class="col-12 md:col-6 lg:col-3">
-            <a routerLink="/departments">
-
-            <div class="surface-card shadow-2 p-3 border-round">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Total Departments</span>
-                        <div class="text-900 font-medium text-xl">{{totaldept}}</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width:2.5rem;height:2.5rem">
-                        <i class="pi pi-desktop text-orange-500 text-xl"></i>
-                    </div>
-                </div>
-
-            </div>
-          </a>
-        </div>
-
-
-
-            <!--Count total Jobs card -->
-
-
-          <div class="col-12 md:col-6 lg:col-3">
-            <a routerLink="/jobs">
-            <div class="surface-card shadow-2 p-3 border-round">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Total Jobs</span>
-                        <div class="text-900 font-medium text-xl">{{totaljobs}}</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" style="width:2.5rem;height:2.5rem">
-                        <i class="pi pi-briefcase text-cyan-500 text-xl"></i>
-                    </div>
-                </div>
-
-            </div>
-          </a>
-        </div>
-
-
-
-
-          <div class="col-12 md:col-6 lg:col-3">
-            <div class="surface-card shadow-2 p-3 border-round">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Total Sections</span>
-                        <div class="text-900 font-medium text-xl">{{totalsects}}</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-purple-100 border-round" style="width:2.5rem;height:2.5rem">
-                        <i class="pi pi-eraser text-purple-500 text-xl"></i>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
   </div>
-</div>
 
 
 
@@ -108,7 +114,7 @@
     <div class="row justify-content-md-center align-items-center">
 
       <div class="col">
-              <h2>Recent Employees</h2>
+        <h2>Recent Employees</h2>
         <div class="table-responsive">
           <table class="users" *ngIf="latest_emps">
             <tr>
@@ -121,7 +127,7 @@
               <tr>
                 <td>{{emp.employee_name}}</td>
                 <td>{{emp.department_name}}</td>
-                <td>{{emp.hire_date?.substring(0,10)}}</td>
+                <td>{{emp.formatted_hire_date}}</td>
 
               </tr>
             </tbody>
@@ -138,18 +144,21 @@
           TOP Employee
         </h2>
         <div class="table-responsive">
-          <table class="users" *ngIf="latest_emps">
+          <table class="users" >
             <tr>
               <th scope="col">Employee Name</th>
-              <th scope="col">Department</th>
-              <th scope="col">Hire Date</th>
+              <th scope="col">Total Attend</th>
+              <th scope="col">Month</th>
+
             </tr>
 
-            <tbody *ngFor="let emp of latest_emps">
+            <tbody *ngFor="let emp of topFive">
               <tr>
-                <td>{{emp.employee_name}}</td>
-                <td>{{emp.department_name}}</td>
-                <td>{{emp.hire_date?.substring(0,10)}}</td>
+                <td>{{emp[0]}}</td>
+                <td>{{emp[1]}}</td>
+                <td>{{emp[2]}} - {{emp[3]}}</td>
+
+
 
               </tr>
             </tbody>
@@ -157,7 +166,7 @@
           </table>
 
         </div>
-        <div >
+        <div>
 
         </div>
 
@@ -170,11 +179,5 @@
 
 
 </body>
+
 </html>
-
-
-
-
-
-
-

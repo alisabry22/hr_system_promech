@@ -1,5 +1,5 @@
 
-const{GetEmployeeTotalCount,GetDepartmentTotalCount,GetJobsTotalCount,GetLast5JoinedEmployees, getTotalSections}=require("../helpers/dashboard_helper")
+const{GetEmployeeTotalCount,GetDepartmentTotalCount,GetJobsTotalCount,GetLast5JoinedEmployees, getTotalSections, getTop5Attendance}=require("../helpers/dashboard_helper")
 
 const getDashboardData = async (req, res) => {
   try {
@@ -8,6 +8,8 @@ const getDashboardData = async (req, res) => {
     const jobs_count = await GetJobsTotalCount();
     const get_last_Emps = await GetLast5JoinedEmployees();
     const total_Sects=await getTotalSections();
+   var topFiveEmps= await getTop5Attendance();
+  
 
     return res.send({
       state: "success",
@@ -16,6 +18,7 @@ const getDashboardData = async (req, res) => {
       totaljob: jobs_count,
       latest_emps: get_last_Emps,
       totalsect:total_Sects,
+      topfive:topFiveEmps,
     });
   } catch (error) {
     return res.send({ state: "error", message: error.message });

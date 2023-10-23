@@ -216,11 +216,15 @@ function createExcel(nameslist, file, count_days) {
       if (val[val.length - 1]["No."]) {
         var filename = `./emails/${val[val.length - 1].CompanyName}_${
           val[val.length - 1]["No."]
-        }_${Names[i]}_${date[1]}_${date[2]}.xlsx`;
-      } else {
+        }_${Names[i]}.xlsx`;
+      } else if (val[val.length - 1]["AC-No"]) {
         var filename = `./emails/${val[val.length - 1].CompanyName}_${
           val[val.length - 1]["AC-No"]
-        }_${Names[i]}_${date[1]}_${date[2]}.xlsx`;
+        }_${Names[i]}.xlsx`;
+      } else {
+        var filename = `./emails/${val[val.length - 1].CompanyName}_${
+          val[val.length - 1]["AC-No."]
+        }_${Names[i]}.xlsx`;
       }
       xlsx.writeFile(workbook, filename);
       i++;

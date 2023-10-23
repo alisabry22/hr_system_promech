@@ -8,8 +8,10 @@ import { EditempComponent } from '../editemp/editemp.component';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Sort } from '@angular/material/sort';
 import { SendMailsComponent } from '../send-mails/send-mails.component';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-allemp',
+  providers: [DatePipe],
   templateUrl: './allemp.component.html',
   styleUrls: ['./allemp.component.css'],
 })
@@ -18,9 +20,11 @@ export class AllempComponent implements OnInit {
   final_emps: Employee[] = [];
   message: string = '';
   alertShown: boolean = false;
+
   state: string = '';
   sortedEmps: Employee[] = [];
   filter_emp: string = '';
+  emailFail:boolean=false;
   list_of_emps_mails: Employee[] = [];
   departments = [];
   final_departs: Department[] = [];
@@ -29,9 +33,13 @@ export class AllempComponent implements OnInit {
   constructor(
     private router: Router,
     private employeeService: EmployeeserviceService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private datePipe: DatePipe
   ) {}
   ngOnInit(): void {
+    this.list_of_emps_mails = [];
+    this.emailFail=false;
+    this.isSelected = false;
     this.employeeService.getAllEmployees().subscribe({
       next: (event: any) => {
         this.state = event.state;
@@ -45,7 +53,13 @@ export class AllempComponent implements OnInit {
           hire_date: val[3],
           status: val[5],
           sect_code: val[6],
+          formatted_hire_date: this.datePipe.transform(
+            val[3],
+            'dd-MM-YYYY',
+            'UTC'
+          )!,
           department_name: val[7],
+
           rule: val[8],
           email_address: val[9],
           manager_email_address: val[10],
@@ -65,7 +79,8 @@ export class AllempComponent implements OnInit {
       },
     });
   }
-  openDialog(emp: Employee) {
+  //this dialog will open once admin clicks on each row of employees to edit his/her values
+  openEditEmployeeDialog(emp: Employee) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.hasBackdrop = true;
     dialogConfig.autoFocus = true;
@@ -91,7 +106,7 @@ export class AllempComponent implements OnInit {
       }
     });
   }
-
+//this function works once dialog is closed to edit employee data
   editEmployee(
     empname: string,
     departname: string,
@@ -132,7 +147,7 @@ export class AllempComponent implements OnInit {
   closeAlert() {
     this.alertShown = false;
   }
-
+//for implementing sort employees by different categories
   sortEmps(sort: Sort) {
     const data = this.final_emps.slice();
     if (!sort.active || sort.direction === '') {
@@ -162,18 +177,33 @@ export class AllempComponent implements OnInit {
     });
   }
 
-  sendEmail(event: any) {
+  sendEmail(data: any) {
+    let list_of_ccs: string[] = data.cc;
+    let form_Data = data.form;
+
     if (this.list_of_emps_mails.length != 0) {
-      this.list_of_emps_mails.forEach((emp) => {
-        this.employeeService.sendEmail(emp).subscribe({
+      //call api to send emails to employees if the list of choosen employees is not empty
+      this.employeeService
+        .sendEmail(form_Data, list_of_ccs, this.list_of_emps_mails)
+        .subscribe({
+
+
+
           next: (event: any) => {
-            console.log(event);
+            console.log("event",event);
+            this.state=event.state;
+            this.message=event.message;
+            this.alertShown=true;
           },
           error: (event: any) => {
-            console.error(event);
+            this.state=event.state;
+            this.message=event.message;
+            this.emailFail=true;
+            this.alertShown=true;
           },
         });
-      });
+
+      this.ngOnInit();
     } else {
       alert('ewew');
     }
@@ -210,7 +240,6 @@ export class AllempComponent implements OnInit {
     } else {
       this.list_of_emps_mails = [];
     }
-    console.log(this.list_of_emps_mails);
   }
   openDialogSendMails(event: any) {
     const dialogConfig = new MatDialogConfig();
@@ -222,6 +251,12 @@ export class AllempComponent implements OnInit {
     dialogConfig.data = { emps: this.list_of_emps_mails };
 
     const dialogRef = this.dialog.open(SendMailsComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data != null) {
+        //this means admin click save button
+        this.sendEmail(data);
+      }
+    });
   }
 }
 function compare(a: number | string, b: number | string, isAsc: boolean) {

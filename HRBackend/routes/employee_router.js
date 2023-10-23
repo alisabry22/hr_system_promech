@@ -8,6 +8,7 @@ const {
   EditEmpTime,
   getEmpsHistory,
   sendEmailToEmployees,
+  getAllEmailsFromDb,
 } = require("../controllers/employee_controller");
 const { verifyToken } = require("../helpers/auth_helpers");
 
@@ -25,5 +26,8 @@ router.post("/editemp", verifyToken, EditEmployee);
 router.post("/editEmpTime", verifyToken, EditEmpTime);
 //get emps history
 router.get("/emphistory", verifyToken, getEmpsHistory);
+
+//get emails from db
+router.get("/loademails", verifyToken, getAllEmailsFromDb);
 
 module.exports = router;

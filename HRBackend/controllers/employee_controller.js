@@ -1,5 +1,3 @@
-const fs = require("fs");
-
 const {
   UpdateTransAtTrans,
   GetSpecificEmployeeTimeFromAtEmpTime,
@@ -18,8 +16,9 @@ const {
   updatehistoryTableHelper,
 } = require("../helpers/employee_helper");
 const oracleConnection = require("./oracle_connection");
-const { log, error } = require("console");
-const { node_transporter } = require("../helpers/node_mailer");
+const { node_transporter, SendEmailToEmployee } = require("../helpers/node_mailer");
+const logger = require("../helpers/logger");
+const ReadFileOfEmployee = require("../helpers/file_helper");
 
 const getAllEmployees = async (req, res) => {
   try {
@@ -206,47 +205,91 @@ async function updatehistoryTableOnEachEdit(
   }
 }
 
+
 const sendEmailToEmployees = async (req, res) => {
+  var total_failed_emails=[];
+  const { emps, form, cc } = req.body;
+
   try {
-    const {
-      card_id,
-      emp_name,
-      email_address,
-      manager_email_address,
-      company_name,
-    } = req.body;
-    if (card_id && company_name) {
-      fs.readdir("./emails", (err, files) => {
-        if (err) {
-          console.log("error", err);
+ 
+    if (emps.length != 0) {
+      logger.info(`Current Date: ${new Date().toLocaleString()}`);
+      logger.info(
+        `Total number of employees to send emails:${emps.length}`
+      );
+      //loop on each employee to send mail for him
+      for (let emp of emps) {
+        let list_of_ccs =
+          emp.manager_email_address != null &&
+          emp.manager_email_address.length > 1
+            ? `${emp.manager_email_address}`
+            : "";
+
+        for (var element of cc) {
+          list_of_ccs += `,${element}`;
         }
-        var empfilename = company_name + "_" + card_id;
-        var empfiles = files.filter((filename) =>
-          filename.includes(empfilename)
-        );
-        const mail_options = {
-          from: "smoothbaron@gmail.com",
-          to: email_address,
-          subject: "Attendance Sheet",
-          text: "This is Your attendance",
-          attachments: [
-            {
-              filename: `${emp_name}.xlsx`,
-              path: `./emails/${empfiles[0]}`,
-            },
-          ],
-        };
-        node_transporter.sendMail(mail_options, (err, info) => {
-          if (err) {
-            console.log(err);
-          } else {
-            log("info", info);
-          }
-        });
-      });
+
+        const file=await ReadFileOfEmployee(emp.card_id,emp.company_name);
+        
+        if(file!=false){
+          //it means this function returns for me the excel sheet of employee so we can send him email
+          const mail_options = {
+            from: "hr.pro352@gmail.com",
+            to: emp.email_address,
+            cc: list_of_ccs,
+            subject: form.title,
+            text: form.body,
+            attachments: [
+              {
+                filename: `${emp.employee_name}.xlsx`,
+                path: `./emails/${file}`,
+              },
+            ],
+          };
+          const result= await SendEmailToEmployee(mail_options);
+            //it means succes send email to this user
+         if(result==true){
+          logger.info(`Success sending email to: ${emp.email_address}`);
+
+         }else{
+          total_failed_emails.push(emp.email_address);
+          logger.error(`Error sending file to : ${emp.email_address} , check his file at D:\\hr_system\\HRBackend\\emails`);
+
+         }
+        }
+    
+      }
+    
+            if(total_failed_emails.length!=0){
+        //it means their are some failed emails send it back to frontend
+        res.send({state:'error',message:`failed to send emails to ${total_failed_emails.length} employee(s)`});
+      }else{
+        res.send({state:'success',message:`successfully send emails to ${emps.length} employee(s)`});
+      }
     }
   } catch (error) {
     console.log("sendEmailToEmployees ", error);
+  }
+};
+
+const getAllEmailsFromDb = async (req, res) => {
+  let connection;
+  try {
+    connection = await oracleConnection();
+    const get_query =
+      "select email_address from at_emps where email_address is not null";
+    const result = await connection.execute(get_query);
+    return res.send({ emails: result.rows });
+  } catch (error) {
+    return res.send({ state: "error", message: error.toString() });
+  } finally {
+    if (connection) {
+      try {
+        await connection.release();
+      } catch (error) {
+        console.log("getAllEmailsFromDb", error);
+      }
+    }
   }
 };
 module.exports = {
@@ -258,4 +301,5 @@ module.exports = {
   getEmpsHistory,
   updatehistoryTableOnEachEdit,
   sendEmailToEmployees,
+  getAllEmailsFromDb,
 };

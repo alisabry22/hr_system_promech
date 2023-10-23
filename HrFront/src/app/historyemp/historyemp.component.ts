@@ -5,38 +5,43 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FormControl, FormGroup } from '@angular/forms';
 import { EmpHistory } from 'shared/models/emphistory';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-historyemp',
+  providers: [DatePipe],
   templateUrl: './historyemp.component.html',
-  styleUrls: ['./historyemp.component.css']
+  styleUrls: ['./historyemp.component.css'],
 })
 export class HistoryempComponent implements OnInit {
   emps: EmpHistory[] = [];
   result = [];
   pagination: number = 1;
-  state: string = "";
-  temp_emps:EmpHistory[]=[];
-  message: string = "";
+  state: string = '';
+  temp_emps: EmpHistory[] = [];
+  message: string = '';
   showLoading: boolean = false;
   alertShown: boolean = false;
-  filter_text: string = "";
-  startDate!:Date ;
+  filter_text: string = '';
+  startDate!: Date;
   endDate!: Date;
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
-  })
-  constructor(private router: Router, private historyService: HistoryService) { }
+  });
+  constructor(
+    private router: Router,
+    private datepipe: DatePipe,
+    private historyService: HistoryService
+  ) {}
   ngOnInit(): void {
-    this.pagination=1;
+    this.pagination = 1;
     this.range = new FormGroup({
       start: new FormControl<Date | null>(null),
       end: new FormControl<Date | null>(null),
-    })
-    var token = sessionStorage.getItem("token");
+    });
+    var token = sessionStorage.getItem('token');
     if (!token) {
-      this.router.navigate(["login"]);
+      this.router.navigate(['login']);
     } else {
       this.getAllEmpHistory();
     }
@@ -45,15 +50,10 @@ export class HistoryempComponent implements OnInit {
   getAllEmpHistory() {
     this.showLoading = true;
     this.historyService.getAllEmpsHistory().subscribe({
-
-
       next: (event: any) => {
-
-
         this.result = event.history;
 
-
-        this.emps = this.result.map(val => ({
+        this.emps = this.result.map((val) => ({
           date_day: val[0],
           card_id: val[1],
           emp_name: val[2],
@@ -62,29 +62,25 @@ export class HistoryempComponent implements OnInit {
           dept_code: val[5],
           sect_code: val[6],
           job_code: val[6],
-          in_hour: val[8],
-          IN_MIN: val[9],
-          exit_hour: val[10],
-          exit_min: val[11],
-          late_hour: val[12],
-          late_min: val[13],
-          early_hour: val[14],
-          early_min: val[15],
+          clock_in: val[19] != 'True'&&val[8]&&val[9] ?`${val[8]}:${val[9]}` :'',
+          clock_out: val[19] != 'True'&&val[10]&&val[11] ?`${val[10]}:${val[11]}`: '',
+          late: val[19] != 'True' ? `${val[12]}:${val[13]}` : '',
+          early: val[19] != 'True' ? `${val[14]}:${val[15]}` : '',
+          formated_date: this.datepipe.transform(val[0], 'dd-MM-YYYY', 'UTC')!,
           trans_amt: val[17],
           remarks: val[18],
           absent: val[19],
-
-        }))
+        }));
       },
       error: (event: any) => {
         if (event instanceof HttpErrorResponse && event.status == 403) {
-          this.router.navigate(["login"]);
+          this.router.navigate(['login']);
         } else {
           this.alertShown = true;
           this.message = event.message;
           this.state = event.state;
         }
-      }
+      },
     });
     this.showLoading = false;
   }
@@ -93,64 +89,37 @@ export class HistoryempComponent implements OnInit {
   }
   renderPage(event: number) {
     this.pagination = event;
-
   }
   startDateChange(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
-      this.startDate=event.value;
+      this.startDate = event.value;
 
-    //  this.startDate = `${event.value.getDate()}-${(event.value?.getMonth() + 1)}-${event.value?.getFullYear()}`;
-
+      //  this.startDate = `${event.value.getDate()}-${(event.value?.getMonth() + 1)}-${event.value?.getFullYear()}`;
     }
+  }
 
-
-
-
-
-
-
-  };
-
-   addOneDay(date = new Date()) {
+  addOneDay(date = new Date()) {
     date.setDate(date.getDate() + 1);
 
     return date;
   }
   endDateChange(event: MatDatepickerInputEvent<Date>) {
-    this.temp_emps=[];
+    this.temp_emps = [];
     if (event.value) {
+      this.endDate = this.addOneDay(event.value);
 
+      for (let element of this.emps) {
+        var date = new Date(element.date_day);
 
-      this.endDate=this.addOneDay(event.value);
-
-
-
-      for(let element of this.emps){
-       var date=new Date(element.date_day);
-
-
-        if(date<=this.endDate && date>=this.startDate){
-
+        if (date <= this.endDate && date >= this.startDate) {
           this.temp_emps.push(element);
         }
-
       }
-      this.emps=this.temp_emps;
-
-
-
+      this.emps = this.temp_emps;
+    }
   }
-
-
-
-}
-applyCalled(event: any) {
-
-
-
-}
-resetFilters() {
-  this.ngOnInit();
-}
-
+  applyCalled(event: any) {}
+  resetFilters() {
+    this.ngOnInit();
+  }
 }

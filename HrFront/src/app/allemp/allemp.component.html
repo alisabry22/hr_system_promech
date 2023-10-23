@@ -5,12 +5,13 @@
   </button>
 </div>
 
-<div *ngIf="state == 'error' && alertShown" class="alert alert-warning alert-dismissible fade show" role="alert">
+<div *ngIf="state == 'error' && alertShown" class="alert alert-danger alert-dismissible fade show" role="alert">
   <strong>Error </strong> {{ message }}
   <button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+
 
 
 <div class="empty_container">
@@ -25,7 +26,7 @@
       *ngIf="employees.length >= 1" />
     <button type="button" (click)="openDialogSendMails($event)" [disabled]="list_of_emps_mails.length === 0"
       matTooltip="Send Attendance Sheets" class="btn btn-primary">Send Attendance Sheets
-      ({{list_of_emps_mails.length!=0?list_of_emps_mails.length:''}})</button>
+      ({{list_of_emps_mails.length!=0?list_of_emps_mails.length :'' }})</button>
 
   </div>
 </div>
@@ -72,16 +73,16 @@
             [checked]="isSelected&&!(emp.status=='2' || (emp.email_address==null||emp.email_address.length===0))"
             type="checkbox" [value]="emp" id="flexCheckDefault" />
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
           {{ emp.card_id }}
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
           {{ emp.employee_name }}
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
           {{ emp.department_name }}
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
           {{
           emp.sect_code == "1"
           ? "Product Development"
@@ -90,23 +91,23 @@
           : "Sheet Metal"
           }}
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
           {{ emp.job_title }}
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
           {{ emp.rule }}
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
           {{ emp.status == "1" ? "Active" : "InActive" }}
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
           {{ emp.email_address }}
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
           {{ emp.manager_email_address }}
         </td>
-        <td (click)="openDialog(emp)" matTooltip="Tap To Edit">
-          {{ emp.hire_date?.substring(0, 10) }}
+        <td (click)="openEditEmployeeDialog(emp)" matTooltip="Tap To Edit">
+          {{ emp.formatted_hire_date }}
         </td>
       </tr>
     </tbody>
