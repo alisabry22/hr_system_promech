@@ -12,25 +12,25 @@
     <input matInput readonly placeholder="Clock_out"   formControlName="clock_out">
 
   </mat-form-field>
- 
 
- 
+
+
   <mat-form-field  >
     <mat-label>Remarks</mat-label>
-    
+
     <mat-select  [(value)]="remarks" disableOptionCentering="true" formControlName="remarks" >
       <mat-option value=""></mat-option>
       <mat-option value="Permission">Permission</mat-option>
       <mat-option value="Ordinary">Ordinary</mat-option>
       <mat-option value="Casual">Casual</mat-option>
       <mat-option value="Sick">Sick</mat-option>
-     
+      <mat-option value="official">Official</mat-option>
       <mat-option value="Mission">Mission</mat-option>
 
     </mat-select>
   </mat-form-field>
 
- 
+
   <mat-form-field>
     <input matInput  placeholder="Transportation Amount"   formControlName="trans">
 

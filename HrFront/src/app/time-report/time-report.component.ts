@@ -88,6 +88,7 @@ export class TimeReportComponent implements OnInit {
 
     this.timeRepoService.getAllTimeReportData().subscribe(response => {
       this.get_time_repo_data = response.timerepo;
+      console.log(this.get_time_repo_data);
 
       this.timeRepoData = this.get_time_repo_data.map(val => ({
         cardId: val[0],
@@ -98,15 +99,16 @@ export class TimeReportComponent implements OnInit {
         total_attend: val[7],
         trans_amount: val[8],
         total_absent: val[9],
-        total_sick: val[10],
-        total_mission: val[11],
-        total_oridinary_vacation: val[12],
-        total_casual_vacation: val[13],
-        total_permission: val[14],
-        rule_no: val[15],
-        company_name: val[16],
-        dept_name: val[17],
-        sect_desc: val[18]
+        total_official:val[10],
+        total_sick: val[11],
+        total_mission: val[12],
+        total_oridinary_vacation: val[13],
+        total_casual_vacation: val[14],
+        total_permission: val[15],
+        rule_no: val[16],
+        company_name: val[17],
+        dept_name: val[18],
+        sect_desc: val[19]
 
       }))
       this.sortedData=this.timeRepoData;
@@ -156,7 +158,7 @@ export class TimeReportComponent implements OnInit {
     let element = document.getElementById('table');
     console.log(element);
 
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.timeRepoData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
 
     XLSX.utils.book_append_sheet(wb, ws, "report");

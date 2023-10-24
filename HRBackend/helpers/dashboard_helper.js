@@ -74,7 +74,7 @@ function GetJobsTotalCount(){
 //select last 5 employees joined our company 
 function GetLast5JoinedEmployees(){
     return new Promise(async function(reslove,reject){
-        var last_5_emps_query="select e.*, d.dept_desc from at_emps e,at_dept d where e.status=1 and e.dept_code=d.dept_code  and rownum<=5 order by hire_date desc  ";
+        var last_5_emps_query="select e.*, d.dept_desc from at_emps e,at_dept d where e.status=1 and e.dept_code=d.dept_code and hire_date is not null  and rownum<=5 order by hire_date desc";
 
         let connection;
         try {

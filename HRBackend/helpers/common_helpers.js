@@ -61,7 +61,7 @@ function UpdateRemarksAtTrans(at_emp_times,card_id,company_name){
         let at_emp_time=[];
                  at_emp_time=at_emp_times;  
         var update_remarks_query =
-"update at_transs set t_sick=:1,t_mission=:2,t_ordinary_vacation=:3,t_casual_vacation=:4,t_permission=:5  where card_id=:6 and month=:7 and year=:8 and company_name=:9";
+"update at_transs set t_sick=:1,t_mission=:2,t_ordinary_vacation=:3,t_casual_vacation=:4,t_permission=:5,t_official=:6  where card_id=:7 and month=:8 and year=:9 and company_name=:10";
 
         try {
             connection=await oracleConnection();
@@ -72,6 +72,7 @@ function UpdateRemarksAtTrans(at_emp_times,card_id,company_name){
             var total_mission = 0;
             var total_casual = 0;
             var total_permission = 0;
+            var total_official=0;
           
             for (let i = 0; i < at_emp_time.length; i++) {
               if (at_emp_time[i][8]!=null&&at_emp_time[i][8].length >= 1) {
@@ -86,6 +87,9 @@ function UpdateRemarksAtTrans(at_emp_times,card_id,company_name){
                 } else if (at_emp_time[i][8] === "Permission") {
                   total_permission += 1;
                 }
+                else if (at_emp_time[i][8] === "official") {
+                    total_official += 1;
+                  }
               }
             }
           
@@ -96,6 +100,7 @@ function UpdateRemarksAtTrans(at_emp_times,card_id,company_name){
                 total_ordinary,
                 total_casual,
                 total_permission,
+                total_official,
                 parseInt(card_id),
                 parseInt(last_date[1]),
                 parseInt(last_date[2]),

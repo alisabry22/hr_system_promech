@@ -1,8 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Department } from 'shared/models/department';
 import { Employee } from 'shared/models/employee';
+import { job } from 'shared/models/job';
+import { SectionModel } from 'shared/models/section';
 
 @Component({
   selector: 'app-editemp',
@@ -11,18 +14,34 @@ import { Employee } from 'shared/models/employee';
 })
 export class EditempComponent implements OnInit {
   form!: FormGroup;
+  currentEmployee!:Employee;
+  sectionDescription:string='';
+  jobTitleDescription:string='';
+  insurance:string='';
   departmentName: string = '';
   employeename: string = '';
+  ordinaryVacation:string='';
+  casualVacation:string='';
+  hiredate!:Date;
   emailaddress: string = '';
   manager_email_address: string = '';
   role: string = '';
   emp_status: string = '';
   departments: Department[] = [];
+  allJobs:job[]=[];
+  allSects:SectionModel[]=[];
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditempComponent>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
+    this.currentEmployee=data['emp'];
+
+    console.log(this.currentEmployee);
+
+
+    this.allJobs=data['jobs'];
+    this.allSects=data['sects'];
     this.employeename = data['emp'].employee_name!;
     this.departmentName = data['emp'].department_name!;
     this.emailaddress = data['emp'].email_address;
@@ -30,7 +49,15 @@ export class EditempComponent implements OnInit {
     this.role = data['emp'].rule!;
     this.departments = data['depts'];
     this.emp_status = data['emp'].status;
-    console.log(this.emp_status);
+    this.hiredate=data['emp'].hire_date;
+    this.casualVacation=data['emp'].casual_vacation;
+    this.ordinaryVacation=data['emp'].ordinary_vacation;
+    this.sectionDescription=this.currentEmployee.sect_desc!;
+    this.jobTitleDescription=this.currentEmployee.job_title!;
+    this.insurance=this.currentEmployee.insurance!;
+
+
+
   }
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -40,6 +67,13 @@ export class EditempComponent implements OnInit {
       emp_status: this.emp_status,
       emailaddress: this.emailaddress,
       manager_email_address: this.manager_email_address,
+      hiredate:this.hiredate,
+      casual_vacation:this.casualVacation,
+      ordinary_vacation:this.ordinaryVacation,
+      sect_desc:this.sectionDescription,
+      job_title:this.jobTitleDescription,
+      insurance:this.insurance,
+
     });
   }
   close() {
@@ -47,5 +81,8 @@ export class EditempComponent implements OnInit {
   }
   save() {
     this.dialogRef.close(this.form.value);
+  }
+  getChangedDate(event: MatDatepickerInputEvent<Date>){
+    this.hiredate = event.target.value!;
   }
 }

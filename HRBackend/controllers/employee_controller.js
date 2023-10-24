@@ -14,6 +14,9 @@ const {
   UpdateEmployeeAtEmps,
   UpdateAtEmpTimeHelper,
   updatehistoryTableHelper,
+  UpdateEmployeeRuleAtTranss,
+  getAllSections,
+  getAllJobsInDb,
 } = require("../helpers/employee_helper");
 const oracleConnection = require("./oracle_connection");
 const { node_transporter, SendEmailToEmployee } = require("../helpers/node_mailer");
@@ -24,10 +27,13 @@ const getAllEmployees = async (req, res) => {
   try {
     var emps_result = await getAllEmployeesQuery();
     var depts_result = await GetAllDepartmentsQuery();
+    var sect_resut=await getAllSections();
+    var job_result=await getAllJobsInDb();
+        //var section_result=await 
 
     res
       .status(200)
-      .send({ state: "success", allemp: emps_result, alldept: depts_result });
+      .send({ state: "success", allemp: emps_result, alldept: depts_result,sect:sect_resut,job:job_result });
   } catch (error) {
     return res.status(500).send({ state: "error", message: error.message });
   }
@@ -83,29 +89,49 @@ const getAllEmpTime = async (req, res) => {
 };
 
 const EditEmployee = async (req, res) => {
-  console.log(req.body);
+
   const {
+    card_id,
+    company_name,
     empname,
     departmentName,
     role,
     status,
     email_address,
     manager_email_address,
+    hiredate,
+    casual_vacation,
+    ordinary_vacation,
+    job_code,
+    sect_code,
+    insurance_no
   } = req.body;
   try {
+   
     connection = oracleConnection();
     let rolecode = role == "Manager" ? "1" : "2";
 
     const deptCode = await GetDepartmentCode(departmentName);
     const updateEmpResult = await UpdateEmployeeAtEmps(
+      card_id,
+      company_name,
       empname,
       deptCode,
       rolecode,
       status,
       email_address != null ? email_address : "",
-      manager_email_address != null ? manager_email_address : ""
+      manager_email_address != null ? manager_email_address : "",
+      hiredate,
+      casual_vacation!=null?casual_vacation:0,
+      ordinary_vacation!=null?ordinary_vacation:0,
+      job_code,
+      sect_code,
+      insurance_no
     );
     if (updateEmpResult === 1) {
+        //update at transs table emp row with new role
+        await UpdateEmployeeRuleAtTranss(rolecode,card_id,company_name);
+        
       res.send({ state: "success", message: "Successfully Updated Employee" });
     }
   } catch (error) {
@@ -219,6 +245,7 @@ const sendEmailToEmployees = async (req, res) => {
       );
       //loop on each employee to send mail for him
       for (let emp of emps) {
+        console.log("emp is ",emp);
         let list_of_ccs =
           emp.manager_email_address != null &&
           emp.manager_email_address.length > 1
@@ -230,12 +257,14 @@ const sendEmailToEmployees = async (req, res) => {
         }
 
         const file=await ReadFileOfEmployee(emp.card_id,emp.company_name);
+        console.log(`file is for ${emp.email_address}` ,file);
         
         if(file!=false){
           //it means this function returns for me the excel sheet of employee so we can send him email
           const mail_options = {
             from: "hr.pro352@gmail.com",
             to: emp.email_address,
+        
             cc: list_of_ccs,
             subject: form.title,
             text: form.body,

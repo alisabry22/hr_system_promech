@@ -33,9 +33,9 @@ const node_transporter = nodemailer.createTransport({
 });
 node_transporter.verify((err, success) => {
   if (err) {
-    console.log("from node mailer file error", err);
+    console.log("connection error to send email package", err);
   } else {
-    console.log(success);
+    console.log("connection to email package is successfully",success);
   }
 });
 

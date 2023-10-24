@@ -3,31 +3,21 @@
 <mat-dialog-content [formGroup]="form">
   <mat-form-field appearance="outline">
     <mat-label>Employee Name</mat-label>
-    <input
-      matInput
-      readonly
-      placeholder="Employee Name"
-      name="employeename"
-      formControlName="employeename"
-    />
+    <input matInput readonly placeholder="Employee Name" name="employeename" formControlName="employeename" />
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Email Address</mat-label>
-    <input
-      matInput
-      placeholder="Email Address"
-      name="emailaddress"
-      formControlName="emailaddress"
-    />
+    <input matInput placeholder="Email Address" name="emailaddress" formControlName="emailaddress" />
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Manager Email Address</mat-label>
-    <input
-      matInput
-      placeholder="Manager Email Address"
-      name="manager_email_address"
-      formControlName="manager_email_address"
-    />
+    <input matInput placeholder="Manager Email Address" name="manager_email_address"
+      formControlName="manager_email_address" />
+  </mat-form-field>
+  <!--insurance number input-->
+  <mat-form-field appearance="outline">
+    <mat-label>Insurance Number</mat-label>
+    <input matInput  placeholder="Insurance Number" name="insurancenumber" formControlName="insurance" />
   </mat-form-field>
 
   <!-- select employee Deartment -->
@@ -37,46 +27,64 @@
       <mat-option [value]="departmentName">
         {{ departmentName }}
       </mat-option>
-      <mat-option
-        *ngFor="let dept of departments"
-        value="{{ dept.dept_desc }}"
-        [hidden]="dept.dept_desc === departmentName"
-        >{{ dept.dept_desc }}</mat-option
-      >
+      <mat-option *ngFor="let dept of departments" value="{{ dept.dept_desc }}"
+        [hidden]="dept.dept_desc === departmentName">{{ dept.dept_desc }}</mat-option>
     </mat-select>
     <mat-select *ngIf="!departmentName" formControlName="departmentName">
+      <mat-option *ngFor="let dept of departments" value="{{ dept.dept_desc }}">{{ dept.dept_desc }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!--change employee section-->
+
+  <mat-form-field appearance="fill">
+    <mat-label>Section</mat-label>
+    <mat-select *ngIf="currentEmployee.sect_desc!=null" formControlName="sect_desc">
+      <mat-option [value]="currentEmployee.sect_desc">
+        {{ currentEmployee.sect_desc }}
+      </mat-option>
       <mat-option
-        *ngFor="let dept of departments"
-        value="{{ dept.dept_desc }}"
-        >{{ dept.dept_desc }}</mat-option
+        *ngFor="let sect of allSects"
+        [value]="sect.sect_description"
+        [hidden]="sect.sect_description === currentEmployee.sect_desc"
+        >{{ sect.sect_description }}</mat-option>
+    </mat-select>
+    <mat-select *ngIf="currentEmployee.sect_desc==null" formControlName="sect_desc">
+      <mat-option *ngFor="let sect of allSects" [value]="sect.sect_description">{{sect.sect_description}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!--change employee job title-->
+
+  <mat-form-field appearance="fill">
+    <mat-label>Job Title</mat-label>
+    <mat-select *ngIf="currentEmployee.job_title" formControlName="job_title">
+      <mat-option [value]="currentEmployee.job_title">
+        {{ currentEmployee.job_title }}
+      </mat-option>
+      <mat-option
+        *ngFor="let job of allJobs"
+        value="{{ job.job_desc }}"
+        [hidden]="job.job_desc === currentEmployee.job_title"
+        >{{ job.job_desc }}</mat-option
+      >
+    </mat-select>
+    <mat-select *ngIf="!currentEmployee.job_title" formControlName="job_title">
+      <mat-option
+        *ngFor="let job of allJobs"
+        value="{{ job.job_desc }}"
+        >{{ job.job_desc }}</mat-option>
       >
     </mat-select>
   </mat-form-field>
-
   <!-- select employee Role -->
 
   <mat-form-field appearance="fill">
     <mat-label>Select Role</mat-label>
-    <mat-select
-      appearance="outline"
-      formControlName="role"
-      placeholder="Role"
-      *ngIf="role"
-    >
+    <mat-select appearance="outline" formControlName="role" placeholder="Role" *ngIf="role">
       <mat-option value="{{ role }}">{{ role }}</mat-option>
-      <mat-option *ngIf="role === 'Employee'" value="Manager"
-        >Manager</mat-option
-      >
-      <mat-option *ngIf="role === 'Manager'" value="Employee"
-        >Employee</mat-option
-      >
+      <mat-option *ngIf="role === 'Employee'" value="Manager">Manager</mat-option>
+      <mat-option *ngIf="role === 'Manager'" value="Employee">Employee</mat-option>
     </mat-select>
-    <mat-select
-      appearance="outline"
-      formControlName="role"
-      placeholder="Role"
-      *ngIf="!role"
-    >
+    <mat-select appearance="outline" formControlName="role" placeholder="Role" *ngIf="!role">
       <mat-option value="Employee">Employee</mat-option>
       <mat-option value="Manager">Manager</mat-option>
     </mat-select>
@@ -87,12 +95,32 @@
     <mat-label>Employee Status</mat-label>
     <mat-select *ngIf="emp_status" formControlName="emp_status">
       <mat-option [value]="emp_status">
-        {{ emp_status == "1" ? "Active" : "InActive" }}</mat-option
-      >
+        {{ emp_status == "1" ? "Active" : "InActive" }}</mat-option>
 
       <mat-option value="2" *ngIf="emp_status == '1'">InActive </mat-option>
       <mat-option value="1" *ngIf="emp_status == '2'"> Active</mat-option>
     </mat-select>
+  </mat-form-field>
+  <!--for editing hire date of employee-->
+  <mat-form-field>
+    <mat-label>HireDate</mat-label>
+    <input matInput [matDatepicker]="picker" [placeholder]="hiredate!=null?hiredate.toLocaleString():'hiredate' "
+      formControlName="hiredate" (dateChange)="getChangedDate($event)" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <!--this is for casual vacation-->
+  <mat-form-field appearance="outline">
+    <mat-label>Casual Vacation</mat-label>
+    <input matInput [placeholder]="casualVacation!=null?casualVacation: '0' " name="manager_email_address"
+      formControlName="casual_vacation" />
+  </mat-form-field>
+  <!--this for ordinary vacation-->
+  <mat-form-field appearance="outline">
+    <mat-label>Ordinary Vacation</mat-label>
+    <input matInput [placeholder]="ordinaryVacation!=null?ordinaryVacation: '0' " name="manager_email_address"
+      formControlName="ordinary_vacation" />
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>

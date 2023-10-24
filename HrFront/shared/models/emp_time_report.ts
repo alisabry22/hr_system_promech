@@ -4,6 +4,7 @@ export class EmpTimeReport{
     month?:number;
     year?:number;
     total_late?:string;
+    total_official?:string;
     total_attend?:string;
     trans_amount?:string;
     total_absent?:string;

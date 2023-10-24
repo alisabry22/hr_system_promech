@@ -16,7 +16,7 @@ table {
     color: #fff;
   }
   table th{
-    font-size: 14px;
+    font-size: 12px;
     text-decoration: none;
     font-weight: 500;
 
@@ -40,7 +40,7 @@ table {
   }
   td,
   th {
-    padding: 12px 12px;
+    padding: 10px 10px;
     text-align: left;
 
   }
