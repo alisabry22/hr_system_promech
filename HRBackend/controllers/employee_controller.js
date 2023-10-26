@@ -107,11 +107,17 @@ const EditEmployee = async (req, res) => {
     insurance_no
   } = req.body;
   try {
+      
    
     connection = oracleConnection();
     let rolecode = role == "Manager" ? "1" : "2";
 
     const deptCode = await GetDepartmentCode(departmentName);
+  
+   
+
+     
+      
     const updateEmpResult = await UpdateEmployeeAtEmps(
       card_id,
       company_name,
@@ -119,14 +125,14 @@ const EditEmployee = async (req, res) => {
       deptCode,
       rolecode,
       status,
-      email_address != null ? email_address : "",
-      manager_email_address != null ? manager_email_address : "",
+      email_address !="null" ? email_address : "",
+      manager_email_address != "null" ? manager_email_address : "",
       hiredate,
-      casual_vacation!=null?casual_vacation:0,
-      ordinary_vacation!=null?ordinary_vacation:0,
+      casual_vacation!="null"?casual_vacation:0,
+      ordinary_vacation!="null"?ordinary_vacation:0,
       job_code,
       sect_code,
-      insurance_no
+      insurance_no!="null"?insurance_no:0
     );
     if (updateEmpResult === 1) {
         //update at transs table emp row with new role

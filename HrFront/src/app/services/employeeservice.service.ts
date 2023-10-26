@@ -42,7 +42,7 @@ export class EmployeeserviceService {
     body.set('status', status);
     body.set('email_address', email_address);
     body.set('manager_email_address', manager_email_address);
-    body.set('hiredate',hire_date.toLocaleString());
+    body.set('hiredate',hire_date!=null?hire_date.toLocaleString():"");
     body.set('casual_vacation',casual_vacation);
     body.set('ordinary_vacation',ordinary_vacation);
     body.set('job_code',job_code);

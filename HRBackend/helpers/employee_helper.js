@@ -150,11 +150,13 @@ function UpdateEmployeeAtEmps(
   sect_code,
   insurance_no
 ) {
+  
   return new Promise(async function (resolve, reject) {
+    
     let connection;
     var updateQuery =
       "update at_emps set emp_name=:1 , dept_code=:2 ,rule_no=:3,status=:4,email_address=:5,manager_email_address=:6 , hire_date=:7,casual_days=:8,ordinary_days=:9,job_code=:10,sect_code=:11,insurance_no=:12 where card_id=:13 and company_name=:14";
-
+  
     try {
       connection = await oracleConnection();
       const result = await connection.execute(
@@ -166,12 +168,12 @@ function UpdateEmployeeAtEmps(
           parseInt(empstatus),
           email_address != null ? email_address : "",
           manager_email_address != null ? manager_email_address : "",
-          new Date(hiredate),
-          parseInt(casual_days),
-          parseInt(ordinary_days),
+          hiredate.length!=0?new Date(hiredate):null,
+          casual_days!=null?parseInt(casual_days):null,
+         ordinary_days!=null? parseInt(ordinary_days):null,
           parseInt(job_code),
           parseInt(sect_code),
-          parseInt(insurance_no),
+         insurance_no!=null? parseInt(insurance_no):null,
           parseInt(card_id),
           company_name,
         ],
