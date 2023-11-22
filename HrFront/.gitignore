@@ -20,6 +20,8 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 output/
+
+#igone all excel files
 *.xlsx
 *.xls
 
