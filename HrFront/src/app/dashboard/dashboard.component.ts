@@ -46,6 +46,7 @@ export class DashboardComponent implements OnInit {
           this.alertShown = true;
         } else {
 
+          console.log(event);
 
 
           this.state = event.state;
@@ -54,7 +55,7 @@ export class DashboardComponent implements OnInit {
           this.totaljobs = event.totaljob;
           this.totalsects = event.totalsect;
           this.topFive=event.topfive;
-          console.log(event.totalemp);
+
 
           this.latest_emps = event.latest_emps.map((val: any) => ({
             card_id: val[0],

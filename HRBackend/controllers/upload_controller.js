@@ -191,7 +191,8 @@ function createExcel(nameslist, file, count_days) {
     //get names of employees
     Names = Array.from(nameslist);
     //create new workbook
-    var workbook = xlsx.readFile(`./output/${file.filename}`);
+
+    var workbook = xlsx.readFile(`D:/hr_system/HrBackend/output/${file.filename}`);
     var worksheet = workbook.Sheets[workbook.SheetNames[0]];
     var jsonExcel = xlsx.utils.sheet_to_json(worksheet);
 
@@ -209,20 +210,20 @@ function createExcel(nameslist, file, count_days) {
 
       xlsx.utils.book_append_sheet(workbook, newsheet, Names[i]);
 
-      xlsx.writeFile(workbook, `./output/${Names[i]}.xlsx`);
+      xlsx.writeFile(workbook, `D:/hr_system/HrBackend/output/${Names[i]}.xlsx`);
       var date = val[val.length - 1].Date.toString();
       date = date.split("-");
       var filename;
       if (val[val.length - 1]["No."]) {
-        var filename = `./emails/${val[val.length - 1].CompanyName}_${
+        var filename = `D:/hr_system/HrBackend/emails/${val[val.length - 1].CompanyName}_${
           val[val.length - 1]["No."]
         }_${Names[i]}.xlsx`;
       } else if (val[val.length - 1]["AC-No"]) {
-        var filename = `./emails/${val[val.length - 1].CompanyName}_${
+        var filename = `D:/hr_system/HrBackend/emails/${val[val.length - 1].CompanyName}_${
           val[val.length - 1]["AC-No"]
         }_${Names[i]}.xlsx`;
       } else {
-        var filename = `./emails/${val[val.length - 1].CompanyName}_${
+        var filename = `D:/hr_system/HrBackend/emails/${val[val.length - 1].CompanyName}_${
           val[val.length - 1]["AC-No."]
         }_${Names[i]}.xlsx`;
       }
@@ -236,7 +237,7 @@ function createExcel(nameslist, file, count_days) {
 
 //manipulate sheet for penta3d and promech12
 function manipulateSheet(file, fileType) {
-  var workbook = xlsx.readFile(`./uploads/${file.originalname}`);
+  var workbook = xlsx.readFile(`D:/hr_system/HrBackend/uploads/${file.originalname}`);
   var excelData = xlsx.utils.sheet_to_json(
     workbook.Sheets[workbook.SheetNames[0]]
   );
@@ -293,7 +294,7 @@ function manipulateSheet(file, fileType) {
   var newworkbook = xlsx.utils.book_new();
   var newsheet = xlsx.utils.json_to_sheet(afterRemoveWeekend);
   xlsx.utils.book_append_sheet(newworkbook, newsheet, "penta3d");
-  xlsx.writeFile(newworkbook, `./output/${file.filename}`);
+  xlsx.writeFile(newworkbook, `D:/hr_system/HrBackend/output/${file.filename}`);
 }
 
 //calculate late time for penta3d and promech12

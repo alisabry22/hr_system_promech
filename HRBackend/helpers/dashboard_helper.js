@@ -2,13 +2,13 @@ const oracleConnection = require("../controllers/oracle_connection");
 function GetEmployeeTotalCount(){
    
     return new Promise(async function(reslove,reject){
-        var emp_count_query="select count(*) as total_emp from at_emps";
+        var emp_count_query="select count (distinct (case when substr(emp_name,-9,10)='promech12' then  LOWER( substr(emp_name,0,(LENGTH(emp_name) - LENGTH(substr(emp_name,-9,10))))) when substr(emp_name,-5,10)='penta' then  LOWER(substr(emp_name,0,(LENGTH(emp_name) - LENGTH(substr(emp_name,-5,10))))) else   LOWER(emp_name)  end)) as  emp_name_sub from AT_EMPS  where 1=1";
 
         let connection;
         try {
                 connection=await oracleConnection();
                 const result=await connection.execute(emp_count_query);
-              
+                console.log("ewoewkoew",result.rows[0][0]);
                 reslove(result.rows[0][0]);
         } catch (error) {
                 reject(error);
