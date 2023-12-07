@@ -4,3 +4,4 @@
 - Track Employees in company
 * Track Departments and number of employees in each department
 + Track jobs and employees in each job.
+<img src="https://thehappypuppysite.com/wp-content/uploads/2017/10/Cute-Dog-Names-HP-long.jpg" width="200">
