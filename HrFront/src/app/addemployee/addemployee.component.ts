@@ -112,6 +112,8 @@ export class AddemployeeComponent implements OnInit {
     this.card_id = event.target.cardId.value;
     this.email_address = event.target.email_address.value;
     this.manager_email_address = event.target.manager_email_address.value;
+
+
     if (
       this.employeeName.length == 0 ||
       this.email_address.length === 0 ||
@@ -130,12 +132,17 @@ export class AddemployeeComponent implements OnInit {
       this.message = 'Some Fields Are Missing';
       this.alertShown = true;
     } else {
+
+
       var dep = this.final_departs.find(
         ({ dept_desc }) => dept_desc === this.selectedDebt
       );
       var jobid = this.final_jobs.find(
-        ({ job_desc }) => job_desc === this.selectedJob
+        ({ job_desc }) => job_desc?.replace("\r\n","") === this.selectedJob
       );
+
+
+
       if (dep && jobid) {
         this.addempservice
           .addnewEmployee(
@@ -154,6 +161,8 @@ export class AddemployeeComponent implements OnInit {
           )
           .subscribe({
             next: (event: any) => {
+              console.log("event is ",event);
+
               if (event instanceof HttpResponse) {
                 this.state = event.body.state;
                 this.message = event.body.message;

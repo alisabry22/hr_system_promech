@@ -24,7 +24,7 @@ export class SendMailsComponent implements OnInit {
   month: string = `Month:${
     new Date().getMonth() + 1
   } - Year:${new Date().getFullYear()}`;
-  from: string = '';
+  from: string = 'hr.attendance@promech-eg.com';
   cc: string = '';
   title: string = '';
   body: string = '';

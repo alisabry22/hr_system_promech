@@ -9,7 +9,7 @@ function GetAllDepartmentsQuery() {
     try {
       connection = await oracleConnection();
       const result = await connection.execute(get_dept_query);
-
+      console.log(result.rows);
       resolve(result.rows);
     } catch (error) {
       reject(error);

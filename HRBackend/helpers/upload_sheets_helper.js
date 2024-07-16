@@ -112,8 +112,7 @@ async function SubmitDataToAtTransTable() {
             date=date.toString().split("/");
         
         
-           
-          
+    
           var values = [
             parseInt(emp_times[i][0]),
             (emp_times[i][1]).toString(),
@@ -126,7 +125,7 @@ async function SubmitDataToAtTransTable() {
        
     
          await connection.execute(insert_into_at_trans, values);
-    
+         
         }
         await connection.commit();
               //calculating total late for each emp
@@ -171,7 +170,7 @@ async function calculateTotalLateData(emp_times, date_count) {
            
             // it means he is employee
             time1 = new Date(2000, 0, 1, clock_slice[0], clock_slice[1]);
-            time2 = new Date(2000, 0, 1, 9, 10);
+            time2 = new Date(2000, 0, 1, 8, 40);
           }
     
           diff = time1 - time2;

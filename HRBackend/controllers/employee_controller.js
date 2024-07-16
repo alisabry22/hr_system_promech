@@ -6,7 +6,7 @@ const {
 const {
   GetAllDepartmentsQuery,
   GetDepartmentCode,
-} = require("../helpers/department_helper");
+} = require("../helpers/department_helper.js");
 const {
   getAllEmployeesQuery,
   AddNewEmployeeHelper,
@@ -18,7 +18,7 @@ const {
   getAllSections,
   getAllJobsInDb,
 } = require("../helpers/employee_helper");
-const oracleConnection = require("./oracle_connection");
+const oracleConnection = require('./oracle_connection')
 const { node_transporter, SendEmailToEmployee } = require("../helpers/node_mailer");
 const logger = require("../helpers/logger");
 const ReadFileOfEmployee = require("../helpers/file_helper");
@@ -251,7 +251,7 @@ const sendEmailToEmployees = async (req, res) => {
       );
       //loop on each employee to send mail for him
       for (let emp of emps) {
-        console.log("emp is ",emp);
+       
         let list_of_ccs =
           emp.manager_email_address != null &&
           emp.manager_email_address.length > 1
@@ -263,12 +263,13 @@ const sendEmailToEmployees = async (req, res) => {
         }
 
         const file=await ReadFileOfEmployee(emp.card_id,emp.company_name);
-        console.log(`file is for ${emp.email_address}` ,file);
+        console.log(`file is for $ ${emp.email_address}` ,file);
         
         if(file!=false){
           //it means this function returns for me the excel sheet of employee so we can send him email
           const mail_options = {
-            from: "hr.pro352@gmail.com",
+            from: "hr.attendance@promech-eg.com",
+           // from: "hr.pro352@gmail.com",
             to: emp.email_address,
         
             cc: list_of_ccs,
@@ -281,7 +282,9 @@ const sendEmailToEmployees = async (req, res) => {
               },
             ],
           };
+          await sleep(5000);
           const result= await SendEmailToEmployee(mail_options);
+          console.log("result of sending mail is ",result);
             //it means succes send email to this user
          if(result==true){
           logger.info(`Success sending email to: ${emp.email_address}`);
@@ -301,6 +304,22 @@ const sendEmailToEmployees = async (req, res) => {
       }else{
         res.send({state:'success',message:`successfully send emails to ${emps.length} employee(s)`});
       }
+      //sending log file to hr after uploading to track success or failure
+      const mail_options1 = {
+        from: "hr.attendance@promech-eg.com",
+        to: "hr.attendance@promech-eg.com",
+        cc:"rasha@promech-eg.com",
+        //cc: list_of_ccs,
+        subject: "Log File After Sending mails",
+        text: "Log File After Sending mails",
+        attachments: [
+          {
+            filename: `Emails_logs.log`,
+            path: `sendmails.log`,
+          },
+        ],
+      };
+      await SendEmailToEmployee(mail_options1);
     }
   } catch (error) {
     console.log("sendEmailToEmployees ", error);
@@ -327,6 +346,10 @@ const getAllEmailsFromDb = async (req, res) => {
     }
   }
 };
+
+function sleep(millisecs){
+  return new Promise(resolve=>setTimeout(resolve,millisecs));
+}
 module.exports = {
   getAllEmployees,
   addNewEmployee,

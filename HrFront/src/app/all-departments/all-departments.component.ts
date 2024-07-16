@@ -42,6 +42,8 @@ export class AllDepartmentsComponent implements OnInit {
     this.alldeptservice.getAllDepts().subscribe({
       next:(event:any)=>{
         this.departments=event.departments;
+        console.log(event);
+
         this.final_departs=this.departments.map(val=>({dept_id:val[0],dept_desc:val[1],emp_count:val[2]}));
 
 

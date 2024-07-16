@@ -18,7 +18,7 @@ const uploadSheetToDatabase = async (req, res) => {
         }
              var result1=   await UploadSheetsToDatabaseHelper();
                 if(result1){
-                    var submitresult=  await SubmitDataToAtTransTable();
+                   await SubmitDataToAtTransTable();
                 }
 
                  return res.send({ state: "success", message: "Successfully uploaded data" });

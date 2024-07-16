@@ -1,10 +1,8 @@
-const {
-  GetAllDepartmentsQuery,
-  GetManagersEmails,
-} = require("../helpers/department_helper");
-const { GetAllJobsQuery } = require("../helpers/jobs_helper");
-const { GetAllSectionsQuery } = require("../helpers/sections_helper");
 
+const { GetAllDepartmentsQuery, GetManagersEmails } =require("../helpers/department_helper.js");
+const { GetAllJobsQuery } = require("../helpers/jobs_helper");
+const {GetAllSectionsQuery}=require("../helpers/sections_helper.js");
+const oracleConnection=require("./oracle_connection.js")
 const getAllDepartments = async (req, res) => {
   try {
     var depts_query = await GetAllDepartmentsQuery();
@@ -28,17 +26,19 @@ const AddNewDepartment = async (req, res) => {
   let connection;
   var dept_name = req.body.deptname;
   try {
-    connection = oracleConnection();
+    connection =await oracleConnection();
 
     var select_max_dept_code_query =
-      "select ifnull( max(DEPT_CODE),0) as deptcode from at_dept";
+      "select nvl( max(DEPT_CODE),0) as deptcode from at_dept";
     var addDept = "insert into at_dept (dept_code,dept_desc) values (?,?)";
-
+   
     connection.execute(select_max_dept_code_query, function (err, result) {
       if (err) throw err;
+      var deptcode=parseInt(result.rows[0][0]);
+      
       connection.execute(
         addDept,
-        [result[0].deptcode++, dept_name],
+        [deptcode++, dept_name],
         function (err, result1) {
           if (err) throw err;
           connection.end();

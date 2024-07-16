@@ -26,6 +26,19 @@ export class AddemployeeService {
     email_address:string,
     manager_email_address:string,
   ): Observable<any> {
+    console.log(  empname,
+      department,
+      job,
+      emptype,
+      hiredate,
+      ordinary_vacation,
+      casual_vacation,
+      company_name,
+      cardId,
+      sectCode,
+      email_address,
+      manager_email_address);
+
     let body = new URLSearchParams();
     body.set('empname', empname);
     body.set('emptype', emptype);

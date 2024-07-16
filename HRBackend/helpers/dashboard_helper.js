@@ -8,7 +8,7 @@ function GetEmployeeTotalCount(){
         try {
                 connection=await oracleConnection();
                 const result=await connection.execute(emp_count_query);
-                console.log("ewoewkoew",result.rows[0][0]);
+                
                 reslove(result.rows[0][0]);
         } catch (error) {
                 reject(error);
