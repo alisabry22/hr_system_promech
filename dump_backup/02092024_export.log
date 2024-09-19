@@ -1,0 +1,45 @@
+;;; 
+Export: Release 11.2.0.2.0 - Production on Mon Sep 2 08:30:00 2024
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+;;; 
+Connected to: Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+Starting "ATTEND"."SYS_EXPORT_SCHEMA_01":  attend/********@xe schemas=ATTEND directory=EXPDMP_ATTEND dumpfile=02092024_attend.DMP logfile=02092024_export.log 
+Estimate in progress using BLOCKS method...
+Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+Total estimation using BLOCKS method: 4 MB
+Processing object type SCHEMA_EXPORT/PRE_SCHEMA/PROCACT_SCHEMA
+Processing object type SCHEMA_EXPORT/TABLE/TABLE
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/INDEX
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/INDEX_STATISTICS
+Processing object type SCHEMA_EXPORT/TABLE/COMMENT
+Processing object type SCHEMA_EXPORT/PACKAGE/PACKAGE_SPEC
+Processing object type SCHEMA_EXPORT/PROCEDURE/PROCEDURE
+Processing object type SCHEMA_EXPORT/PACKAGE/COMPILE_PACKAGE/PACKAGE_SPEC/ALTER_PACKAGE_SPEC
+Processing object type SCHEMA_EXPORT/PROCEDURE/ALTER_PROCEDURE
+Processing object type SCHEMA_EXPORT/VIEW/VIEW
+Processing object type SCHEMA_EXPORT/PACKAGE/PACKAGE_BODY
+Processing object type SCHEMA_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS
+Processing object type SCHEMA_EXPORT/POST_SCHEMA/PROCOBJ
+Processing object type SCHEMA_EXPORT/POST_SCHEMA/PROCACT_SCHEMA
+. . exported "ATTEND"."AT_TRANS"                         1.849 MB   20094 rows
+. . exported "ATTEND"."AT_EMP_TIME"                      116.8 KB    2254 rows
+. . exported "ATTEND"."AT_TRANSS"                        57.25 KB     818 rows
+. . exported "ATTEND"."SCHEDULER$_JOB_ARG"               7.445 KB       3 rows
+. . exported "ATTEND"."AT_DAYS"                          10.64 KB     104 rows
+. . exported "ATTEND"."AT_DEPT"                          7.390 KB      10 rows
+. . exported "ATTEND"."AT_EMPS"                          23.45 KB      98 rows
+. . exported "ATTEND"."AT_EMPS_OLD"                      10.79 KB       6 rows
+. . exported "ATTEND"."AT_JOBS"                          8.812 KB      42 rows
+. . exported "ATTEND"."AT_MONTH"                         6.468 KB      12 rows
+. . exported "ATTEND"."AT_RULES"                         10.02 KB       2 rows
+. . exported "ATTEND"."AT_SECT"                          7.578 KB       3 rows
+. . exported "ATTEND"."LOGIN"                            5.460 KB       3 rows
+. . exported "ATTEND"."AT_TRANS_SUM"                         0 KB       0 rows
+. . exported "ATTEND"."SIGNUP"                               0 KB       0 rows
+Master table "ATTEND"."SYS_EXPORT_SCHEMA_01" successfully loaded/unloaded
+******************************************************************************
+Dump file set for ATTEND.SYS_EXPORT_SCHEMA_01 is:
+  D:\HR_SYSTEM\DUMP_BACKUP\02092024_ATTEND.DMP
+Job "ATTEND"."SYS_EXPORT_SCHEMA_01" successfully completed at 08:30:24

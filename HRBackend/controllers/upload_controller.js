@@ -17,8 +17,8 @@ const Promech = async (req, res) => {
   try {
     //manuplate time first
     manuplateTime(file);
+    
     //get days count
-
     var count_days = getTotalDiffDays(file);
 
     //get names of employees
@@ -36,8 +36,8 @@ const Promech = async (req, res) => {
 };
 
 //handle Penta Excel
-
 const penta3d = async (req, res) => {
+  console.log("penta3d got called");
   fileType = req.body.fileType;
   file = req.file;
   try {

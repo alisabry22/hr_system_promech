@@ -18,8 +18,11 @@ const {
   getAllSections,
   getAllJobsInDb,
 } = require("../helpers/employee_helper");
-const oracleConnection = require('./oracle_connection')
-const { node_transporter, SendEmailToEmployee } = require("../helpers/node_mailer");
+const oracleConnection = require("./oracle_connection");
+const {
+  node_transporter,
+  SendEmailToEmployee,
+} = require("../helpers/node_mailer");
 const logger = require("../helpers/logger");
 const ReadFileOfEmployee = require("../helpers/file_helper");
 
@@ -27,13 +30,19 @@ const getAllEmployees = async (req, res) => {
   try {
     var emps_result = await getAllEmployeesQuery();
     var depts_result = await GetAllDepartmentsQuery();
-    var sect_resut=await getAllSections();
-    var job_result=await getAllJobsInDb();
-        //var section_result=await 
+    var sect_resut = await getAllSections();
+    var job_result = await getAllJobsInDb();
+    //var section_result=await
 
     res
       .status(200)
-      .send({ state: "success", allemp: emps_result, alldept: depts_result,sect:sect_resut,job:job_result });
+      .send({
+        state: "success",
+        allemp: emps_result,
+        alldept: depts_result,
+        sect: sect_resut,
+        job: job_result,
+      });
   } catch (error) {
     return res.status(500).send({ state: "error", message: error.message });
   }
@@ -89,7 +98,6 @@ const getAllEmpTime = async (req, res) => {
 };
 
 const EditEmployee = async (req, res) => {
-
   const {
     card_id,
     company_name,
@@ -104,20 +112,14 @@ const EditEmployee = async (req, res) => {
     ordinary_vacation,
     job_code,
     sect_code,
-    insurance_no
+    insurance_no,
   } = req.body;
   try {
-      
-   
     connection = oracleConnection();
     let rolecode = role == "Manager" ? "1" : "2";
 
     const deptCode = await GetDepartmentCode(departmentName);
-  
-   
 
-     
-      
     const updateEmpResult = await UpdateEmployeeAtEmps(
       card_id,
       company_name,
@@ -125,19 +127,19 @@ const EditEmployee = async (req, res) => {
       deptCode,
       rolecode,
       status,
-      email_address !="null" ? email_address : "",
+      email_address != "null" ? email_address : "",
       manager_email_address != "null" ? manager_email_address : "",
       hiredate,
-      casual_vacation!="null"?casual_vacation:0,
-      ordinary_vacation!="null"?ordinary_vacation:0,
+      casual_vacation != "null" ? casual_vacation : 0,
+      ordinary_vacation != "null" ? ordinary_vacation : 0,
       job_code,
       sect_code,
-      insurance_no!="null"?insurance_no:0
+      insurance_no != "null" ? insurance_no : 0
     );
     if (updateEmpResult === 1) {
-        //update at transs table emp row with new role
-        await UpdateEmployeeRuleAtTranss(rolecode,card_id,company_name);
-        
+      //update at transs table emp row with new role
+      await UpdateEmployeeRuleAtTranss(rolecode, card_id, company_name);
+
       res.send({ state: "success", message: "Successfully Updated Employee" });
     }
   } catch (error) {
@@ -237,21 +239,16 @@ async function updatehistoryTableOnEachEdit(
   }
 }
 
-
 const sendEmailToEmployees = async (req, res) => {
-  var total_failed_emails=[];
+  var total_failed_emails = [];
   const { emps, form, cc } = req.body;
 
   try {
- 
     if (emps.length != 0) {
       logger.info(`Current Date: ${new Date().toLocaleString()}`);
-      logger.info(
-        `Total number of employees to send emails:${emps.length}`
-      );
+      logger.info(`Total number of employees to send emails:${emps.length}`);
       //loop on each employee to send mail for him
       for (let emp of emps) {
-       
         let list_of_ccs =
           emp.manager_email_address != null &&
           emp.manager_email_address.length > 1
@@ -262,16 +259,16 @@ const sendEmailToEmployees = async (req, res) => {
           list_of_ccs += `,${element}`;
         }
 
-        const file=await ReadFileOfEmployee(emp.card_id,emp.company_name);
-        console.log(`file is for $ ${emp.email_address}` ,file);
-        
-        if(file!=false){
+        const file = await ReadFileOfEmployee(emp.card_id, emp.company_name);
+        console.log(`file is for $ ${emp.email_address}`, file);
+
+        if (file != false) {
           //it means this function returns for me the excel sheet of employee so we can send him email
           const mail_options = {
-            from: "hr.attendance@promech-eg.com",
-           // from: "hr.pro352@gmail.com",
+            from: "hrattendance@promech-eg.com",
+
             to: emp.email_address,
-        
+
             cc: list_of_ccs,
             subject: form.title,
             text: form.body,
@@ -283,32 +280,37 @@ const sendEmailToEmployees = async (req, res) => {
             ],
           };
           await sleep(5000);
-          const result= await SendEmailToEmployee(mail_options);
-          console.log("result of sending mail is ",result);
-            //it means succes send email to this user
-         if(result==true){
-          logger.info(`Success sending email to: ${emp.email_address}`);
-
-         }else{
-          total_failed_emails.push(emp.email_address);
-          logger.error(`Error sending file to : ${emp.email_address} , check his file at D:\\hr_system\\HRBackend\\emails`);
-
-         }
+          const result = await SendEmailToEmployee(mail_options);
+          console.log("result of sending mail is ", result);
+          //it means succes send email to this user
+          if (result == true) {
+            logger.info(`Success sending email to: ${emp.email_address}`);
+          } else {
+            total_failed_emails.push(emp.email_address);
+            logger.error(
+              `Error sending file to : ${emp.email_address} , check his file at D:\\hr_system\\HRBackend\\emails`
+            );
+          }
         }
-    
       }
-    
-            if(total_failed_emails.length!=0){
+
+      if (total_failed_emails.length != 0) {
         //it means their are some failed emails send it back to frontend
-        res.send({state:'error',message:`failed to send emails to ${total_failed_emails.length} employee(s)`});
-      }else{
-        res.send({state:'success',message:`successfully send emails to ${emps.length} employee(s)`});
+        res.send({
+          state: "error",
+          message: `failed to send emails to ${total_failed_emails.length} employee(s)`,
+        });
+      } else {
+        res.send({
+          state: "success",
+          message: `successfully send emails to ${emps.length} employee(s)`,
+        });
       }
       //sending log file to hr after uploading to track success or failure
       const mail_options1 = {
         from: "hr.attendance@promech-eg.com",
         to: "hr.attendance@promech-eg.com",
-        cc:"rasha@promech-eg.com",
+        cc: "rasha@promech-eg.com",
         //cc: list_of_ccs,
         subject: "Log File After Sending mails",
         text: "Log File After Sending mails",
@@ -347,8 +349,8 @@ const getAllEmailsFromDb = async (req, res) => {
   }
 };
 
-function sleep(millisecs){
-  return new Promise(resolve=>setTimeout(resolve,millisecs));
+function sleep(millisecs) {
+  return new Promise((resolve) => setTimeout(resolve, millisecs));
 }
 module.exports = {
   getAllEmployees,

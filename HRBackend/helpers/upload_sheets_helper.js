@@ -3,8 +3,7 @@ const xlsx = require("xlsx");
 const oracleConnection = require("../controllers/oracle_connection");
 const {GetDistinctDaysAtEmpTime,GetAllEmpTimeWithHisRule,} = require("./common_helpers");
 const moment=require("moment");
-const { log } = require("console");
-const { connect } = require("http2");
+
 
 function UploadSheetsToDatabaseHelper() {
   return new Promise(async function (resolve, reject) {
